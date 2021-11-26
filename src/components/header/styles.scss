@@ -1,0 +1,45 @@
+.header {
+  padding: 0.7rem;
+  width: 100vw;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  background-color: #73a2b0;
+
+  &__img {
+    font-size: 1px;
+    margin-left: 1rem;
+    border-radius: 2rem;
+    border: 0.04rem solid rgba(255, 0, 0, 0.3);
+  }
+
+  &__title {
+    margin-left: 1.5rem;
+    font-size: 2rem;
+    color: #f0f2f5;
+    letter-spacing: 0.1rem;
+  }
+
+  &__search {
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.4rem;
+    margin-left: 6%;
+    width: 50%;
+    background-color: #f0f2f5;
+  }
+
+  &__loggin {
+    color: #f0f2f5;
+    display: block;
+    float: right;
+    width: 35%;
+    margin-right: 2rem;
+    text-align: right;
+  }
+
+  &__icon {
+    margin-left: auto;
+    color: #f0f2f5;
+  }
+}
