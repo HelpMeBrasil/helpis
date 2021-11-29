@@ -1,0 +1,17 @@
+.login{
+    margin: 5% auto;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 70vh;
+    max-width: 70vw;
+    border-radius: 0.25rem;
+    
+    &__user{
+        width: 100%;
+      padding: 0 1.5rem;
+      height: 4rem;
+    }
+    
+}
