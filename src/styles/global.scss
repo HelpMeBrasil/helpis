@@ -1,11 +1,11 @@
-:root{
-  --background: #F0F2F5;
-  --red: #E52E4D;
-  --green: #33CC95;
-  --blue: #5429CC;
-  --blue-light: #6933FF;
-  --text-title: #363F5F;
-  --text-body: #969CB3;
+:root {
+  --background: #f0f2f5;
+  --red: #e52e4d;
+  --green: #33cc95;
+  --blue: #5429cc;
+  --blue-light: #6933ff;
+  --text-title: #363f5f;
+  --text-body: #969cb3;
   --shape: #ffffff;
 }
 
@@ -16,20 +16,36 @@
 }
 
 html {
-  @media (max-width:1080px){
-     font-size: 93.75%; //15px
+  @media (max-width: 1080px) {
+    font-size: 93.75%; //15px
   }
-  @media (max-width:720){
-     font-size: 87.5%;
+  @media (max-width: 720) {
+    font-size: 87.5%;
   }
 }
 
 body {
-  font: Arial, Helvetica, sans-serif;
   background-color: var(--background);
   -webkit-font-smoothing: antialiased;
   width: 100vw;
   height: 100vh;
+}
+
+body,
+input,
+textarea,
+button {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong {
+  font-weight: 600;
 }
 
 button {

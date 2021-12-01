@@ -6,15 +6,27 @@
   align-items: center;
   background-color: #73a2b0;
 
+  &__link {
+    display: flex;
+    align-items: center;
+    color: none;
+  }
+  &__link {
+    text-decoration: none;
+  }
+
+  &__link:hover {
+    text-decoration: none;
+    cursor: pointer;
+  }
   &__img {
-    font-size: 1px;
     margin-left: 1rem;
-    border-radius: 2rem;
+    border-radius: 5rem;
     border: 0.04rem solid rgba(255, 0, 0, 0.3);
   }
 
   &__title {
-    margin-left: 1.5rem;
+    margin: 0 0 0 1.5rem;
     font-size: 2rem;
     color: #e7e9ee;
     letter-spacing: 0.1rem;
@@ -29,7 +41,7 @@
     background-color: #e7e9ee;
   }
 
-  &__loggin {
+  &__login {
     color: #e7e9ee;
     display: block;
     float: right;
@@ -41,5 +53,6 @@
   &__icon {
     margin-left: auto;
     color: #e7e9ee;
+    cursor: pointer;
   }
 }
