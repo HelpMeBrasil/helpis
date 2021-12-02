@@ -1,21 +1,8 @@
 import Modal from 'react-modal';
 import './style.scss';
-import { Menu, Button } from 'antd';
-import {
-  AppstoreOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  PieChartOutlined,
-  DesktopOutlined,
-  ContainerOutlined,
-  MailOutlined,
-} from '@ant-design/icons'
-import { useState } from 'react';
 import 'antd/lib/menu/style/index.css';
 import { Link } from 'react-router-dom';
 Modal.setAppElement('#root');
-const { SubMenu } = Menu;
-
 interface MenuModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
