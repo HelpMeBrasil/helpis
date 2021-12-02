@@ -17,24 +17,24 @@ type AuthProviderProps = {
 
 export const AuthContext = createContext({} as AuthContextData);
 
-export function AuthProvider({ children } : AuthProviderProps) {
- 
+export function AuthProvider({ children }: AuthProviderProps) {
+
   const isAuthenticated = false;
-  
-  async function signIn({ username, password }: SignInCredentials){
+
+  async function signIn({ username, password }: SignInCredentials) {
     const response = await api.post('Auth', {
       username,
       password
     })
-    
-    if(response.status != 200){
+
+    if (response.status != 200) {
       console.log(response.data);
     }
   }
-  return(
-    <AuthContext.Provider value={{signIn, isAuthenticated}}>
-      { children }
+  return (
+    <AuthContext.Provider value={{ signIn, isAuthenticated }}>
+      {children}
     </AuthContext.Provider>
-    )
+  )
 
 }

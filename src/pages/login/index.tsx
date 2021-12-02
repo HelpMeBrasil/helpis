@@ -1,8 +1,13 @@
 import { FormEvent, useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { FormContainer } from "../../components/formContent";
 import { Form } from "../../components/form";
 import { AuthContext } from "../../context/AuthContext";
-import "./style.scss"
+import "./styles.scss"
+import { Paragraph } from "../../components/formParagraph";
+import { Input } from "../../components/formInput";
+import { Title } from "../../components/formTitle";
+import { Button } from "../../components/formButton";
 
  const Login = (): JSX.Element =>{
     const [username, setEmail] = useState('');
@@ -20,20 +25,21 @@ import "./style.scss"
       await signIn(data);
 
     }
+    
     return(
      
-        <div className="login">
-          <h1 className="login__welcome">Bem vindo ao Helpis</h1>
-          <h2 className="login__title">Acessar sua conta</h2>
+        <FormContainer>
+          <Title tag="h1" onClassName="title_h1" value="Bem vindo ao Helpis"/>
+          <Title tag="h2" onClassName="title_h2" value="Acessar sua conta"/>
           <Form onSubmit={handleSubmit}>
-                <p className="login__paragraphs">Email</p>
-                <input value={username} onChange={e => setEmail(e.target.value)} className="login__input" type="email" placeholder="Digite seu email" />
-                <p className="login__paragraphs">Senha</p>
-                <input value={password} onChange={e => setPassword(e.target.value)} className="login__input" type="password" placeholder="Digite sua senha" />
-                <Link to="/forget_password" className="login__forgot-password">Esqueceu a senha ?</Link>
-                <button className="login__button" type="submit">Acessar</button>
+                <Paragraph valueName="Username"/>
+                <Input value={username} onSetState={setEmail} type="text" placeholder="Digite seu usuario"/>
+                <Paragraph valueName="Senha"/>
+                <Input value={password} onSetState={setPassword} type="password" placeholder="Digite sua senha"/>
+                <Link to="/forget_password" className="forgot_password">Esqueceu a senha ?</Link>
+                <Button value="Acessar"/>
           </Form>
-        </div>
+          </FormContainer>
     )
 }
 

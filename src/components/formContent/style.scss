@@ -1,0 +1,17 @@
+.form_container {
+  padding: 3rem 2.5rem 3rem 2.5rem;
+  margin: 5% auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 40%;
+  max-width: 40%;
+  flex-direction: column;
+
+  background: #fff;
+  border-radius: 0.75rem;
+
+  @media (max-width: 720px) {
+    max-width: 80%;
+  }
+}
