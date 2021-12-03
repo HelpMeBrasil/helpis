@@ -1,7 +1,6 @@
 import { Header } from "./components/header/header";
 import { AuthProvider } from "./context/AuthContext";
 import { MenuModal } from './components/MenuModal';
-import Modal from 'react-modal';
 import { useState } from "react";
 import { Rotas } from "./routes";
 import './styles/global.scss';

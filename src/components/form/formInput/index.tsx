@@ -4,9 +4,10 @@ interface InputProps {
   onSetState: (value: React.SetStateAction<string>) => void
   type: string;
   placeholder: string;
+  onSize?: number;
 }
-export function Input ({value, onSetState, type, placeholder}:InputProps){
+export function Input ({value, onSetState, type, placeholder, onSize}:InputProps){
   return(
-    <input value={value} onChange={e => onSetState(e.target.value)} className="form__input" type={type} placeholder={placeholder} />
+    <input value={value} size={onSize} onChange={e => onSetState(e.target.value)} className="form__input" type={type} placeholder={placeholder} />
   )
 }

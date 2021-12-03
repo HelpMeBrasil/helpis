@@ -12,6 +12,8 @@ type ForgetPassword = {
 
 type ConfirmCode = {
   confirmationCode: string;
+  password: string;
+  passwordConfirmation: string;
 }
 
 type AuthContextData = {
@@ -56,13 +58,25 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
 
-  async function confirmCode({confirmationCode}: ConfirmCode) {
-    console.log(username);
-
+  async function confirmCode({confirmationCode, password, passwordConfirmation}: ConfirmCode) {
     const response = await api.post('Recovery/Confirmation', {
       username,
       confirmationCode
   })
+  if(response.status === 200) {
+    console.log(response.data.identifier);
+    const recoveryId = response.data.identifier
+    const responseRecover = await api.put('Recovery', {
+      recoveryId,
+      username,
+      password,
+      passwordConfirmation
+    })
+
+    if (responseRecover.status !== 200) {
+      console.log(responseRecover.data);
+    }
+  }
 
   if (response.status !== 200) {
     console.log(response.data);

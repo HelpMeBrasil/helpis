@@ -16,7 +16,7 @@ export function Header({onOpenMenuModal, handleCloseHeaderMenuModal}: HeaderProp
   const [login, setLogin] = useState("");
   return (
     <div className="header" onClick={handleCloseHeaderMenuModal}>
-        <Link className="header__link"to="/"> 
+        <Link className="header__link"to=""> 
         <img className="header__img" src={logo} alt="helpis"/> 
         <p className="header__title"> Helpis </p>
         </Link>
