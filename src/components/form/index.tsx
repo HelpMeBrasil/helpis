@@ -5,6 +5,7 @@ export * from "./formContainer";
 export * from "./formInput";
 export * from "./formLabel";
 export * from "./formTitle";
+export * from "./formCheckBox";
 
 interface FormProps {
   children: ReactNode;

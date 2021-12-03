@@ -17,7 +17,7 @@ export function MenuModal({ isOpen, onRequestClose} : MenuModalProps){
     >
       <div className="menu">
       <Link  className="menu__link" to="/login">Logar</Link>
-      <Link  className="menu__link" to="/cadastrar">Cadastrar</Link>
+      <Link  className="menu__link" to="/register">Cadastrar</Link>
       </div>
     {/* <Menu
           mode="inline"

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Form, { Button, FormContainer, Input, Label, Title } from "../../components/form";
-
+import Form, { Button, CheckBox, FormContainer, Input, Label, Title } from "../../components/form";
+import './styles.scss'
 
 export function Register() {
   const [firstName, setFirstName] = useState('');
@@ -92,8 +92,8 @@ export function Register() {
         <Input value={codeBank} onSetState={setCodeBank} type="text" placeholder="Digite o código do seu banco"/>
      
         <Label valueName="Selecione o tipo da sua conta"/>
-        <select value={codeAccount} onChange={e => setCodeAccount(e.target.value)} >
-          <option value="CC">Conta Corrente</option>
+        <select className="selectRegister" value={codeAccount} onChange={e => setCodeAccount(e.target.value)} >
+          <option className="selectOption" value="CC">Conta Corrente</option>
           <option value="PP" selected>Conta Poupança</option>
         </select>
      
@@ -126,17 +126,28 @@ export function Register() {
         <Label valueName="CEP"/>
         <Input value={zipCode} onSetState={setZipCode} type="number" placeholder="Digite o cep"/>
      
+        <Label valueName="Complemento"/>
+        <Input value={complement} onSetState={setComplement} type="number" placeholder="Digite a cidade"/>
+
         <Label valueName="Cidade"/>
-        <Input value={cityName} onSetState={setCityName} type="number" placeholder="Digite o complemento"/>
+        <Input value={cityName} onSetState={setCityName} type="number" placeholder="Digite a cidade"/>
 
         <Label valueName="Estado"/>
         <Input value={stateInitials} onSize={2} onSetState={setStateInitials} type="number" placeholder="Digite a sigla"/>
 
         <Label valueName="País"/>
         <Input value={countryName} onSetState={setCountryName} type="number" placeholder="Digite o país"/>
+        
+        <Label valueName="Métodos que aceita receber pagamento:"/>
 
-    
+        <CheckBox value="Boleto"/>
+        <CheckBox value="Cartão de crédito"/>
+        <CheckBox value="Criptomoedas"/>
+        <CheckBox value="Cartão de débito"/>
+        <CheckBox value="Pix"/>
+
         <Button value="Cadastrar"/>
+        
 
       </Form>
     </FormContainer>
