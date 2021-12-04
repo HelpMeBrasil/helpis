@@ -73,13 +73,12 @@ type UserProps = {
       accountType:{
         code: string;
       };
-    }
     bankAgency: string;
     bankAgencyDigit: string;
     bankAccount: string;
     bankAccountDigit: string;
     operation: string;
-  };
+  }
   address: {
     street: string;
     number: string;
@@ -95,6 +94,7 @@ type UserProps = {
   cripto: string;
   debito: string;
   pix: string;
+};
 }
 
 type PasswordChange = {
