@@ -63,7 +63,8 @@ export function UserData() {
       setCodeAccount(response.merchant.bankData.accountType.code);
       setBankAgency(response.merchant.bankData.bankAgency);
       setBankAgencyDigit(response.merchant.bankData.bankAgencyDigit);
-      setBankAccountDigit(response.merchant.bankData.bankAccount);
+      setBankAccount(response.merchant.bankData.bankAccount);
+      setBankAccountDigit(response.merchant.bankData.bankAccountDigit);
       setBankAgency(response.merchant.bankData.bankAgency);
       setBankAgencyDigit(response.merchant.bankData.bankAgencyDigit);
       setOperation(response.merchant.bankData.operation);
@@ -75,11 +76,15 @@ export function UserData() {
       setCityName(response.merchant.address.cityName);
       setStateInitials(response.merchant.address.stateInitials);
       setCountryName(response.merchant.address.countryName);
-      setBoleto(response.merchant.boleto);
-      setCredito(response.merchant.credito);
-      setDebito(response.merchant.debito);
-      setPix(response.merchant.pix);
-      setCripto(response.merchant.cripto);
+
+      const merchantSplit = response.merchant.merchantSplit;
+      console.log(merchantSplit.paymentMethodCode)
+      // setBoleto(response.merchant.boleto);
+      // setCredito(response.merchant.credito);
+      // setDebito(response.merchant.debito);
+      // setPix(response.merchant.pix);
+      // setCripto(response.merchant.cripto);
+
     }
     userDataSearch();
   },[]);

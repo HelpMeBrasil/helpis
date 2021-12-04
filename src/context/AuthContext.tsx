@@ -89,11 +89,10 @@ type UserProps = {
     stateInitials: string;
     countryName: string;
   };
-  boleto: string;
-  credito: string;
-  cripto: string;
-  debito: string;
-  pix: string;
+  merchantSplit: {
+      paymentMethodCode: string,
+  }
+  
 };
 }
 
