@@ -53,7 +53,7 @@ export function UserData() {
   const [checkedDebito,setCheckedDebito] = useState(false);
   const [checkedPix,setCheckedPix] = useState(false);
 
-  const [active, setActive] = useState('');
+  const [active, setActive] = useState<boolean>();
 
   useEffect(() => {
     async function userDataSearch() {
@@ -85,6 +85,7 @@ export function UserData() {
       setCityName(response.merchant.address.cityName);
       setStateInitials(response.merchant.address.stateInitials);
       setCountryName(response.merchant.address.countryName);
+      setActive(response.active);
 
      
       const merchantSplits = response.merchant.merchantSplit;
@@ -122,6 +123,7 @@ export function UserData() {
     const data = {
       firstName,
       surname,
+      active,
       email,
       phoneNumber,
       identity,
@@ -150,7 +152,6 @@ export function UserData() {
       debito,
       pix
     }
-
     await userUpdate(data);
   }
 
@@ -161,7 +162,7 @@ export function UserData() {
       <Form onSubmit={handleSubmit}>
 
         <Label valueName="Estado do cadastro:"/>
-        <select className="selectRegister"  onChange={e => setActive(e.target.value)} >
+        <select className="selectRegister"  onChange={e => setActive(e.target.value == "true" ? true : false)} >
           <option className="selectOption" value="true" >Ativo</option>
           <option className="selectOption" value="false" selected>Inativo</option>
         </select>

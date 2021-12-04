@@ -273,10 +273,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
           isPanelRestricted,
           bankData:{
             bank:{
-              Code : codeBank,
+              code : codeBank,
             },
             accountType:{
-              Code : codeAccount,
+              code : codeAccount,
             },
           bankAgency,
           bankAgencyDigit,
@@ -313,7 +313,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     async function userUpdate({ 
       firstName, surname, email, phoneNumber, identity, name, commercialName, active, responsibleName, responsibleIdentity, codeBank,
       codeAccount, bankAgency, bankAgencyDigit, bankAccount, bankAccountDigit, operation, street, number, district, zipCode, complement, cityName, stateInitials,
-      countryName, boleto, credito, cripto, debito, pix}: RegisterProps)  {
+      countryName, boleto, credito, cripto, debito, pix}: UserUpdate)  {
         let merchantSplit = [];
         if(boleto !== ''){
           merchantSplit.push({
@@ -384,46 +384,48 @@ export function AuthProvider({ children }: AuthProviderProps) {
   
         let username = email;
         const isPanelRestricted = true;
-        const response = await api.put('User',{
-          firstName,
-          surname,
-          username,
-          email,
-          active,
-          phoneNumber,
-          merchant:{
-            name,
-            identity,
-            commercialName,
-            responsibleName,
-            responsibleIdentity,
-            isPanelRestricted,
-            bankData:{
-              bank:{
-                Code : codeBank,
+
+        const data = {
+            firstName,
+            surname,
+            username,
+            email,
+            phoneNumber,
+            merchant:{
+              name,
+              identity,
+              commercialName,
+              responsibleName,
+              responsibleIdentity,
+              isPanelRestricted,
+              bankData:{
+                bank:{
+                  Code : codeBank,
+                },
+                accountType:{
+                  Code : codeAccount,
+                },
+              bankAgency,
+              bankAgencyDigit,
+              bankAccount,
+              bankAccountDigit,
+              operation,
               },
-              accountType:{
-                Code : codeAccount,
-              },
-            bankAgency,
-            bankAgencyDigit,
-            bankAccount,
-            bankAccountDigit,
-            operation,
+            address:{
+              street,
+              number,
+              district,
+              zipCode,
+              complement,
+              cityName,
+              stateInitials,
+              countryName,
             },
-          address:{
-            street,
-            number,
-            district,
-            zipCode,
-            complement,
-            cityName,
-            stateInitials,
-            countryName,
-          },
-          merchantSplit,
+            merchantSplit,
+          }
         }
-      }, config);
+        console.log(data);
+        const response = await api.put('User', data, config);
         if (response.status === 200) {
           toast.success('Update realizado', {autoClose:3000});
   

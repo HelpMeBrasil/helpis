@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "./styles.scss"
 
 type CheckBoxProps = {
@@ -8,7 +9,20 @@ type CheckBoxProps = {
 
 
 export function CheckBox({value, onSetChange, onChecked}: CheckBoxProps) {
+
+  const [onCheck, setOnCheck] = useState<boolean>();
+  
+  useEffect(() => {
+    async function changeOnCheck() {
+      setOnCheck(onChecked);
+    }
+     
+      changeOnCheck();
+  },[onChecked]);
+
   function handleSetChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setOnCheck(e.target.checked)
+
     const isChecked = e.target.checked;
     if(isChecked) {
       onSetChange(value);
@@ -20,7 +34,7 @@ export function CheckBox({value, onSetChange, onChecked}: CheckBoxProps) {
 
   return(
   <div className="checkboxContainer">
-  <input className="inputCheckBox" type="checkbox" id={value} checked={onChecked} value={value} onChange={e => handleSetChange(e)}/>
+  <input className="inputCheckBox" type="checkbox" id={value} checked={onCheck} value={value} onChange={e => handleSetChange(e)}/>
   <label className="labelCheckBox" htmlFor={value}>{value}</label>
   </div>
   )
