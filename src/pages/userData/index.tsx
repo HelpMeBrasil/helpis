@@ -53,6 +53,8 @@ export function UserData() {
   const [checkedDebito,setCheckedDebito] = useState(false);
   const [checkedPix,setCheckedPix] = useState(false);
 
+  const [active, setActive] = useState('');
+
   useEffect(() => {
     async function userDataSearch() {
       const response = await userDataGet();
@@ -157,6 +159,13 @@ export function UserData() {
       <Title tag="h1" onClassName="title_h1" value="Cadastrar-se"/>
       <Title tag="h2" onClassName="title_h2" value="Dados pessoais"/>
       <Form onSubmit={handleSubmit}>
+
+        <Label valueName="Estado do cadastro:"/>
+        <select className="selectRegister"  onChange={e => setActive(e.target.value)} >
+          <option className="selectOption" value="true" >Ativo</option>
+          <option className="selectOption" value="false" selected>Inativo</option>
+        </select>
+
         <Label valueName="Nome"/>
         <Input value={firstName} onSetState={setFirstName} type="text" placeholder="Digite seu primeiro nome"/>
         

@@ -32,6 +32,7 @@ type RegisterProps = {
   commercialName: string;
   responsibleName: string;
   responsibleIdentity: string;
+  active?: boolean;
   codeBank: string;
   codeAccount: string;
   bankAgency: string;
@@ -61,6 +62,7 @@ type UserProps = {
   phoneNumber: string;
   password: string;
   identity: string;
+  active: boolean;
   merchant:{
     name: string;
     commercialName: string;
@@ -309,7 +311,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
 
     async function userUpdate({ 
-      firstName, surname, email, phoneNumber, identity, name, commercialName, responsibleName, responsibleIdentity, codeBank,
+      firstName, surname, email, phoneNumber, identity, name, commercialName, active, responsibleName, responsibleIdentity, codeBank,
       codeAccount, bankAgency, bankAgencyDigit, bankAccount, bankAccountDigit, operation, street, number, district, zipCode, complement, cityName, stateInitials,
       countryName, boleto, credito, cripto, debito, pix}: RegisterProps)  {
         let merchantSplit = [];
@@ -387,6 +389,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           surname,
           username,
           email,
+          active,
           phoneNumber,
           merchant:{
             name,
