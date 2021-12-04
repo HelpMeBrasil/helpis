@@ -2,6 +2,7 @@ import { createContext, ReactNode, useState } from "react";
 import { api } from "../services/api";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 toast.configure()
 
 
@@ -53,11 +54,53 @@ type RegisterProps = {
   pix: string;
 }
 
+type UserProps = {
+  firstName: string;
+  surname: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  identity: string;
+  merchant:{
+    name: string;
+    commercialName: string;
+    responsibleName: string;
+    responsibleIdentity: string;
+    bank:{
+      code: string;
+    };
+    accountType:{
+      code: string;
+    };
+    bankAgency: string;
+    bankAgencyDigit: string;
+    bankAccount: string;
+    bankAccountDigit: string;
+    operation: string;
+  };
+  address: {
+    street: string;
+    number: string;
+    district: string;
+    zipCode: string;
+    complement: string;
+    cityName: string;
+    stateInitials: string;
+    countryName: string;
+  };
+  boleto: string;
+  credito: string;
+  cripto: string;
+  debito: string;
+  pix: string;
+}
+
 type AuthContextData = {
   signIn(credentials: SignInCredentials): Promise<void>;
   forgetPassword(emailForRecovery: ForgetPassword): Promise<void>;
   confirmCode(codeRecovery: ConfirmCode): Promise<void>;
   register(propsRegister: RegisterProps): Promise<void>;
+  userDataGet(): Promise<UserProps>;
   isAuthenticated: boolean;
 };
 
@@ -70,6 +113,9 @@ export const AuthContext = createContext({} as AuthContextData);
 export function AuthProvider({ children }: AuthProviderProps) {
   const [username, setUsername] = useState('');
   const isAuthenticated = false;
+  const storagedToken = sessionStorage.getItem('accessToken');
+
+  const navigate = useNavigate();
 
 
   async function signIn({ username, password }: SignInCredentials) {
@@ -78,10 +124,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
       password
     })
 
-    if (response.status == 200) {
+    if (response.status === 200) {
       toast.success('Sucesso!', {autoClose:3000});
 
-      window.sessionStorage.setItem('accessToken', response.data.accessToken);
+      //window.sessionStorage.setItem('accessToken', response.data.accessToken);
+      sessionStorage.setItem('accessToken', response.data.accessToken)
     }else{
       toast.warning('Usuário/senha incorretos ou este cadastro não existe.', {autoClose:3000});
     }
@@ -237,11 +284,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         merchantSplit,
       }
     });
-
-      if (response.status == 200) {
+      if (response.status === 200) {
         toast.success('teste', {autoClose:3000});
 
-        window.location.href = "./login";
+        //window.location.href = "./login";
+        navigate('/login');
       }else{
         toast.warning('Não foi possível realizar o cadastro, revise os dados informados e tente novamente.' +
         ' Caso o erro persista entre em contato conosco.', {autoClose:3000});
@@ -249,8 +296,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     }
 
+    async function userDataGet(){
+      const config  = {
+        headers: {
+          //token: window.sessionStorage.geyItem('accessToken')
+          authorization: storagedToken ? 'bearer '+ storagedToken : 'Opa'
+        }
+      }
+      
+      const response = await api.get('User', config);
+      console.log(response.data);
+      return response.data;
+    }
+
   return (
-    <AuthContext.Provider value={{ signIn, isAuthenticated, forgetPassword, confirmCode, register }}>
+    <AuthContext.Provider value={{ signIn, isAuthenticated, forgetPassword, confirmCode, register, userDataGet }}>
       {children}
     </AuthContext.Provider>
   )

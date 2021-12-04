@@ -1,16 +1,16 @@
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import Form, { Button, CheckBox, FormContainer, Input, Label, Title } from "../../components/form";
 import { AuthContext } from "../../context/AuthContext";
-import './styles.scss'
 
-export function Register() {
-  const { register } = useContext(AuthContext);
+
+
+export function UserData() {
+  const { userDataGet } = useContext(AuthContext);
 
   const [firstName, setFirstName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
   const [identity, setIdentity] = useState('');
 
   //Merchant
@@ -49,6 +49,45 @@ export function Register() {
 
 
 
+
+  useEffect(() => {
+    async function userDataSearch() {
+      const response = await userDataGet();
+      setFirstName(response.firstName);
+      setSurname(response.surname);
+      setEmail(response.email);
+      setPhoneNumber(response.phoneNumber);
+      setIdentity(response.identity);
+      setName(response.merchant.name);
+      setCommercionalName(response.merchant.commercialName);
+      setResponsibleName(response.merchant.responsibleName);
+      setResponsibleIdentity(response.merchant.responsibleIdentity);
+      setCodeBank(response.merchant.bank.code);
+      setCodeAccount(response.merchant.accountType.code);
+      setBankAgency(response.merchant.bankAgency);
+      setBankAgencyDigit(response.merchant.bankAgencyDigit);
+      setBankAccountDigit(response.merchant.bankAccount);
+      setBankAgency(response.merchant.bankAgency);
+      setBankAgencyDigit(response.merchant.bankAgencyDigit);
+      setOperation(response.merchant.operation);
+      setStreet(response.address.street);
+      setNumber(response.address.number);
+      setDistrict(response.address.district);
+      setZipCode(response.address.zipCode);
+      setComplement(response.address.complement);
+      setCityName(response.address.cityName);
+      setStateInitials(response.address.stateInitials);
+      setCountryName(response.address.countryName);
+      setBoleto(response.boleto);
+      setCredito(response.credito);
+      setDebito(response.debito);
+      setPix(response.pix);
+      setCripto(response.cripto);
+    }
+    userDataSearch();
+  },[]);
+  
+
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
@@ -57,7 +96,6 @@ export function Register() {
       surname,
       email,
       phoneNumber,
-      password,
       identity,
       name,
       commercialName,
@@ -84,7 +122,7 @@ export function Register() {
       debito,
       pix
     }
-    await register(data);
+    //await register(data);
   }
 
   return(
@@ -103,9 +141,6 @@ export function Register() {
        
         <Label valueName="Número de celular"/>
         <Input value={phoneNumber} onSetState={setPhoneNumber} type="number" placeholder="Numero formato DDD e NUMERO Exemplo: 00123456789"/>
-        
-        <Label valueName="Senha"/>
-        <Input value={password} onSetState={setPassword} type="password" placeholder="Digite sua senha"/>
        
         <Title tag="h1" onClassName="title_h1" value="Dados para recebimento"/>
         <Title tag="h2" onClassName="title_h2" value="Caso nao possua empresa, utilize deus dados pessoais"/>
@@ -185,7 +220,6 @@ export function Register() {
         <CheckBox value="Pix" onSetChange={setPix}/> 
 
         <Button value="Cadastrar"/>
-        
 
       </Form>
     </FormContainer>
