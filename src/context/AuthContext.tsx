@@ -89,9 +89,9 @@ type UserProps = {
     stateInitials: string;
     countryName: string;
   };
-  merchantSplit: {
+  merchantSplit: [  {
       paymentMethodCode: string,
-  }
+  }];
   
 };
 }
@@ -456,7 +456,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
       }
       
-      const response = await api.get('User', config);
+      const response = await api.post('Management/ChangePassword',{
+        password: newPassword,
+        oldPassword,
+        passwordConfirmation: confirmNewPassword,
+      }, config);
       return response.data;
     }
 

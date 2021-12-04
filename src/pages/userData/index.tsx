@@ -1,4 +1,5 @@
 import { FormEvent, useContext, useEffect, useState } from "react";
+import { isConstructorDeclaration } from "typescript";
 import Form, { Button, CheckBox, FormContainer, Input, Label, Title } from "../../components/form";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -45,6 +46,12 @@ export function UserData() {
   const [debito, setDebito] = useState('');
   const [pix, setPix] = useState('');
   const [cripto, setCripto] = useState('');
+  
+  const [checkedBoleto,setCheckedBoleto] = useState(false);
+  const [checkedCredito,setCheckedCredito] = useState(false);
+  const [checkedCripto,setCheckedCripto] = useState(false);
+  const [checkedDebito,setCheckedDebito] = useState(false);
+  const [checkedPix,setCheckedPix] = useState(false);
 
   useEffect(() => {
     async function userDataSearch() {
@@ -77,14 +84,31 @@ export function UserData() {
       setStateInitials(response.merchant.address.stateInitials);
       setCountryName(response.merchant.address.countryName);
 
-      const merchantSplit = response.merchant.merchantSplit;
-      console.log(merchantSplit.paymentMethodCode)
-      // setBoleto(response.merchant.boleto);
-      // setCredito(response.merchant.credito);
-      // setDebito(response.merchant.debito);
-      // setPix(response.merchant.pix);
-      // setCripto(response.merchant.cripto);
+     
+      const merchantSplits = response.merchant.merchantSplit;
+      for(let i=0; i<merchantSplits.length; i++){
+        if(merchantSplits[i].paymentMethodCode === '1') {
+          setCheckedBoleto(true);
+          setBoleto('Boleto');
+        }
+        if(merchantSplits[i].paymentMethodCode === '2') {
+          setCredito('Credio');
+          setCheckedCredito(true);
 
+        }
+        if(merchantSplits[i].paymentMethodCode === '3') {
+          setCripto('Cripto');
+          setCheckedCripto(true);
+        }
+        if(merchantSplits[i].paymentMethodCode === '4') {
+          setDebito('Debito');
+          setCheckedDebito(true);
+        }
+        if(merchantSplits[i].paymentMethodCode === '6') {
+          setCheckedPix(true);
+          setPix('Pix');
+        }
+      }
     }
     userDataSearch();
   },[]);
@@ -124,6 +148,7 @@ export function UserData() {
       debito,
       pix
     }
+
     await userUpdate(data);
   }
 
@@ -215,11 +240,11 @@ export function UserData() {
         
         <Label valueName="Métodos que aceita receber pagamento:"/>
 
-        <CheckBox value="Boleto" onSetChange={setBoleto}/>
-        <CheckBox value="Cartão de crédito" onSetChange={setCredito}/>
-        <CheckBox value="Criptomoedas" onSetChange={setCripto}/>
-        <CheckBox value="Cartão de débito" onSetChange={setDebito}/>
-        <CheckBox value="Pix" onSetChange={setPix}/> 
+        <CheckBox onChecked={checkedBoleto} value="Boleto" onSetChange={setBoleto}/>
+        <CheckBox onChecked={checkedCredito} value="Cartão de crédito" onSetChange={setCredito}/>
+        <CheckBox onChecked={checkedCripto} value="Criptomoedas" onSetChange={setCripto}/>
+        <CheckBox onChecked={checkedDebito} value="Cartão de débito" onSetChange={setDebito}/>
+        <CheckBox onChecked={checkedPix} value="Pix" onSetChange={setPix}/> 
 
         <Button value="Cadastrar"/>
 

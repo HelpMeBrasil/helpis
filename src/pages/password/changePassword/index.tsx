@@ -11,7 +11,10 @@ export function ChangePassword() {
   const [confirmNewPassword, setConfirmNewPassowrd] = useState('');
   
   async function handleSubmit(event: FormEvent){
+    event.preventDefault();
+    
     if(newPassword === confirmNewPassword){
+      console.log(confirmNewPassword)
       const data = {
         oldPassword,
         newPassword,

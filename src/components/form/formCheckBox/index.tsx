@@ -1,12 +1,13 @@
 import "./styles.scss"
 
 type CheckBoxProps = {
-  value: string
-  onSetChange: (value: React.SetStateAction<string>) => void
+  value: string;
+  onChecked?: boolean;
+  onSetChange: (value: React.SetStateAction<string>) => void;
 }
 
 
-export function CheckBox({value, onSetChange}: CheckBoxProps) {
+export function CheckBox({value, onSetChange, onChecked}: CheckBoxProps) {
   function handleSetChange(e: React.ChangeEvent<HTMLInputElement>) {
     const isChecked = e.target.checked;
     if(isChecked) {
@@ -19,7 +20,7 @@ export function CheckBox({value, onSetChange}: CheckBoxProps) {
 
   return(
   <div className="checkboxContainer">
-  <input className="inputCheckBox" type="checkbox" id={value} value={value} onChange={e => handleSetChange(e)}/>
+  <input className="inputCheckBox" type="checkbox" id={value} checked={onChecked} value={value} onChange={e => handleSetChange(e)}/>
   <label className="labelCheckBox" htmlFor={value}>{value}</label>
   </div>
   )
