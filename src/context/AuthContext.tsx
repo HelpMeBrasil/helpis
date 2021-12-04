@@ -25,10 +25,8 @@ type RegisterProps = {
   identity: string;
   name: string;
   commercialName: string;
-  identityCompany: string;
   responsibleName: string;
   responsibleIdentity: string;
-  emailCompany: string;
   codeBank: string;
   codeAccount: string;
   bankAgency: string;
@@ -121,65 +119,65 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function register({ 
-    firstName, surname, email, phoneNumber, password, identity, name, commercialName, identityCompany, responsibleName, responsibleIdentity, emailCompany, codeBank,
+    firstName, surname, email, phoneNumber, password, identity, name, commercialName, responsibleName, responsibleIdentity, codeBank,
     codeAccount, bankAgency, bankAgencyDigit, bankAccount, bankAccountDigit, operation, street, number, district, zipCode, complement, cityName, stateInitials,
     countryName, boleto, credito, cripto, debito, pix}: RegisterProps)  {
-      let merchantSplit = [{}];
+      let merchantSplit = [];
       if(boleto !== ''){
         merchantSplit.push({
           PaymentMethodCode: "1",
           IsSubaccountTaxPayer: true,
           Taxes: [
                 {
-                    TaxTypeName: "2",
+                    TaxTypeName: 2,
                     Tax: "0.20"
                 }
             ]
         });
       }
-      if(credito === ''){
+      if(credito !== ''){
         merchantSplit.push({
-          PaymentMethodCode: "1",
+          PaymentMethodCode: "2",
           IsSubaccountTaxPayer: true,
           Taxes: [
                 {
-                    TaxTypeName: "2",
+                    TaxTypeName: 2,
                     Tax: "0.20"
                 }
             ]
         });
       }
-      if(cripto === ''){
+      if(cripto !== ''){
         merchantSplit.push({
-          PaymentMethodCode: "1",
+          PaymentMethodCode: "3",
           IsSubaccountTaxPayer: true,
           Taxes: [
                 {
-                    TaxTypeName: "2",
+                    TaxTypeName: 2,
                     Tax: "0.20"
                 }
             ]
         });
       }
-      if(debito === ''){
+      if(debito !== ''){
         merchantSplit.push({
-          PaymentMethodCode: "1",
+          PaymentMethodCode: "4",
           IsSubaccountTaxPayer: true,
           Taxes: [
                 {
-                    TaxTypeName: "2",
+                    TaxTypeName: 2,
                     Tax: "0.20"
                 }
             ]
         });
       }
-      if(pix === ''){
+      if(pix !== ''){
         merchantSplit.push({
-          PaymentMethodCode: "1",
+          PaymentMethodCode: "6",
           IsSubaccountTaxPayer: true,
           Taxes: [
                 {
-                    TaxTypeName: "2",
+                    TaxTypeName: 2,
                     Tax: "0.20"
                 }
             ]
@@ -195,14 +193,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         email,
         phoneNumber,
         password,
-        identity,
         merchant:{
           name,
+          identity,
           commercialName,
-          identityCompany,
           responsibleName,
           responsibleIdentity,
-          emailCompany,
           isPanelRestricted,
           bankData:{
             bank:{
@@ -211,13 +207,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
             accountType:{
               codeAccount,
             },
-          },
           bankAgency,
           bankAgencyDigit,
           bankAccount,
           bankAccountDigit,
           operation,
-        },
+          },
         address:{
           street,
           number,
@@ -229,7 +224,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
           countryName,
         },
         merchantSplit,
-      })
+      }
+    });
 
       if (response.status !== 200) {
         console.log(response.data);

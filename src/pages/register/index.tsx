@@ -16,10 +16,8 @@ export function Register() {
   //Merchant
   const [name, setName] = useState('');
   const [commercialName, setCommercionalName] = useState('');
-  const [identityCompany, setIdentityCompany] = useState('');
   const [responsibleName, setResponsibleName] = useState('');
   const [responsibleIdentity, setResponsibleIdentity] = useState('');
-  const [emailCompany, setEmailCompany] = useState('');
 
   //BankData
   const [codeBank , setCodeBank] = useState('');
@@ -63,10 +61,8 @@ export function Register() {
       identity,
       name,
       commercialName,
-      identityCompany,
       responsibleName,
       responsibleIdentity,
-      emailCompany,
       codeBank,
       codeAccount,
       bankAgency,
@@ -103,9 +99,6 @@ export function Register() {
         <Label valueName="Sobrenome"/>
         <Input value={surname} onSetState={setSurname} type="text" placeholder="Digite seu sobrenome"/>
        
-        {/* <Label valueName="Nome de usuário"/>
-        <Input value={username} onSetState={setUsername} type="text" placeholder="Digite seu nome de usuário"/> */}
-       
         <Label valueName="Email"/>
         <Input value={email} onSetState={setEmail} type="text" placeholder="Digite seu email"/>
        
@@ -115,9 +108,6 @@ export function Register() {
         <Label valueName="Senha"/>
         <Input value={password} onSetState={setPassword} type="password" placeholder="Digite sua senha"/>
        
-        <Label valueName="CPF"/>
-        <Input value={identity} onSetState={setIdentity} type="number" placeholder="Digite seu CPF apenas numero"/>
-
         <Title tag="h1" onClassName="title_h1" value="Dados para recebimento"/>
         <Title tag="h2" onClassName="title_h2" value="Caso nao possua empresa, utilize deus dados pessoais"/>
      
@@ -128,16 +118,13 @@ export function Register() {
         <Input value={commercialName} onSetState={setCommercionalName} type="text" placeholder="Digite seu nome comercial "/>
         
         <Label valueName="CPF ou CNPJ"/>
-        <Input value={identityCompany} onSetState={setIdentityCompany} type="number" placeholder="Digite seu cpf ou cnpj sem pontos"/>
+        <Input value={identity} onSetState={setIdentity} type="number" placeholder="Digite seu cpf ou cnpj sem pontos"/>
       
         <Label valueName="Nome completo do responsavel"/>
         <Input value={responsibleName} onSetState={setResponsibleName} type="text" placeholder="Digite o nome completo do responsavel"/>
         
         <Label valueName="CPF do responsavel"/>
         <Input value={responsibleIdentity} onSetState={setResponsibleIdentity} type="text" placeholder="Digite o cpf completo"/>
-   
-        <Label valueName="Email da empresa ou pessoal"/>
-        <Input value={emailCompany} onSetState={setEmailCompany} type="text" placeholder="Digite o email da empresa ou pessoal"/>
 
         <Title tag="h2" onClassName="title_h2" value="Dados bancários"/>
         <Label valueName="Código do seu banco"/>
