@@ -1,6 +1,9 @@
 import { FormEvent, useContext, useState } from "react";
 import Form, { Button, FormContainer, Input, Label, Title } from "../../components/form";
 import { AuthContext } from "../../context/AuthContext";
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
 
 export function ResetPassword(){
   const [confirmationCode, setconfirmationCode] = useState('');
@@ -27,6 +30,7 @@ export function ResetPassword(){
     <FormContainer>
       <Title tag="h1" onClassName="title_h1" value="Resetar sua senha"/>
       <Form onSubmit={handleConfirmationCode}>
+      <Label valueName="Enviamos um e-mail para você, verifique sua caixa de entrada e confirme o código abaixo:"/>
         <Label valueName="Codigo"/>
         <Input value={confirmationCode} onSetState={setconfirmationCode} type="text" placeholder="Digite o codigo recebido no seu email"/>
         <Label valueName="Nova senha"/>

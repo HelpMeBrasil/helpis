@@ -1,5 +1,9 @@
 import { createContext, ReactNode, useState } from "react";
 import { api } from "../services/api";
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
+
 
 type SignInCredentials = {
   username: string;
@@ -74,8 +78,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       password
     })
 
-    if (response.status !== 200) {
-      console.log(response.data);
+    if (response.status == 200) {
+      toast.success('Sucesso!', {autoClose:3000});
+
+      window.sessionStorage.setItem('accessToken', response.data.accessToken);
+    }else{
+      toast.warning('Usuário/senha incorretos ou este cadastro não existe.', {autoClose:3000});
     }
   }
 
@@ -87,7 +95,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   })
   setUsername(username);
     if (response.status !== 200) {
-      console.log(response.data);
+      toast.warning('Usuário não encontrado.', {autoClose:3000});
     }
   }
 
@@ -108,9 +116,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     })
 
     if (responseRecover.status !== 200) {
-      console.log(responseRecover.data);
+      toast.warning('A senha não atende os requisitos.', {autoClose:3000});
+    }else{
+      window.location.href = "./login";
     }
-  }
+  }else
+  toast.warning('Código informado é inválido.', {autoClose:3000});
 
   if (response.status !== 200) {
     console.log(response.data);
@@ -202,10 +213,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
           isPanelRestricted,
           bankData:{
             bank:{
-              codeBank,
+              Code : codeBank,
             },
             accountType:{
-              codeAccount,
+              Code : codeAccount,
             },
           bankAgency,
           bankAgencyDigit,
@@ -227,8 +238,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     });
 
-      if (response.status !== 200) {
-        console.log(response.data);
+      if (response.status == 200) {
+        toast.success('teste', {autoClose:3000});
+
+        window.location.href = "./login";
+      }else{
+        toast.warning('Não foi possível realizar o cadastro, revise os dados informados e tente novamente.' +
+        ' Caso o erro persista entre em contato conosco.', {autoClose:3000});
       }
 
     }

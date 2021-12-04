@@ -85,7 +85,6 @@ export function Register() {
       pix
     }
     await register(data);
-    // navigate('/reset_password');
   }
 
   return(
