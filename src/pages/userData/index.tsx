@@ -49,6 +49,7 @@ export function UserData() {
   useEffect(() => {
     async function userDataSearch() {
       const response = await userDataGet();
+      console.log(response);
       setFirstName(response.firstName);
       setSurname(response.surname);
       setEmail(response.email);
@@ -58,8 +59,8 @@ export function UserData() {
       setCommercionalName(response.merchant.commercialName);
       setResponsibleName(response.merchant.responsibleName);
       setResponsibleIdentity(response.merchant.responsibleIdentity);
-      setCodeBank(response.merchant.bank.code);
-      setCodeAccount(response.merchant.accountType.code);
+      setCodeBank(response.merchant.bankData.bank.code);
+      setCodeAccount(response.merchant.bankData.accountType.code);
       setBankAgency(response.merchant.bankAgency);
       setBankAgencyDigit(response.merchant.bankAgencyDigit);
       setBankAccountDigit(response.merchant.bankAccount);

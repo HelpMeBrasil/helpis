@@ -66,12 +66,14 @@ type UserProps = {
     commercialName: string;
     responsibleName: string;
     responsibleIdentity: string;
-    bank:{
+    bankData:{
+      bank:{
       code: string;
-    };
-    accountType:{
-      code: string;
-    };
+      };
+      accountType:{
+        code: string;
+      };
+    }
     bankAgency: string;
     bankAgencyDigit: string;
     bankAccount: string;

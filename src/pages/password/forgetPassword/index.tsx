@@ -1,7 +1,7 @@
 import { FormEvent, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import  Form, {Button, FormContainer, Input, Label,Title}  from "../../components/form";
-import { AuthContext } from "../../context/AuthContext";
+import Form, { Button, FormContainer, Input, Label, Title } from "../../../components/form";
+import { AuthContext } from "../../../context/AuthContext";
 
 
 export function ForgetPassword(){

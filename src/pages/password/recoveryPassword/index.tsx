@@ -1,6 +1,6 @@
 import { FormEvent, useContext, useState } from "react";
-import Form, { Button, FormContainer, Input, Label, Title } from "../../components/form";
-import { AuthContext } from "../../context/AuthContext";
+import Form, { Button, FormContainer, Input, Label, Title } from "../../../components/form";
+import { AuthContext } from "../../../context/AuthContext";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure()

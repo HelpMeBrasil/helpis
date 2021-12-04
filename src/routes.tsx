@@ -1,6 +1,6 @@
 import {Routes, Route } from 'react-router-dom';
-import { ForgetPassword } from './pages/forget_password';
-import { ResetPassword } from './pages/reset_password';
+import { ForgetPassword } from './pages/password/forgetPassword';
+import { ResetPassword } from './pages/password/recoveryPassword';
 import Login from './pages/login';
 import { Register } from './pages/register';
 import { UserData } from './pages/userData';
