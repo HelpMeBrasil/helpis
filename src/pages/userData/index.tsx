@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 
 export function UserData() {
-  const { userDataGet } = useContext(AuthContext);
+  const { userDataGet, userUpdate } = useContext(AuthContext);
 
   const [firstName, setFirstName] = useState('');
   const [surname, setSurname] = useState('');
@@ -40,15 +40,11 @@ export function UserData() {
   const [stateInitials, setStateInitials] = useState('');
   const [countryName, setCountryName] = useState('');
 
-
   const [boleto, setBoleto] = useState('');
   const [credito, setCredito] = useState('');
   const [debito, setDebito] = useState('');
   const [pix, setPix] = useState('');
   const [cripto, setCripto] = useState('');
-
-
-
 
   useEffect(() => {
     async function userDataSearch() {
@@ -122,7 +118,7 @@ export function UserData() {
       debito,
       pix
     }
-    //await register(data);
+    await userUpdate(data);
   }
 
   return(

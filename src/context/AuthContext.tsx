@@ -95,12 +95,22 @@ type UserProps = {
   pix: string;
 }
 
+type PasswordChange = {
+  oldPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
+
+type UserUpdate = Omit<RegisterProps, 'password'>;
+
 type AuthContextData = {
   signIn(credentials: SignInCredentials): Promise<void>;
   forgetPassword(emailForRecovery: ForgetPassword): Promise<void>;
   confirmCode(codeRecovery: ConfirmCode): Promise<void>;
   register(propsRegister: RegisterProps): Promise<void>;
   userDataGet(): Promise<UserProps>;
+  userUpdate(propsUpdate: UserUpdate): Promise<void>;
+  changePassword(propsChangePassword: PasswordChange): Promise<void>;
   isAuthenticated: boolean;
 };
 
@@ -296,6 +306,135 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     }
 
+
+    async function userUpdate({ 
+      firstName, surname, email, phoneNumber, identity, name, commercialName, responsibleName, responsibleIdentity, codeBank,
+      codeAccount, bankAgency, bankAgencyDigit, bankAccount, bankAccountDigit, operation, street, number, district, zipCode, complement, cityName, stateInitials,
+      countryName, boleto, credito, cripto, debito, pix}: RegisterProps)  {
+        let merchantSplit = [];
+        if(boleto !== ''){
+          merchantSplit.push({
+            PaymentMethodCode: "1",
+            IsSubaccountTaxPayer: true,
+            Taxes: [
+                  {
+                      TaxTypeName: 2,
+                      Tax: "0.20"
+                  }
+              ]
+          });
+        }
+        if(credito !== ''){
+          merchantSplit.push({
+            PaymentMethodCode: "2",
+            IsSubaccountTaxPayer: true,
+            Taxes: [
+                  {
+                      TaxTypeName: 2,
+                      Tax: "0.20"
+                  }
+              ]
+          });
+        }
+        if(cripto !== ''){
+          merchantSplit.push({
+            PaymentMethodCode: "3",
+            IsSubaccountTaxPayer: true,
+            Taxes: [
+                  {
+                      TaxTypeName: 2,
+                      Tax: "0.20"
+                  }
+              ]
+          });
+        }
+        if(debito !== ''){
+          merchantSplit.push({
+            PaymentMethodCode: "4",
+            IsSubaccountTaxPayer: true,
+            Taxes: [
+                  {
+                      TaxTypeName: 2,
+                      Tax: "0.20"
+                  }
+              ]
+          });
+        }
+        if(pix !== ''){
+          merchantSplit.push({
+            PaymentMethodCode: "6",
+            IsSubaccountTaxPayer: true,
+            Taxes: [
+                  {
+                      TaxTypeName: 2,
+                      Tax: "0.20"
+                  }
+              ]
+          });
+        }
+        const config  = {
+          headers: {
+            //token: window.sessionStorage.geyItem('accessToken')
+            authorization: storagedToken ? 'bearer '+ storagedToken : 'Opa'
+          }
+        }
+  
+        let username = email;
+        const isPanelRestricted = true;
+        const response = await api.put('User',{
+          firstName,
+          surname,
+          username,
+          email,
+          phoneNumber,
+          merchant:{
+            name,
+            identity,
+            commercialName,
+            responsibleName,
+            responsibleIdentity,
+            isPanelRestricted,
+            bankData:{
+              bank:{
+                Code : codeBank,
+              },
+              accountType:{
+                Code : codeAccount,
+              },
+            bankAgency,
+            bankAgencyDigit,
+            bankAccount,
+            bankAccountDigit,
+            operation,
+            },
+          address:{
+            street,
+            number,
+            district,
+            zipCode,
+            complement,
+            cityName,
+            stateInitials,
+            countryName,
+          },
+          merchantSplit,
+        }
+      }, config);
+        if (response.status === 200) {
+          toast.success('Update realizado', {autoClose:3000});
+  
+          //window.location.href = "./login";
+          //navigate('/login');
+        }else{
+          toast.warning('Não foi possível realizar a alteração de cadastro, revise os dados informados e tente novamente.' +
+          ' Caso o erro persista entre em contato conosco.', {autoClose:3000});
+        }
+  
+      }
+
+
+
+
     async function userDataGet(){
       const config  = {
         headers: {
@@ -305,12 +444,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
       
       const response = await api.get('User', config);
-      console.log(response.data);
+      return response.data;
+    }
+
+    async function changePassword({oldPassword, newPassword, confirmNewPassword}: PasswordChange){
+      const config  = {
+        headers: {
+          //token: window.sessionStorage.geyItem('accessToken')
+          authorization: storagedToken ? 'bearer '+ storagedToken : 'Opa'
+        }
+      }
+      
+      const response = await api.get('User', config);
       return response.data;
     }
 
   return (
-    <AuthContext.Provider value={{ signIn, isAuthenticated, forgetPassword, confirmCode, register, userDataGet }}>
+    <AuthContext.Provider value={{ signIn, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
       {children}
     </AuthContext.Provider>
   )
