@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import Form, { Button, CheckBox, FormContainer, Input, Label, Title } from "../../components/form";
+import { AuthContext } from "../../context/AuthContext";
 import './styles.scss'
 
 export function Register() {
+  const { register } = useContext(AuthContext);
+
   const [firstName, setFirstName] = useState('');
   const [surname, setSurname] = useState('');
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
@@ -40,19 +42,68 @@ export function Register() {
   const [stateInitials, setStateInitials] = useState('');
   const [countryName, setCountryName] = useState('');
 
+
+  const [boleto, setBoleto] = useState('');
+  const [credito, setCredito] = useState('');
+  const [debito, setDebito] = useState('');
+  const [pix, setPix] = useState('');
+  const [cripto, setCripto] = useState('');
+
+
+
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+
+    const data = {
+      firstName,
+      surname,
+      email,
+      phoneNumber,
+      password,
+      identity,
+      name,
+      commercialName,
+      identityCompany,
+      responsibleName,
+      responsibleIdentity,
+      emailCompany,
+      codeBank,
+      codeAccount,
+      bankAgency,
+      bankAgencyDigit,
+      bankAccount,
+      bankAccountDigit,
+      operation,
+      street,
+      number,
+      district,
+      zipCode,
+      cityName,
+      stateInitials,
+      countryName,
+      boleto,
+      credito,
+      cripto,
+      debito,
+      pix
+    }
+    await register(data);
+    // navigate('/reset_password');
+  }
+
   return(
     <FormContainer>
       <Title tag="h1" onClassName="title_h1" value="Cadastrar-se"/>
       <Title tag="h2" onClassName="title_h2" value="Dados pessoais"/>
-      <Form >
+      <Form onSubmit={handleSubmit}>
         <Label valueName="Nome"/>
         <Input value={firstName} onSetState={setFirstName} type="text" placeholder="Digite seu primeiro nome"/>
         
         <Label valueName="Sobrenome"/>
         <Input value={surname} onSetState={setSurname} type="text" placeholder="Digite seu sobrenome"/>
        
-        <Label valueName="Nome de usuário"/>
-        <Input value={username} onSetState={setUsername} type="text" placeholder="Digite seu nome de usuário"/>
+        {/* <Label valueName="Nome de usuário"/>
+        <Input value={username} onSetState={setUsername} type="text" placeholder="Digite seu nome de usuário"/> */}
        
         <Label valueName="Email"/>
         <Input value={email} onSetState={setEmail} type="text" placeholder="Digite seu email"/>
@@ -92,9 +143,9 @@ export function Register() {
         <Input value={codeBank} onSetState={setCodeBank} type="text" placeholder="Digite o código do seu banco"/>
      
         <Label valueName="Selecione o tipo da sua conta"/>
-        <select className="selectRegister" value={codeAccount} onChange={e => setCodeAccount(e.target.value)} >
-          <option className="selectOption" value="CC">Conta Corrente</option>
-          <option value="PP" selected>Conta Poupança</option>
+        <select className="selectRegister"  onChange={e => setCodeAccount(e.target.value)} >
+          <option className="selectOption" value="CC" >Conta Corrente</option>
+          <option className="selectOption" value="PP" selected>Conta Poupança</option>
         </select>
      
         <Label valueName="Número da sua agência"/>
@@ -140,11 +191,11 @@ export function Register() {
         
         <Label valueName="Métodos que aceita receber pagamento:"/>
 
-        <CheckBox value="Boleto"/>
-        <CheckBox value="Cartão de crédito"/>
-        <CheckBox value="Criptomoedas"/>
-        <CheckBox value="Cartão de débito"/>
-        <CheckBox value="Pix"/>
+        <CheckBox value="Boleto" onSetChange={setBoleto}/>
+        <CheckBox value="Cartão de crédito" onSetChange={setCredito}/>
+        <CheckBox value="Criptomoedas" onSetChange={setCripto}/>
+        <CheckBox value="Cartão de débito" onSetChange={setDebito}/>
+        <CheckBox value="Pix" onSetChange={setPix}/> 
 
         <Button value="Cadastrar"/>
         

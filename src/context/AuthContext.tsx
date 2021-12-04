@@ -16,10 +16,46 @@ type ConfirmCode = {
   passwordConfirmation: string;
 }
 
+type RegisterProps = {
+  firstName: string;
+  surname: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  identity: string;
+  name: string;
+  commercialName: string;
+  identityCompany: string;
+  responsibleName: string;
+  responsibleIdentity: string;
+  emailCompany: string;
+  codeBank: string;
+  codeAccount: string;
+  bankAgency: string;
+  bankAgencyDigit: string;
+  bankAccount: string;
+  bankAccountDigit: string;
+  operation: string;
+  street: string;
+  number: string;
+  district: string;
+  zipCode: string;
+  complement: string;
+  cityName: string;
+  stateInitials: string;
+  countryName: string;
+  boleto: string;
+  credito: string;
+  cripto: string;
+  debito: string;
+  pix: string;
+}
+
 type AuthContextData = {
   signIn(credentials: SignInCredentials): Promise<void>;
   forgetPassword(emailForRecovery: ForgetPassword): Promise<void>;
   confirmCode(codeRecovery: ConfirmCode): Promise<void>;
+  register(propsRegister: RegisterProps): Promise<void>;
   isAuthenticated: boolean;
 };
 
@@ -83,8 +119,123 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
     
   }
+
+  async function register({ 
+    firstName, surname, email, phoneNumber, password, identity, name, commercialName, identityCompany, responsibleName, responsibleIdentity, emailCompany, codeBank,
+    codeAccount, bankAgency, bankAgencyDigit, bankAccount, bankAccountDigit, operation, street, number, district, zipCode, complement, cityName, stateInitials,
+    countryName, boleto, credito, cripto, debito, pix}: RegisterProps)  {
+      let merchantSplit = [{}];
+      if(boleto !== ''){
+        merchantSplit.push({
+          PaymentMethodCode: "1",
+          IsSubaccountTaxPayer: true,
+          Taxes: [
+                {
+                    TaxTypeName: "2",
+                    Tax: "0.20"
+                }
+            ]
+        });
+      }
+      if(credito === ''){
+        merchantSplit.push({
+          PaymentMethodCode: "1",
+          IsSubaccountTaxPayer: true,
+          Taxes: [
+                {
+                    TaxTypeName: "2",
+                    Tax: "0.20"
+                }
+            ]
+        });
+      }
+      if(cripto === ''){
+        merchantSplit.push({
+          PaymentMethodCode: "1",
+          IsSubaccountTaxPayer: true,
+          Taxes: [
+                {
+                    TaxTypeName: "2",
+                    Tax: "0.20"
+                }
+            ]
+        });
+      }
+      if(debito === ''){
+        merchantSplit.push({
+          PaymentMethodCode: "1",
+          IsSubaccountTaxPayer: true,
+          Taxes: [
+                {
+                    TaxTypeName: "2",
+                    Tax: "0.20"
+                }
+            ]
+        });
+      }
+      if(pix === ''){
+        merchantSplit.push({
+          PaymentMethodCode: "1",
+          IsSubaccountTaxPayer: true,
+          Taxes: [
+                {
+                    TaxTypeName: "2",
+                    Tax: "0.20"
+                }
+            ]
+        });
+      }
+
+      let username = email;
+      const isPanelRestricted = true;
+      const response = await api.post('Register',{
+        firstName,
+        surname,
+        username,
+        email,
+        phoneNumber,
+        password,
+        identity,
+        merchant:{
+          name,
+          commercialName,
+          identityCompany as identity,
+          responsibleName,
+          responsibleIdentity,
+          emailCompany as email,
+          isPanelRestricted,
+          bankData:{
+            codeBank,
+          },
+          accountType:{
+            codeAccount,
+          },
+          bankAgency,
+          bankAgencyDigit,
+          bankAccount,
+          bankAccountDigit,
+          operation,
+        },
+        address:{
+          street,
+          number,
+          district,
+          zipCode,
+          complement,
+          cityName,
+          countryName
+        },
+        merchantSplit,
+      })
+
+      if (response.status !== 200) {
+        console.log(response.data);
+      }
+
+    }
+
   return (
-    <AuthContext.Provider value={{ signIn, isAuthenticated, forgetPassword, confirmCode }}>
+    <AuthContext.Provider value={{ signIn, isAuthenticated, forgetPassword, confirmCode, register }}>
       {children}
     </AuthContext.Provider>
   )
