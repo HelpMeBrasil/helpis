@@ -78,6 +78,7 @@ export function Register() {
       number,
       district,
       zipCode,
+      complement,
       cityName,
       stateInitials,
       countryName,
@@ -161,7 +162,7 @@ export function Register() {
         <Input value={bankAccountDigit} onSetState={setBankAccountDigit} type="text" placeholder="Digite o dígito da sua conta bancária"/>
      
         <Label valueName="Operação da sua conta bancária"/>
-        <Input value={operation} onSetState={setoperation} type="text" placeholder="Digite seu nome completo"/>
+        <Input value={operation} onSetState={setoperation} type="text" placeholder="Digite a operação da sua conta"/>
 
         <Title tag="h2" onClassName="title_h2" value="Endereço"/>
 
@@ -169,7 +170,7 @@ export function Register() {
         <Input value={street} onSetState={setStreet} type="text" placeholder="Digite o endereço da sua rua"/>
       
         <Label valueName="Número"/>
-        <Input value={number} onSetState={setNumber} type="number" placeholder="Digite o nímero"/>
+        <Input value={number} onSetState={setNumber} type="number" placeholder="Digite o número"/>
      
         <Label valueName="Bairro"/>
         <Input value={district} onSetState={setDistrict} type="text" placeholder="Digite o bairro"/>
@@ -178,16 +179,16 @@ export function Register() {
         <Input value={zipCode} onSetState={setZipCode} type="number" placeholder="Digite o cep"/>
      
         <Label valueName="Complemento"/>
-        <Input value={complement} onSetState={setComplement} type="number" placeholder="Digite a cidade"/>
+        <Input value={complement} onSetState={setComplement} type="text" placeholder="Digite o complemento"/>
 
         <Label valueName="Cidade"/>
-        <Input value={cityName} onSetState={setCityName} type="number" placeholder="Digite a cidade"/>
+        <Input value={cityName} onSetState={setCityName} type="text" placeholder="Digite a cidade"/>
 
         <Label valueName="Estado"/>
-        <Input value={stateInitials} onSize={2} onSetState={setStateInitials} type="number" placeholder="Digite a sigla"/>
+        <Input value={stateInitials} onSize={2} onSetState={setStateInitials} type="text" placeholder="Digite a sigla do estado"/>
 
         <Label valueName="País"/>
-        <Input value={countryName} onSetState={setCountryName} type="number" placeholder="Digite o país"/>
+        <Input value={countryName} onSize={3} onSetState={setCountryName} type="text" placeholder="Digite a sigla do páis"/>
         
         <Label valueName="Métodos que aceita receber pagamento:"/>
 

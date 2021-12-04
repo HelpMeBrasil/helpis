@@ -199,16 +199,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
         merchant:{
           name,
           commercialName,
-          identityCompany as identity,
+          identityCompany,
           responsibleName,
           responsibleIdentity,
-          emailCompany as email,
+          emailCompany,
           isPanelRestricted,
           bankData:{
-            codeBank,
-          },
-          accountType:{
-            codeAccount,
+            bank:{
+              codeBank,
+            },
+            accountType:{
+              codeAccount,
+            },
           },
           bankAgency,
           bankAgencyDigit,
@@ -223,7 +225,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
           zipCode,
           complement,
           cityName,
-          countryName
+          stateInitials,
+          countryName,
         },
         merchantSplit,
       })
