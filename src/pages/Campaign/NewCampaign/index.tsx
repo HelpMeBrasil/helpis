@@ -22,7 +22,7 @@ export function NewCampaign(){
 
     function handleSubmit(event: FormEvent){
     event.preventDefault();
-    console.log(img);
+    console.log(img[0]);
 
     }
 
