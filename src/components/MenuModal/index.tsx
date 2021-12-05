@@ -1,13 +1,46 @@
 import Modal from 'react-modal';
 import './style.scss';
 import 'antd/lib/menu/style/index.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 Modal.setAppElement('#root');
 interface MenuModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
 }
 export function MenuModal({ isOpen, onRequestClose} : MenuModalProps){
+  let { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+
+    const menuNotLogged = () => {
+      if(isAuthenticated === false){
+        return(
+        <div className="menu">
+        <Link  className="menu__link" to="/login">Logar</Link>
+        <Link  className="menu__link" to="/register">Cadastrar</Link>
+        </div>
+        )
+      } 
+    }
+
+    function logoff() {
+      sessionStorage.removeItem('accessToken');
+      setIsAuthenticated(false);
+      
+    }
+
+    const menuLogged = () => {
+      if(isAuthenticated === true){
+        return(
+        <div className="menu">
+        <Link  className="menu__link" to="/user_data">Dados do usuario</Link>
+        <Link  className="menu__link" to="/change_password">Mudar senha</Link>
+        <Link  onClick={logoff} className="menu__link" to="/">Deslogar</Link>
+        </div>
+        )
+      } 
+    }
+
   return (
     <Modal
     isOpen={isOpen}
@@ -15,12 +48,9 @@ export function MenuModal({ isOpen, onRequestClose} : MenuModalProps){
     overlayClassName="react-modal-overlay"
     className="react-modal-content"
     >
-      <div className="menu">
-      <Link  className="menu__link" to="/login">Logar</Link>
-      <Link  className="menu__link" to="/register">Cadastrar</Link>
-      <Link  className="menu__link" to="/user_data">Dados do usuario</Link>
-      <Link  className="menu__link" to="/change_password">Mudar senha</Link>
-      </div>
+      {menuNotLogged()}
+      {menuLogged()}
+  
     {/* <Menu
           mode="inline"
           theme="light"

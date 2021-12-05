@@ -5,9 +5,10 @@ interface InputProps {
   type: string;
   placeholder: string;
   onSize?: number;
+  disabled?:  boolean;
 }
-export function Input ({value, onSetState, type, placeholder, onSize}:InputProps){
+export function Input ({value, onSetState, type, placeholder, onSize, disabled}:InputProps){
   return(
-    <input value={value} size={onSize} onChange={e => onSetState(e.target.value)} className="form__input" type={type} placeholder={placeholder} />
+    <input value={value} size={onSize} onChange={e => onSetState(e.target.value)} className="form__input" type={type} placeholder={placeholder} disabled={disabled}/>
   )
 }

@@ -56,13 +56,13 @@ type RegisterProps = {
 }
 
 type UserProps = {
+  id: string;
   firstName: string;
   surname: string;
   email: string;
   phoneNumber: string;
   password: string;
   identity: string;
-  active: boolean;
   merchant:{
     name: string;
     commercialName: string;
@@ -114,7 +114,8 @@ type AuthContextData = {
   userDataGet(): Promise<UserProps>;
   userUpdate(propsUpdate: UserUpdate): Promise<void>;
   changePassword(propsChangePassword: PasswordChange): Promise<void>;
-  isAuthenticated: boolean;
+  isAuthenticated: any;
+  setIsAuthenticated: any;
 };
 
 type AuthProviderProps = {
@@ -125,8 +126,10 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [username, setUsername] = useState('');
-  const isAuthenticated = false;
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [userId, setUserId] = useState('');
   const storagedToken = sessionStorage.getItem('accessToken');
+  
 
   const navigate = useNavigate();
 
@@ -142,6 +145,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       //window.sessionStorage.setItem('accessToken', response.data.accessToken);
       sessionStorage.setItem('accessToken', response.data.accessToken)
+      setIsAuthenticated(true);
+      console.log("Teste"+isAuthenticated);
     }else{
       toast.warning('Usuário/senha incorretos ou este cadastro não existe.', {autoClose:3000});
     }
@@ -311,7 +316,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
 
     async function userUpdate({ 
-      firstName, surname, email, phoneNumber, identity, name, commercialName, active, responsibleName, responsibleIdentity, codeBank,
+      firstName, surname, email, phoneNumber, identity, name, commercialName, responsibleName, responsibleIdentity, codeBank,
       codeAccount, bankAgency, bankAgencyDigit, bankAccount, bankAccountDigit, operation, street, number, district, zipCode, complement, cityName, stateInitials,
       countryName, boleto, credito, cripto, debito, pix}: UserUpdate)  {
         let merchantSplit = [];
@@ -386,6 +391,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const isPanelRestricted = true;
 
         const data = {
+            id: userId,
+            active: true,
             firstName,
             surname,
             username,
@@ -424,7 +431,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             merchantSplit,
           }
         }
-        console.log(data);
+
         const response = await api.put('User', data, config);
         if (response.status === 200) {
           toast.success('Update realizado', {autoClose:3000});
@@ -448,8 +455,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
           authorization: storagedToken ? 'bearer '+ storagedToken : 'Opa'
         }
       }
+      console.log(config)
       
       const response = await api.get('User', config);
+      console.log(response);
+      // setUserId(response.data.id)
       return response.data;
     }
 
@@ -470,7 +480,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
   return (
-    <AuthContext.Provider value={{ signIn, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
+    <AuthContext.Provider value={{ signIn,setIsAuthenticated, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
       {children}
     </AuthContext.Provider>
   )

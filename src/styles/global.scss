@@ -29,6 +29,7 @@ body {
   -webkit-font-smoothing: antialiased;
   width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
 }
 
 body,
@@ -54,4 +55,15 @@ button {
 [disabled] {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(182, 182, 182);
+  border-radius: 50px;
+  border: 2px solid white;
 }

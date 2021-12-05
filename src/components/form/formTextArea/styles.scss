@@ -1,0 +1,24 @@
+.form_textarea {
+  resize: none;
+  padding: 0 2rem 0 2rem;
+  margin-bottom: 1rem;
+  float: left;
+  width: 100%;
+  padding: 0 1.5rem;
+  height: 8rem;
+  border-radius: 0.75rem;
+  border: 1px solid #b1b1b1;
+  background: #fff;
+  font-weight: 400;
+  font-size: 1rem;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(182, 182, 182);
+    border-radius: 50px;
+    border: 2px solid white;
+  }
+}

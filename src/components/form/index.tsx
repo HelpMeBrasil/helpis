@@ -6,6 +6,8 @@ export * from "./formInput";
 export * from "./formLabel";
 export * from "./formTitle";
 export * from "./formCheckBox";
+export * from "./formTextArea";
+export * from "./formInputImg";
 
 interface FormProps {
   children: ReactNode;
