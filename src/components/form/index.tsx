@@ -11,7 +11,7 @@ export * from "./formInputImg";
 
 interface FormProps {
   children: ReactNode;
-  onSubmit?: (event: FormEvent) => Promise<void>;
+  onSubmit?: any;
 }
 
  function Form({children, onSubmit}:FormProps) {
