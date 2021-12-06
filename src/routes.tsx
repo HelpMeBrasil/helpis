@@ -8,6 +8,8 @@ import { ChangePassword } from './pages/password/changePassword';
 import { NewCampaign } from './pages/campaign/NewCampaign';
 import { ViewCampaign } from './pages/campaign/ViewCampaign';
 import { CampaignsByUserName } from './pages/campaign/campaignsByUserName';
+import { EditCampaign } from './pages/campaign/editCampaign';
+import { CampaignsName } from './pages/campaign/campaignsByName';
 
 
 export const Rotas = (): JSX.Element => {
@@ -22,6 +24,8 @@ export const Rotas = (): JSX.Element => {
         <Route path="/new_campaign" element={<NewCampaign/>} />
         <Route path="/view_campaign/:hash" element={<ViewCampaign/>} />
         <Route path="/minhas_campanhas" element={<CampaignsByUserName/>} />
+        <Route path="editar_campanha/:hash" element={<EditCampaign/>} />
+        <Route path="campanhas_nome/:campaignName" element={<CampaignsName/>} />
       </Routes>
   );
 };

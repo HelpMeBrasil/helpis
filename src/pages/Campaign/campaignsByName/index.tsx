@@ -7,7 +7,7 @@ import { home } from 'react-icons-kit/icomoon/home'
 import {edit} from 'react-icons-kit/feather/edit'
 import {deleteIconic} from 'react-icons-kit/typicons/deleteIconic'
 import './styles.scss'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 type CampaignReturnProps = {
     hash: string,
     title: string,
@@ -15,15 +15,15 @@ type CampaignReturnProps = {
     image: string,
   }
 
-export function CampaignsByUserName(){
-    const { listGridByUserName } = useContext(AuthContext);
+export function CampaignsName(){
+    const { listGridSite } = useContext(AuthContext);
     const [ campaigns, setCampaigns ] = useState<CampaignReturnProps[]>([]);
-
-    
+    const { campaignName } = useParams<string>();
 
     useEffect(() => {
         async function campaignsGet() {
-            const response = await listGridByUserName();
+            const response = await listGridSite(campaignName!);
+            console.log(response);
             setCampaigns(response);
         }
         campaignsGet();
@@ -31,29 +31,14 @@ export function CampaignsByUserName(){
 
     return(
     <>
-    
-    <Title tag="h1" onClassName="title_h1" value="Minhas campanhas"/>
+    <Title tag="h1" onClassName="title_h1" value="Pesquisa por nome"/>
     <ListaContent>
           {campaigns.map(campaign => (
             <li className="campanhas_list" key={campaign.hash}>
             <Title tag="h1" onClassName="title_h1" value={campaign.title}/>
             <img className="campanha_img" src={campaign.image}/>
             <Label valueName={campaign.description}/>
-            <div className="container_buttons">
-                <Link to={`/editar_campanha/${campaign.hash}`}>
-                <div className="campanhas_buttonEdit">
-                <Icon size={30} icon={edit}/>
-                </div>
-                </Link>
-                <Link to="/">
-                <div className="campanhas_buttonDelet">
-                <Icon size={38} icon={deleteIconic}/>
-                </div>
-                </Link>
-            </div>   
             </li>
-            
-            
           ))}
     </ListaContent>
     </>

@@ -107,13 +107,13 @@ type PasswordChange = {
 type UserUpdate = Omit<RegisterProps, 'password'>;
 
 type CampaignReturnProps = {
-  id: string;
+  hash: string,
   title: string,
   description: string,
   image: string,
 }
 
-type CampaignProps = Omit<CampaignReturnProps, 'id'>;
+type CampaignProps = Omit<CampaignReturnProps, 'id' | 'hash'>;
 
 type AuthContextData = {
   signIn(credentials: SignInCredentials): Promise<void>;
@@ -126,9 +126,12 @@ type AuthContextData = {
   isAuthenticated: any;
   setIsAuthenticated: any;
   addCampaign: (propsCampaign: CampaignProps) => Promise<void>;
-  viewCampaign:(hash: string) => Promise<CampaignProps>;
+  viewCampaign:(hash: string) => Promise<CampaignReturnProps>;
   campaign: CampaignProps | undefined;
   listGridByUserName:() => Promise<CampaignReturnProps[]>
+  editCampaign: (propsEditCampaign: CampaignReturnProps) => Promise<void>
+  listGridByName:(name: string) => Promise<CampaignReturnProps[]>
+  listGridSite:(name: string) => Promise<CampaignReturnProps[]>
 };
 
 type AuthProviderProps = {
@@ -542,8 +545,66 @@ export function AuthProvider({ children }: AuthProviderProps) {
       console.log(response.data)
       return response.data;
     }
+
+    async function editCampaign({title, description, image, hash}: CampaignReturnProps){
+
+      const config  = {
+        headers: {
+          //token: window.sessionStorage.geyItem('accessToken')
+          authorization: storagedToken ? 'bearer '+ storagedToken : 'Opa'
+        }
+      }
+      const response = await api.put('DonationCampaign',{
+        hash,
+        title,
+        isActive:true,
+        description,
+        image,
+      }, config)
+      if(response.status === 200) {
+        navigate('view_campaign/'+hash);
+
+      }
+    }
+
+    async function listGridByName(campaignName: string) {
+      const config  = {
+        headers: {
+          //token: window.sessionStorage.geyItem('accessToken')
+          authorization: storagedToken ? 'bearer '+ storagedToken : 'Opa'
+        },
+        params: {
+          //token: window.sessionStorage.geyItem('accessToken')
+          campaignName
+        }
+      }
+
+      const response = await api.get('DonationCampaign/ListGridByName', config)
+      if(response.status !== 200) {
+        console.log("erro");
+      }
+      return response.data;
+    }
+
+    async function listGridSite(campaignName: string) {
+      const config  = {
+        
+        params: {
+          //token: window.sessionStorage.geyItem('accessToken')
+          campaignName
+        }
+      }
+
+      const response = await api.get('DonationCampaign/ListSite', config)
+      if(response.status !== 200) {
+        console.log("erro");
+      }
+      return response.data;
+    }
+    
+
   return (
-    <AuthContext.Provider value={{listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
+    <AuthContext.Provider value={{listGridSite, listGridByName, editCampaign, listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
       {children}
     </AuthContext.Provider>
   )
