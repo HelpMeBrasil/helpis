@@ -33,8 +33,10 @@ export function MenuModal({ isOpen, onRequestClose} : MenuModalProps){
       if(isAuthenticated === true){
         return(
         <div className="menu">
+        <Link  className="menu__link" to="/minhas_campanhas">Minhas campanhas</Link>
         <Link  className="menu__link" to="/user_data">Dados do usuario</Link>
         <Link  className="menu__link" to="/change_password">Mudar senha</Link>
+        <Link  className="menu__link" to="/new_campaign">Criar campanha</Link>
         <Link  onClick={logoff} className="menu__link" to="/">Deslogar</Link>
         </div>
         )

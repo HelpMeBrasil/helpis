@@ -55,8 +55,8 @@ export function UserData() {
 
   useEffect(() => {
     async function userDataSearch() {
+      
       const response = await userDataGet();
-      console.log(response);
       setFirstName(response.firstName);
       setSurname(response.surname);
       setEmail(response.email);
@@ -173,28 +173,28 @@ export function UserData() {
         <Title tag="h2" onClassName="title_h2" value="Caso nao possua empresa, utilize deus dados pessoais"/>
      
         <Label valueName="Nome Completo"/>
-        <Input value={name} onSetState={setName} type="text" placeholder="Digite seu nome completo" />
+        <Input value={name} onSetState={setName} type="text" placeholder="Digite seu nome completo" disabled={true}/>
        
         <Label valueName="Nome comercial"/>
         <Input value={commercialName} onSetState={setCommercionalName} type="text" placeholder="Digite seu nome comercial "/>
         
         <Label valueName="CPF ou CNPJ"/>
-        <Input value={identity} onSetState={setIdentity} type="number" placeholder="Digite seu cpf ou cnpj sem pontos"/>
+        <Input value={identity} onSetState={setIdentity} type="number" placeholder="Digite seu cpf ou cnpj sem pontos" disabled={true}/>
       
         <Label valueName="Nome completo do responsavel"/>
-        <Input value={responsibleName} onSetState={setResponsibleName} type="text" placeholder="Digite o nome completo do responsavel"/>
+        <Input value={responsibleName} onSetState={setResponsibleName} type="text" placeholder="Digite o nome completo do responsavel" disabled={true}/>
         
         <Label valueName="CPF do responsavel"/>
-        <Input value={responsibleIdentity} onSetState={setResponsibleIdentity} type="text" placeholder="Digite o cpf completo"/>
+        <Input value={responsibleIdentity} onSetState={setResponsibleIdentity} type="text" placeholder="Digite o cpf completo" disabled={true}/>
 
         <Title tag="h2" onClassName="title_h2" value="Dados bancários"/>
         <Label valueName="Código do seu banco"/>
         <Input value={codeBank} onSetState={setCodeBank} type="text" placeholder="Digite o código do seu banco"/>
      
         <Label valueName="Selecione o tipo da sua conta"/>
-        <select className="selectRegister"  onChange={e => setCodeAccount(e.target.value)} >
-          <option className="selectOption" value="CC" >Conta Corrente</option>
-          <option className="selectOption" value="PP" selected>Conta Poupança</option>
+        <select className="selectRegister" value={codeAccount} onChange={e => setCodeAccount(e.target.value)} >
+          <option className="selectOption" value='CC' >Conta Corrente</option>
+          <option className="selectOption" value='PP' selected>Conta Poupança</option>
         </select>
      
         <Label valueName="Número da sua agência"/>

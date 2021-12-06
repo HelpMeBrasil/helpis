@@ -106,6 +106,15 @@ type PasswordChange = {
 
 type UserUpdate = Omit<RegisterProps, 'password'>;
 
+type CampaignReturnProps = {
+  id: string;
+  title: string,
+  description: string,
+  image: string,
+}
+
+type CampaignProps = Omit<CampaignReturnProps, 'id'>;
+
 type AuthContextData = {
   signIn(credentials: SignInCredentials): Promise<void>;
   forgetPassword(emailForRecovery: ForgetPassword): Promise<void>;
@@ -116,6 +125,10 @@ type AuthContextData = {
   changePassword(propsChangePassword: PasswordChange): Promise<void>;
   isAuthenticated: any;
   setIsAuthenticated: any;
+  addCampaign: (propsCampaign: CampaignProps) => Promise<void>;
+  viewCampaign:(hash: string) => Promise<CampaignProps>;
+  campaign: CampaignProps | undefined;
+  listGridByUserName:() => Promise<CampaignReturnProps[]>
 };
 
 type AuthProviderProps = {
@@ -128,6 +141,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [username, setUsername] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [userId, setUserId] = useState('');
+  const [campaign, setCampaign] = useState<CampaignProps>()
   const storagedToken = sessionStorage.getItem('accessToken');
   
 
@@ -407,10 +421,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
               isPanelRestricted,
               bankData:{
                 bank:{
-                  Code : codeBank,
+                  code : codeBank,
                 },
                 accountType:{
-                  Code : codeAccount,
+                  code : codeAccount,
                 },
               bankAgency,
               bankAgencyDigit,
@@ -431,7 +445,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
             merchantSplit,
           }
         }
-
         const response = await api.put('User', data, config);
         if (response.status === 200) {
           toast.success('Update realizado', {autoClose:3000});
@@ -479,8 +492,58 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return response.data;
     }
 
+    async function addCampaign({title, description, image}: CampaignProps){
+
+      const config  = {
+        headers: {
+          //token: window.sessionStorage.geyItem('accessToken')
+          authorization: storagedToken ? 'bearer '+ storagedToken : 'Opa'
+        }
+      }
+      const response = await api.post('DonationCampaign',{
+        title,
+        description,
+        image,
+      }, config)
+
+      if(response.status === 200) {
+        console.log(response.data)
+        navigate('view_campaign/'+response.data);
+
+      }
+    }
+
+
+    async function viewCampaign(hash: string ){
+      var config = {
+        params:{
+          hash
+        }
+      }
+      const response = await api.get("DonationCampaign", config)
+      if(response.status === 200) {
+        return response.data;
+      }
+       
+    }
+
+    async function listGridByUserName() {
+      const config  = {
+        headers: {
+          //token: window.sessionStorage.geyItem('accessToken')
+          authorization: storagedToken ? 'bearer '+ storagedToken : 'Opa'
+        }
+      }
+
+      const response = await api.get('DonationCampaign/ListGridByUserName', config)
+      if(response.status !== 200) {
+        console.log("erro");
+      }
+      console.log(response.data)
+      return response.data;
+    }
   return (
-    <AuthContext.Provider value={{ signIn,setIsAuthenticated, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
+    <AuthContext.Provider value={{listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
       {children}
     </AuthContext.Provider>
   )

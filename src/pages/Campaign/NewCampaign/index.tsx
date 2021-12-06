@@ -1,28 +1,35 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Form, { Button, FormContainer, Input, InputImg, Label, Textarea, Title } from "../../../components/form";
+import { AuthContext } from "../../../context/AuthContext";
 
 
 export function NewCampaign(){
+  
+  const { addCampaign } = useContext(AuthContext);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [textarea, setTextarea] = useState('');
   const [img, setImg] = useState<any>();
 
-  function getBase64(file:any, cb:any) {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-        cb(reader.result)
-    };
-    reader.onerror = function (error) {
-        console.log('Error: ', error);
-    };    
-  }
+    
+    const toBase64 = (file: File) => new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+  });
 
-    function handleSubmit(event: FormEvent){
+    async function handleSubmit(event: FormEvent){
     event.preventDefault();
-    console.log(img[0]);
+    const image = await toBase64(img[0]) as string;
+    console.log(image);
+    const data = {
+      title,
+      description,
+      image,
+    }
+
+    await addCampaign(data);
 
     }
 
@@ -34,9 +41,7 @@ export function NewCampaign(){
                 <Label valueName="Título da campanha"/>
                 <Input value={title} onSetState={setTitle} type="text" placeholder="Digite o título"/>
                 <Label valueName="Descrição da campanha"/>
-                <Input value={description} onSetState={setDescription} type="text" placeholder="Digite a descrição"/>
-                <Textarea value={textarea} onSetState={setTextarea}/>
-
+                <Textarea value={description} onSetState={setDescription}/>
                 <Label valueName="Escolha uma imagem para a campanha"/>
                 <InputImg name="formInputImg "id="formInputImg" accept="image/x-png,image/gif,image/jpeg" type="file" onSetState={setImg}/>
                 <Button value="Criar"/>
