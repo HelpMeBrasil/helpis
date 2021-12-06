@@ -5,11 +5,11 @@ import Login from './pages/login';
 import { Register } from './pages/register';
 import { UserData } from './pages/userData';
 import { ChangePassword } from './pages/password/changePassword';
-import { NewCampaign } from './pages/campaign/NewCampaign';
-import { ViewCampaign } from './pages/campaign/ViewCampaign';
-import { CampaignsByUserName } from './pages/campaign/campaignsByUserName';
-import { EditCampaign } from './pages/campaign/editCampaign';
-import { CampaignsName } from './pages/campaign/campaignsByName';
+import { NewCampaign } from './pages/Campaign/NewCampaign';
+import { ViewCampaign } from './pages/Campaign/ViewCampaign';
+import { CampaignsByUserName } from './pages/Campaign/campaignsByUserName';
+import { EditCampaign } from './pages/Campaign/editCampaign';
+import { CampaignsName } from './pages/Campaign/campaignsByName';
 
 
 export const Rotas = (): JSX.Element => {
