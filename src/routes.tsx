@@ -10,6 +10,7 @@ import { ViewCampaign } from './pages/Campaign/ViewCampaign';
 import { CampaignsByUserName } from './pages/Campaign/campaignsByUserName';
 import { EditCampaign } from './pages/Campaign/editCampaign';
 import { CampaignsName } from './pages/Campaign/campaignsByName';
+import { Payment } from './pages/Payments/addPayment';
 
 
 export const Rotas = (): JSX.Element => {
@@ -22,10 +23,11 @@ export const Rotas = (): JSX.Element => {
         <Route path="/user_data" element={<UserData/>} />
         <Route path="/change_password" element={<ChangePassword/>} />
         <Route path="/new_campaign" element={<NewCampaign/>} />
-        <Route path="/view_campaign/:hash" element={<ViewCampaign/>} />
+        <Route path="/ver_campanha/:hash" element={<ViewCampaign/>} />
         <Route path="/minhas_campanhas" element={<CampaignsByUserName/>} />
-        <Route path="editar_campanha/:hash" element={<EditCampaign/>} />
-        <Route path="campanhas_nome/:campaignName" element={<CampaignsName/>} />
+        <Route path="/editar_campanha/:hash" element={<EditCampaign/>} />
+        <Route path="/campanhas_nome/:campaignName" element={<CampaignsName/>} />
+        <Route path="/payment/:hash" element={<Payment/>} />
       </Routes>
   );
 };

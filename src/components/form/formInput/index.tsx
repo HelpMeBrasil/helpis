@@ -1,6 +1,6 @@
 import './style.scss';
 interface InputProps {
-  value: string;
+  value: string | number;
   onSetState: (value: React.SetStateAction<string>) => void
   type: string;
   placeholder: string;

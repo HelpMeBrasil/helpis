@@ -25,13 +25,14 @@ export function CampaignsByUserName(){
             const response = await listGridByUserName();
             setCampaigns(response);
         }
+        console.log("teste:")
         campaignsGet();
-    },[campaigns])
+    },[listGridByUserName])
 
     return(
     <>
     
-    <Title tag="h1" onClassName="title_h1" value="Minhasssssss campanhas"/>
+    <Title tag="h1" onClassName="title_h1" value="Minhas campanhas"/>
     <ListaContent>
           {campaigns.map(campaign => (
             <li className="campanhas_list" key={campaign.hash}>

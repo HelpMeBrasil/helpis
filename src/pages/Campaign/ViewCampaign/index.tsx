@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Content } from '../../../components/content';
 import { ContentButton } from '../../../components/contentButton';
 import { Button, Label, Title } from '../../../components/form';
@@ -41,7 +42,7 @@ export function ViewCampaign() {
         <>
         <ContentButton>
         <Title tag="h2" onClassName="title_h1" value="Ajude"/>
-        <Button value="Doar"/> 
+        <Link to={"/payment/"+hash} ><Button value="Doar"/></Link>
         </ContentButton>
         <Content>
         <Title tag="h1" onClassName="title_h1" value={campaign.title}/>

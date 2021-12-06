@@ -9,7 +9,7 @@ export function EditCampaign(){
   const { viewCampaign, editCampaign } = useContext(AuthContext);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [img, setImg] = useState<any>();
+  const [img, setImg] = useState<FileList>({} as FileList);
   const { hash } = useParams<string>();
   const [ hashFix, setHashFix] = useState('');
   console.log(hash)
@@ -22,22 +22,41 @@ export function EditCampaign(){
       reader.onload = () => resolve(reader.result);
       reader.onerror = error => reject(error);
   });
+  function dataURLtoFile(dataurl: string, filename: string) {
+ 
+    var arr = dataurl.split(','),
+    mime = arr[0].match(/:(.*?);/)![1],
+    bstr = atob(arr[1]), 
+    n = bstr.length, 
+    u8arr = new Uint8Array(n);
+    
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
 
-  useEffect(() => {
+    return new File([u8arr], filename, {type:mime});
+    }
+
+    useEffect(() => {
     async function searchCampaign() {
         const response = await viewCampaign(hash!)
         setTitle(response.title);
         setDescription(response.description);
-        setImg(response.image);
+        const file = dataURLtoFile(response.image, "imagemAtual")
+        let list = new DataTransfer();
+        list.items.add(file);
+        let myFileList = list.files;
+        setImg(myFileList);
+        console.log("setou")
         setHashFix(response.hash);
-        console.log("teste");
         }
     searchCampaign();
     },[])
 
     async function handleSubmit(event: FormEvent){
     event.preventDefault();
-    const image = await toBase64(img[0]) as string;
+    console.log(img);
+    const image = await toBase64(img![0]) as string;
     const data = {
       hash: hashFix,
       title,

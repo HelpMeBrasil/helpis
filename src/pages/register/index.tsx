@@ -50,6 +50,7 @@ export function Register() {
 
 
   async function handleSubmit(event: FormEvent) {
+    console.log(event);
     event.preventDefault();
 
     const data = {

@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState, useCallback } from "react";
 import { api } from "../services/api";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -98,6 +98,35 @@ type UserProps = {
 };
 }
 
+type Payment = {
+  hash: string | undefined
+  isSandbox: boolean,
+  paymentMethod:{
+    code: string
+  },
+  customer: {
+    email: string
+    phoneNumber: string
+    identity: string
+    name:string
+    street:string
+    number:string
+    district:string
+    zipCode:string
+    complement:string
+    cityName:string
+    stateInitials:string
+    countryName:string
+  },
+  products: {
+    code: string,
+    description: string,
+    unitPrice: number,
+    quantity: number,
+  },
+  paymentObject: any, //pode variar dependendo do tipo de pagamento
+} 
+
 type PasswordChange = {
   oldPassword: string;
   newPassword: string;
@@ -132,6 +161,7 @@ type AuthContextData = {
   editCampaign: (propsEditCampaign: CampaignReturnProps) => Promise<void>
   listGridByName:(name: string) => Promise<CampaignReturnProps[]>
   listGridSite:(name: string) => Promise<CampaignReturnProps[]>
+  addPayment:(data: Payment) => Promise<void>;
 };
 
 type AuthProviderProps = {
@@ -530,7 +560,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
        
     }
 
-    async function listGridByUserName() {
+    const listGridByUserName = useCallback( async () => {
+      
       const config  = {
         headers: {
           //token: window.sessionStorage.geyItem('accessToken')
@@ -544,7 +575,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
       console.log(response.data)
       return response.data;
-    }
+    }, [storagedToken])
 
     async function editCampaign({title, description, image, hash}: CampaignReturnProps){
 
@@ -601,10 +632,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
       return response.data;
     }
+
+    async function addPayment(data: Payment){
+      const config  = {
+        params: {
+          //token: window.sessionStorage.geyItem('accessToken')
+          hash: data.hash
+        }
+      }
+      if(data.paymentMethod.code === '1'){
+        console.log(data);
+        const response = await api.post('Payment/AddTransactionBankSlip',data,config)
+
+        console.log(response.data);
+      }
+      
+    }
+
     
 
   return (
-    <AuthContext.Provider value={{listGridSite, listGridByName, editCampaign, listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
+    <AuthContext.Provider value={{addPayment, listGridSite, listGridByName, editCampaign, listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
       {children}
     </AuthContext.Provider>
   )
