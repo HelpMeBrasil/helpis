@@ -23,12 +23,16 @@ export function CampaignsName(){
     useEffect(() => {
         async function campaignsGet() {
             const response = await listGridSite(campaignName!);
-            console.log("adriano é: putao"+response);
+            console.log("primeiro");
             setCampaigns(response);
         }
         campaignsGet();
-    },[listGridSite])
-
+    },[])
+    if(campaigns === null){
+    return(
+      <Title tag="h1" onClassName="title_h1" value="Carregando"/>
+    )
+  }else{
     return(
     
     <>
@@ -49,4 +53,5 @@ export function CampaignsName(){
     }
     </>
     )
+    }
 }
