@@ -3,9 +3,8 @@ import { Label, Title } from '../../../components/form';
 import { ListaContent } from '../../../components/lista/listaContent';
 import { AuthContext } from "../../../context/AuthContext";
 import { Icon } from 'react-icons-kit'
-import { home } from 'react-icons-kit/icomoon/home'
-import {edit} from 'react-icons-kit/feather/edit'
-import {deleteIconic} from 'react-icons-kit/typicons/deleteIconic'
+import { edit } from 'react-icons-kit/feather/edit'
+import { deleteIconic } from 'react-icons-kit/typicons/deleteIconic'
 import './styles.scss'
 import { Link } from 'react-router-dom';
 type CampaignReturnProps = {
@@ -32,12 +31,13 @@ export function CampaignsByUserName(){
     return(
     <>
     
-    <Title tag="h1" onClassName="title_h1" value="Minhas campanhas"/>
+    <Title tag="h1" onClassName="title_h1" value="Minhasssssss campanhas"/>
     <ListaContent>
           {campaigns.map(campaign => (
             <li className="campanhas_list" key={campaign.hash}>
             <Title tag="h1" onClassName="title_h1" value={campaign.title}/>
-            <img className="campanha_img" src={campaign.image}/>
+            <img alt="imagem_campanha" className="campanha_img" src={campaign.image}/>
+            
             <Label valueName={campaign.description}/>
             <div className="container_buttons">
                 <Link to={`/editar_campanha/${campaign.hash}`}>

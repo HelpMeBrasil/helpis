@@ -7,7 +7,7 @@ import { home } from 'react-icons-kit/icomoon/home'
 import {edit} from 'react-icons-kit/feather/edit'
 import {deleteIconic} from 'react-icons-kit/typicons/deleteIconic'
 import './styles.scss'
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 type CampaignReturnProps = {
     hash: string,
     title: string,
@@ -23,24 +23,30 @@ export function CampaignsName(){
     useEffect(() => {
         async function campaignsGet() {
             const response = await listGridSite(campaignName!);
-            console.log(response);
+            console.log("adriano é: putao"+response);
             setCampaigns(response);
         }
         campaignsGet();
-    },[campaigns])
+    },[listGridSite])
 
     return(
+    
+    <>
+    {campaigns.length === 0 ?
+    <Title tag="h1" onClassName="title_h1" value="Não existem campanhas com esse nome"/> : 
     <>
     <Title tag="h1" onClassName="title_h1" value="Pesquisa por nome"/>
     <ListaContent>
           {campaigns.map(campaign => (
             <li className="campanhas_list" key={campaign.hash}>
             <Title tag="h1" onClassName="title_h1" value={campaign.title}/>
-            <img className="campanha_img" src={campaign.image}/>
+            <img alt="imagem_campanha" className="campanha_img" src={campaign.image}/>
             <Label valueName={campaign.description}/>
             </li>
           ))}
     </ListaContent>
+    </>
+    }
     </>
     )
 }

@@ -30,6 +30,7 @@ export function EditCampaign(){
         setDescription(response.description);
         setImg(response.image);
         setHashFix(response.hash);
+        console.log("teste");
         }
     searchCampaign();
     },[])

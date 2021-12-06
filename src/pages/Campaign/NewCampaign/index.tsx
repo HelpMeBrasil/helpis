@@ -1,5 +1,4 @@
 import { FormEvent, useState, useContext } from "react";
-import { Link } from "react-router-dom";
 import Form, { Button, FormContainer, Input, InputImg, Label, Textarea, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
 
