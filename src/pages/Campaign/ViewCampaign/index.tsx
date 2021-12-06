@@ -32,9 +32,10 @@ export function ViewCampaign() {
     async function searchCampaign() {
         const response = await viewCampaign(hash!)
         setCampaign(response);
+        console.log("Teste"+response);
         }
     searchCampaign();
-    },[campaign])
+    },[viewCampaign])
     
     return(
         <>
