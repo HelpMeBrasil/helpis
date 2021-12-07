@@ -25,7 +25,7 @@ export function Payment() {
   const [holder, setHolder] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [securityCode, setSecurityCode] = useState('');
-  const [expirationDate, setExpiradionDate] = useState('');
+  const [expirationDateEua, setExpiradionDateEua] = useState('');
   const [boleto, setBoleto] = useState(false);
   const [credito, setCredito] = useState(false);
   const [debito, setDebito] = useState(false);
@@ -49,7 +49,7 @@ export function Payment() {
     <Input value={securityCode} onSetState={setSecurityCode} type="text" placeholder="Digite o código"/>
 
     <Label valueName="Data de expiração"/>
-    <Input value={expirationDate} onSetState={setExpiradionDate} type="month" placeholder="Digite a data de expiração"/>
+    <Input value={expirationDateEua} onSetState={setExpiradionDateEua} type="month" placeholder="Digite a data de expiração"/>
 
     </>
     )
@@ -70,7 +70,7 @@ export function Payment() {
     <Input value={securityCode} onSetState={setSecurityCode} type="text" placeholder="Digite o código"/>
 
     <Label valueName="Data de expiração"/>
-    <Input value={expirationDate} onSetState={setExpiradionDate} type="month" placeholder="Digite a data de expiração"/>
+    <Input value={expirationDateEua} onSetState={setExpiradionDateEua} type="month" placeholder="Digite a data de expiração"/>
     
     </>
     )
@@ -80,7 +80,6 @@ export function Payment() {
   let dataCredit = {
     holder,
     cardNumber,
-    expirationDate,
     securityCode,
     installmentQuantity: 1,
     isPreAuthorization: false,
@@ -121,10 +120,11 @@ export function Payment() {
       return {}
     }
     if(optionPayment==='2'){
-      const brFormat = expirationDate.split("-");
-      const dia = brFormat[1];
-      const mes = brFormat[0];
-      setExpiradionDate(dia+"/"+mes)
+      let brFormat = expirationDateEua.split("-");
+      let dia = brFormat[1];
+      let mes = brFormat[0];
+      setExpiradionDateEua(dia+"/"+mes)
+      let expirationDate = dia+"/"+mes;
       return {    
         holder,
         cardNumber,
@@ -136,10 +136,11 @@ export function Payment() {
       return {}
     }
     if(optionPayment==='4'){
-      const brFormat = expirationDate.split("-");
-      const dia = brFormat[1];
-      const mes = brFormat[0];
-      setExpiradionDate(dia+"/"+mes)
+      let brFormat = expirationDateEua.split("-");
+      let dia = brFormat[1];
+      let mes = brFormat[0];
+      setExpiradionDateEua(dia+"/"+mes)
+      let expirationDate = dia+"/"+mes;
       return {
         holder,
         cardNumber,
@@ -152,6 +153,7 @@ export function Payment() {
     }
   }
   async function handleSubmit(event: FormEvent) {
+    console.log(paymentObject());
     event.preventDefault();
     const data = {
       hash,
