@@ -34,6 +34,7 @@ function App() {
       <MenuModal
       isOpen={isMenuModalOpen}
       onRequestClose={handleCloseMenuModal}/>
+      <div>''</div>
     </AuthProvider>
    </BrowserRouter>
    </>
