@@ -71,7 +71,7 @@ export function Payment() {
 
     <Label valueName="Data de expiração"/>
     <Input value={expirationDate} onSetState={setExpiradionDate} type="month" placeholder="Digite a data de expiração"/>
-
+    
     </>
     )
   }
@@ -121,6 +121,10 @@ export function Payment() {
       return {}
     }
     if(optionPayment==='2'){
+      const brFormat = expirationDate.split("-");
+      const dia = brFormat[1];
+      const mes = brFormat[0];
+      setExpiradionDate(dia+"/"+mes)
       return {    
         holder,
         cardNumber,
