@@ -18,8 +18,8 @@ export function MenuModal({ isOpen, onRequestClose} : MenuModalProps){
       if(isAuthenticated === false){
         return(
         <div className="menu">
-        <Link  className="menu__link" to="/login">Logar</Link>
-        <Link  className="menu__link" to="/register">Cadastrar</Link>
+        <Link onClick={() => handleCloseLink()} className="menu__link" to="/login">Logar</Link>
+        <Link onClick={() => handleCloseLink()} className="menu__link" to="/register">Cadastrar</Link>
         </div>
         )
       } 
@@ -28,9 +28,12 @@ export function MenuModal({ isOpen, onRequestClose} : MenuModalProps){
     function logoff() {
       sessionStorage.removeItem('accessToken');
       setIsAuthenticated(false);
-      
+      handleCloseLink();
     }
 
+    function handleCloseLink(){
+      onRequestClose();
+    }
     const menuLogged = () => {
       if(isAuthenticated === true){
         return(
