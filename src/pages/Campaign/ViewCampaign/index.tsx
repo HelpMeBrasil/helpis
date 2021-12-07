@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { Content } from '../../../components/content';
 import { ContentButton } from '../../../components/contentButton';
 import { Button, Label, Title } from '../../../components/form';
@@ -24,6 +25,7 @@ type CampaignProps = {
   
 export function ViewCampaign() {
     const { hash } = useParams<string>();
+    const [loading, setLoading] = useState(true);
     const [ campaign, setCampaign ] = useState<CampaignProps>({
         title: '',
         description: '',
@@ -32,6 +34,8 @@ export function ViewCampaign() {
     });
     const { viewCampaign, listByReference } = useContext(AuthContext);
     const [ amount, setAmount ] = useState<number>(0);
+
+    const url = api.defaults.baseURL!+"/"+hash;
 
     useEffect(() => {
     async function searchCampaign() {
@@ -44,8 +48,15 @@ export function ViewCampaign() {
         }
         searchCampaign();
     },[viewCampaign])
+
+
+    function handleCopyURL(){
+      navigator.clipboard.writeText(url)
+      toast.success("URL copiada");
+    }
     
-    const [loading, setLoading] = useState(true);
+    
+    
     if(loading === true){
     return(
         <Title tag="h1" onClassName="title_h1" value="Carregando"/>
@@ -55,15 +66,35 @@ export function ViewCampaign() {
         <ContentButton>
         <Title tag="h2" onClassName="title_h2" value="Ajude"/>
         <Link to={"/payment/"+hash} ><Button value="Doar"/></Link>
-        <Title tag="h2" onClassName="title_h2" value={"Meta: "+campaign.targetValue}/>
-        <Title tag="h2" onClassName="title_h2" value={"Arrecadado: "+amount}/>
-        <Title tag="h2" onClassName="title_h2" value="Compartilhe"/>
-        <Label valueName={api.defaults.baseURL!+"/"+hash}/>
         
+        {/* <Title tag="h2" onClassName="title_h2" value={"Meta: "+campaign.targetValue}/>
+        
+        <Title tag="h2" onClassName="title_h2" value={"Arrecadado: "+amount}/> */}
+
+        
+
+        <p className="campaign_values" >Meta: {new Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL'
+        }).format(campaign.targetValue)} </p>
+
+      <p className="campaign_values">Alcançado: {new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      }).format(amount)} </p>
+
+        <p className="campaign_values">Compartilhe </p>
+
+        <p className="campaign_values_small">Clique para copiar</p>
+        <button onClick={() => handleCopyURL()} className="campaign_copy_url">
+        <p className="campaign_values_border"> {api.defaults.baseURL!+"/"+hash}  </p>
+        </button>
+
         </ContentButton>
         <Content>
         <Title tag="h1" onClassName="title_h1" value={campaign.title}/>
         <img className="img_view" src={campaign.image} alt="img" />
+        
         </Content>
         <Content>
         <Title tag="h1" onClassName="title_h1" value="Detalhes da campanha"/>
