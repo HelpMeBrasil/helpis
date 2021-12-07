@@ -49,7 +49,7 @@ export function Payment() {
     <Input value={securityCode} onSetState={setSecurityCode} type="text" placeholder="Digite o código"/>
 
     <Label valueName="Data de expiração"/>
-    <Input value={expirationDate} onSetState={setExpiradionDate} type="date" placeholder="Digite a data de expiração"/>
+    <Input value={expirationDate} onSetState={setExpiradionDate} type="month" placeholder="Digite a data de expiração"/>
 
     </>
     )
@@ -70,7 +70,7 @@ export function Payment() {
     <Input value={securityCode} onSetState={setSecurityCode} type="text" placeholder="Digite o código"/>
 
     <Label valueName="Data de expiração"/>
-    <Input value={expirationDate} onSetState={setExpiradionDate} type="date" placeholder="Digite a data de expiração"/>
+    <Input value={expirationDate} onSetState={setExpiradionDate} type="month" placeholder="Digite a data de expiração"/>
 
     </>
     )
