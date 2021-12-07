@@ -1,7 +1,7 @@
 .header {
   padding: 0.7rem;
   width: 100vw;
-  height: 10%;
+  height: 6vh;
   display: flex;
   align-items: center;
   background-color: #73a2b0;
@@ -20,9 +20,13 @@
     cursor: pointer;
   }
   &__img {
+    width: 25%;
     margin-left: 1rem;
     border-radius: 5rem;
     border: 0.04rem solid rgba(255, 0, 0, 0.3);
+    @media (max-width: 900px) {
+      margin-left: 0rem;
+    }
   }
 
   &__title {
@@ -30,6 +34,10 @@
     font-size: 2rem;
     color: #e7e9ee;
     letter-spacing: 0.1rem;
+    @media (max-width: 900px) {
+      margin: 0 0 0 0.2rem;
+      font-size: 1.7rem;
+    }
   }
 
   &__search {
@@ -39,6 +47,13 @@
     margin-left: 6%;
     width: 50%;
     background-color: #e7e9ee;
+    @media (max-width: 900px) {
+      margin: 0 0 0 0;
+      padding: 0.3rem;
+      font-size: 1rem;
+      margin-left: 0;
+      width: 51%;
+    }
   }
 
   &__login {
@@ -55,5 +70,8 @@
     margin-right: 0.3rem;
     color: #e7e9ee;
     cursor: pointer;
+    @media (max-width: 900px) {
+      margin-right: 0;
+    }
   }
 }
