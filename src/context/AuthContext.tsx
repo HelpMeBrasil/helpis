@@ -109,21 +109,23 @@ type Payment = {
     phoneNumber: string
     identity: string
     name:string
-    street:string
-    number:string
-    district:string
-    zipCode:string
-    complement:string
-    cityName:string
-    stateInitials:string
-    countryName:string
+    address: {
+      street:string
+      number:string
+      district:string
+      zipCode:string
+      complement:string
+      cityName:string
+      stateInitials:string
+      countryName:string
+    },
   },
   products: {
     code: string,
     description: string,
     unitPrice: number,
     quantity: number,
-  },
+  }[],
   paymentObject: any, //pode variar dependendo do tipo de pagamento
 } 
 
@@ -144,6 +146,18 @@ type CampaignReturnProps = {
 
 type CampaignProps = Omit<CampaignReturnProps, 'id' | 'hash'>;
 
+type ResponseRequest = {
+    paymentMethod:{
+      code: string,
+      name: string,
+    },
+    isEnabled: boolean,
+    InstallmentLimit: number,
+    MinorInstallmentAmount: number,
+    IsInstallmentEnable: false
+  }
+
+
 type AuthContextData = {
   signIn(credentials: SignInCredentials): Promise<void>;
   forgetPassword(emailForRecovery: ForgetPassword): Promise<void>;
@@ -162,6 +176,7 @@ type AuthContextData = {
   listGridByName:(name: string) => Promise<CampaignReturnProps[]>
   listGridSite:(name: string) => Promise<CampaignReturnProps[]>
   addPayment:(data: Payment) => Promise<void>;
+  requestMethods:(hash: string) => Promise<ResponseRequest[]>;
 };
 
 type AuthProviderProps = {
@@ -646,13 +661,54 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         console.log(response.data);
       }
+
+      if(data.paymentMethod.code === '2'){
+        console.log(data);
+        const response = await api.post('Payment/AddTransactionCredit',data,config)
+
+        console.log(response.data);
+      }
+
+      if(data.paymentMethod.code === '3'){
+        console.log(data);
+        const response = await api.post('Payment/AddTransactionCripto',data,config)
+
+        console.log(response.data);
+      }
+
+      if(data.paymentMethod.code === '4'){
+        console.log(data);
+        const response = await api.post('Payment/AddTransactionDebit',data,config)
+
+        console.log(response.data);
+      }
+
+      if(data.paymentMethod.code === '6'){
+        console.log(data);
+        const response = await api.post('Payment/AddTransactionPix',data,config)
+
+        console.log(response.data);
+      }
       
     }
 
-    
+    async function requestMethods(hash: string){
+      const config  = {
+        
+        params: {
+          //token: window.sessionStorage.geyItem('accessToken')
+          hash
+        }
+      }
+      const response = await api.get('payment/ListPaymentMethods', config);
+      if(response.status === 200){
+        console.log(response.data)
+        return response.data;
+      }
+    }
 
   return (
-    <AuthContext.Provider value={{addPayment, listGridSite, listGridByName, editCampaign, listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
+    <AuthContext.Provider value={{requestMethods, addPayment, listGridSite, listGridByName, editCampaign, listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
       {children}
     </AuthContext.Provider>
   )

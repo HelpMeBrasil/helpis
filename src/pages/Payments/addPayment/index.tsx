@@ -1,10 +1,10 @@
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Form, { Button, CheckBox, FormContainer, Input, Label, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
 import './styles.scss';
 export function Payment() {
-  const { addPayment } = useContext(AuthContext);
+  const { addPayment, requestMethods } = useContext(AuthContext);
   const [optionPayment, setOptionPayment] = useState('');
 
   const [email, setEmail] = useState('');
@@ -26,6 +26,12 @@ export function Payment() {
   const [cardNumber, setCardNumber] = useState('');
   const [securityCode, setSecurityCode] = useState('');
   const [expirationDate, setExpiradionDate] = useState('');
+  const [boleto, setBoleto] = useState(false);
+  const [credito, setCredito] = useState(false);
+  const [debito, setDebito] = useState(false);
+  const [pix, setPix] = useState(false);
+  const [cripto, setCripto] = useState(false);
+
   const { hash } = useParams();
   console.log(hash);
   function cardCredit() {
@@ -81,6 +87,31 @@ export function Payment() {
     isApplyInterest: false
   }
 
+  useEffect(() => {
+    async function methods(){
+      const response = await requestMethods(hash!);
+      for(let key in response){
+        if(response[key].paymentMethod.code === "1" && response[key].isEnabled === true){
+          
+          setBoleto(true);
+        }
+        if(response[key].paymentMethod.code === "2" && response[key].isEnabled === true){
+          setCredito(true);
+        }
+        if(response[key].paymentMethod.code === "3" && response[key].isEnabled === true){
+          setCripto(true)
+        }
+        if(response[key].paymentMethod.code === "4" && response[key].isEnabled === true){
+          setDebito(true);
+        }
+        if(response[key].paymentMethod.code === "6" && response[key].isEnabled === true){
+          setPix(true);
+        }
+      }
+    }
+    methods();
+  })
+
 
 
 
@@ -124,21 +155,23 @@ export function Payment() {
         phoneNumber,
         identity,
         name,
-        street,
-        number,
-        district,
-        zipCode,
-        complement,
-        cityName,
-        stateInitials,
-        countryName,
+        address: {
+          street,
+          number,
+          district,
+          zipCode,
+          complement,
+          cityName,
+          stateInitials,
+          countryName,
+        },
       },
-      products: {
+      products:[{
         code: "001",
         description: "doacao",
         unitPrice: parseInt(donate),
         quantity: 1,
-      },
+      }],
       paymentObject: paymentObject(),
     }
     await addPayment(data);
@@ -195,21 +228,26 @@ export function Payment() {
         <Input value={donate}  onSetState={setDonate} type="number" placeholder="Digite a quantia"/>
 
         <Label valueName="Métodos de pagamento que essa campanha aceita:"/>
+        {boleto === true ? 
         <div className="formRadioButton">
         <input value="1" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio1"  type="radio" name="payment" /><span>Boleto</span>
-        </div>
+        </div> : ''}
+        {credito === true ? 
         <div className="formRadioButton">
         <input value="2" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio2" type="radio" name="payment"/><span>Cartão de credito</span>
-        </div>
+        </div> : ''}
+        {debito === true ? 
         <div className="formRadioButton">
         <input value="4" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio3" type="radio" name="payment"/><span>Cartão de debito</span>
-        </div>
+        </div> : ''}
+        {pix === true ? 
         <div className="formRadioButton">
         <input value="6" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio4" type="radio" name="payment"/><span>Pix</span>
-        </div>
+        </div> : ''}
+        {cripto === true ? 
         <div className="formRadioButton">
         <input value="3" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio5" type="radio" name="payment"/><span>Criptomoeda</span>
-        </div>
+        </div> : ''}
         {optionPayment === "2" ? cardCredit() : '' }
         {optionPayment === "4" ? cardCredit() : '' }
         <Button value="Doar"/>

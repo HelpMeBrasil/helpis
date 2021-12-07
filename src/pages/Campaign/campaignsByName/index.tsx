@@ -19,23 +19,27 @@ export function CampaignsName(){
     const { listGridSite } = useContext(AuthContext);
     const [ campaigns, setCampaigns ] = useState<CampaignReturnProps[]>([]);
     const { campaignName } = useParams<string>();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function campaignsGet() {
             const response = await listGridSite(campaignName!);
             console.log("primeiro");
             setCampaigns(response);
+            setLoading(true);
         }
         campaignsGet();
-    },[])
-    if(campaigns === null){
+    },[campaignName])
+    if(loading === true){
     return(
-      <Title tag="h1" onClassName="title_h1" value="Carregando"/>
+        <Title tag="h1" onClassName="title_h1" value="Carregando"/>
     )
-  }else{
+    }
+    else{
     return(
     
     <>
+
     {campaigns.length === 0 ?
     <Title tag="h1" onClassName="title_h1" value="Não existem campanhas com esse nome"/> : 
     <>
@@ -52,6 +56,7 @@ export function CampaignsName(){
     </>
     }
     </>
+    
     )
-    }
+}
 }
