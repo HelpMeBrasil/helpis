@@ -3,6 +3,7 @@ import { api } from "../services/api";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import { PaymentSucess } from "../pages/Payments/paymentSucess";
 toast.configure()
 
 
@@ -159,6 +160,19 @@ type ResponseRequest = {
 
   type CampaignPropsDelet = Omit<CampaignReturnProps, 'title' | 'description' | 'image'>;
 
+  type CampaignReturnPropsAll = {
+    hash: string,
+    title: string,
+    description: string,
+    image: string,
+  }[]
+
+  type returnPayment = {
+    description: string,
+    walletAddress?: string,
+    barcode?: string,
+  }
+
 type AuthContextData = {
   signIn(credentials: SignInCredentials): Promise<void>;
   forgetPassword(emailForRecovery: ForgetPassword): Promise<void>;
@@ -179,6 +193,7 @@ type AuthContextData = {
   addPayment:(data: Payment) => Promise<void>;
   requestMethods:(hash: string) => Promise<ResponseRequest[]>;
   deletCampaign:(data: CampaignPropsDelet) => Promise<void>;
+  getAllCampaigns:( ) => Promise<CampaignReturnPropsAll>;
 };
 
 type AuthProviderProps = {
@@ -678,38 +693,67 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
       }
       if(data.paymentMethod.code === '1'){
-        console.log(data);
         const response = await api.post('Payment/AddTransactionBankSlip',data,config)
-
-        console.log(response.data);
+        if(response.status === 200){
+          console.log(response.data)
+          navigate('/paymentSucess', { state: { 
+            description: response.data.description,
+            walletAddress: response.data.walletAddress,
+            barcode: response.data.barcode } });
+        }
       }
 
       if(data.paymentMethod.code === '2'){
         console.log(data);
         const response = await api.post('Payment/AddTransactionCredit',data,config)
-
-        console.log(response.data);
+        if(response.status === 200){
+          console.log(response.data)
+          navigate('/paymentSucess', { state: { 
+            description: response.data.description,
+            walletAddress: response.data.walletAddress,
+            barcode: response.data.barcode } });
+        }
       }
 
       if(data.paymentMethod.code === '3'){
         console.log(data);
         const response = await api.post('Payment/AddTransactionCripto',data,config)
-
-        console.log(response.data);
+        if(response.status === 200){
+          console.log(response.data)
+          navigate('/paymentSucess', { state: { 
+            description: response.data.description,
+            walletAddress: response.data.walletAddress,
+            barcode: response.data.barcode,
+            amountBTC: response.data.amountBTC } });
+        }
       }
 
       if(data.paymentMethod.code === '4'){
         console.log(data);
         const response = await api.post('Payment/AddTransactionDebit',data,config)
+        if(response.status === 200){
+          console.log(response.data)
+          navigate('/paymentSucess', { state: { 
+            description: response.data.description,
+            walletAddress: response.data.walletAddress,
+            barcode: response.data.barcode } });
+        }
 
-        console.log(response.data);
       }
 
       if(data.paymentMethod.code === '6'){
         console.log(data);
         const response = await api.post('Payment/AddTransactionPix',data,config)
+        if(response.status === 200){
+          console.log(response.data)
+          navigate('/paymentSucess', { state: { 
+            description: response.data.description,
+            walletAddress: response.data.walletAddress,
+            barcode: response.data.barcode,
+            key: response.data.key,
+            qrCode: response.data.qrCode } });
+        }
 
-        console.log(response.data);
       }
       
     }
@@ -724,13 +768,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
       const response = await api.get('payment/ListPaymentMethods', config);
       if(response.status === 200){
-        console.log(response.data)
         return response.data;
       }
     }
 
+    async function getAllCampaigns(){
+      const response = await api.get('DonationCampaign/ListAllCampaign');
+      return(response.data);
+      
+    }
   return (
-    <AuthContext.Provider value={{deletCampaign, requestMethods, addPayment, listGridSite, listGridByName, editCampaign, listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
+    <AuthContext.Provider value={{getAllCampaigns, deletCampaign, requestMethods, addPayment, listGridSite, listGridByName, editCampaign, listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
       {children}
     </AuthContext.Provider>
   )

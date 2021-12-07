@@ -1,8 +1,19 @@
 .paragraphs {
   margin-bottom: 0.5rem;
-  word-wrap:break-word;
+  word-wrap: break-word;
   width: 100%;
-  white-space:normal;
+  white-space: normal;
   overflow: hidden;
-  text-overflow:ellipsis; // This is where the magic happens
+  text-overflow: ellipsis; // This is where the magic happens
+}
+
+.paragraphsCenter {
+  margin: 1.5rem 0 1.5rem 0;
+  word-wrap: break-word;
+  width: 100%;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis; // This is where the magic happens
+  text-align: center;
+  font-size: 1.6rem;
 }

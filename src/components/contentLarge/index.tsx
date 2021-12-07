@@ -6,7 +6,7 @@ interface ContentProps {
 
 export function ContentLarge({children}: ContentProps) {
     return(
-    <div className="div_container">
+    <div className="div_containerLarge">
         {children}
     </div>
     )

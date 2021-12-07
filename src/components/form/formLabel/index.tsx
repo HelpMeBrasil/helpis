@@ -1,11 +1,17 @@
 import './style.scss'
 interface LabelProps {
-  valueName: String;
+  valueName: string;
+  center?: string;
 
 }
-export function Label({valueName}: LabelProps){
-
-  return (
-    <label className="paragraphs">{valueName}</label>
-  )
+export function Label({valueName, center}: LabelProps){
+  if(center === undefined){
+    return (
+      <label className="paragraphs">{valueName}</label>
+    )
+  }else{
+    return (
+      <label className="paragraphsCenter">{valueName}</label>
+    )
+  }
 }

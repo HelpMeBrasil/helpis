@@ -1,0 +1,8 @@
+.imgQrCodePayment {
+  width: 20%;
+  height: 20%;
+  @media (max-width: 720px) {
+    width: 75%;
+    height: 75%;
+  }
+}

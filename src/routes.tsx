@@ -14,6 +14,7 @@ import { Payment } from './pages/Payments/addPayment';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
 import { Home } from './pages/home';
+import { PaymentSucess } from './pages/Payments/paymentSucess';
 
 
 export const Rotas = (): JSX.Element => {
@@ -36,6 +37,7 @@ export const Rotas = (): JSX.Element => {
         <Route path="/ver_campanha/:hash" element={<ViewCampaign/>} />
         <Route path="/campanhas_nome/:campaignName" element={<CampaignsName/>} />
         <Route path="/payment/:hash" element={<Payment/>} />
+        <Route path="/paymentSucess" element={<PaymentSucess/>} />
         <Route path="*" element={<Home/>} />
 
       </Routes>
