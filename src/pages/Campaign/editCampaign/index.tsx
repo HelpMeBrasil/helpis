@@ -47,8 +47,8 @@ export function EditCampaign(){
         list.items.add(file);
         let myFileList = list.files;
         setImg(myFileList);
-        console.log("setou")
         setHashFix(response.hash);
+        setLoading(false)
         }
     searchCampaign();
     },[])
@@ -66,19 +66,24 @@ export function EditCampaign(){
     editCampaign(data);
     }
 
-
-  return(
-    <FormContainer>
-          <Title tag="h1" onClassName="title_h1" value="Criar uma campanha de doação"/>
-          <Form onSubmit={handleSubmit}>
-                <Label valueName="Título da campanha"/>
-                <Input value={title} onSetState={setTitle} type="text" placeholder="Digite o título"/>
-                <Label valueName="Descrição da campanha"/>
-                <Textarea value={description} onSetState={setDescription}/>
-                <Label valueName="Escolha a mesma ou nova imagem para a campanha"/>
-                <InputImg name="formInputImg "id="formInputImg" accept="image/x-png,image/gif,image/jpeg" type="file" onSetState={setImg}/>
-                <Button value="Criar"/>
-          </Form>
-          </FormContainer>
-  )
+    const [loading, setLoading] = useState(true);
+    if(loading === true){
+    return(
+        <Title tag="h1" onClassName="title_h1" value="Carregando"/>
+    )}else{
+    return(
+      <FormContainer>
+            <Title tag="h1" onClassName="title_h1" value="Criar uma campanha de doação"/>
+            <Form onSubmit={handleSubmit}>
+                  <Label valueName="Título da campanha"/>
+                  <Input value={title} onSetState={setTitle} type="text" placeholder="Digite o título"/>
+                  <Label valueName="Descrição da campanha"/>
+                  <Textarea value={description} onSetState={setDescription}/>
+                  <Label valueName="Escolha a mesma ou nova imagem para a campanha"/>
+                  <InputImg name="formInputImg "id="formInputImg" accept="image/x-png,image/gif,image/jpeg" type="file" onSetState={setImg}/>
+                  <Button value="Criar"/>
+            </Form>
+            </FormContainer>
+    )
+    }
 }

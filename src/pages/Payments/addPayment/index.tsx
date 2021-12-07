@@ -110,7 +110,7 @@ export function Payment() {
       }
     }
     methods();
-  })
+  },[hash, requestMethods])
 
 
 
@@ -178,80 +178,85 @@ export function Payment() {
     //await register(data);
   }
 
-  
+  const [loading, setLoading] = useState(true);
+  if(loading === true){
   return(
-    <FormContainer>
-      <Title tag="h1" onClassName="title_h1" value="Pagamento"/>
-      <Title tag="h2" onClassName="title_h2" value="Dados pessoais"/>
-      <Form onSubmit={handleSubmit}>
-       
-      <Label valueName="Nome Completo"/>
-        <Input value={name} onSetState={setName} type="text" placeholder="Digite seu nome completo"/>
-
-        <Label valueName="CPF"/>
-        <Input value={identity} onSetState={setIdentity} type="number" placeholder="Digite seu cpf ou cnpj sem pontos"/>
-
-        <Label valueName="Número de celular"/>
-        <Input value={phoneNumber} onSetState={setPhoneNumber} type="number" placeholder="Numero formato DDD e NUMERO Exemplo: 00123456789"/>
+      <Title tag="h1" onClassName="title_h1" value="Carregando"/>
+  )}else{
+  return(
+      <FormContainer>
+        <Title tag="h1" onClassName="title_h1" value="Pagamento"/>
+        <Title tag="h2" onClassName="title_h2" value="Dados pessoais"/>
+        <Form onSubmit={handleSubmit}>
         
-        <Label valueName="Email"/>
-        <Input value={email} onSetState={setEmail} type="text" placeholder="Digite seu email"/>
-    
-        <Title tag="h2" onClassName="title_h2" value="Endereço"/>
+        <Label valueName="Nome Completo"/>
+          <Input value={name} onSetState={setName} type="text" placeholder="Digite seu nome completo"/>
 
-        <Label valueName="Rua"/>
-        <Input value={street} onSetState={setStreet} type="text" placeholder="Digite o endereço da sua rua"/>
+          <Label valueName="CPF"/>
+          <Input value={identity} onSetState={setIdentity} type="number" placeholder="Digite seu cpf ou cnpj sem pontos"/>
+
+          <Label valueName="Número de celular"/>
+          <Input value={phoneNumber} onSetState={setPhoneNumber} type="number" placeholder="Numero formato DDD e NUMERO Exemplo: 00123456789"/>
+          
+          <Label valueName="Email"/>
+          <Input value={email} onSetState={setEmail} type="text" placeholder="Digite seu email"/>
       
-        <Label valueName="Número"/>
-        <Input value={number} onSetState={setNumber} type="number" placeholder="Digite o número"/>
-     
-        <Label valueName="Bairro"/>
-        <Input value={district} onSetState={setDistrict} type="text" placeholder="Digite o bairro"/>
-      
-        <Label valueName="CEP"/>
-        <Input value={zipCode} onSetState={setZipCode} type="number" placeholder="Digite o cep"/>
-     
-        <Label valueName="Complemento"/>
-        <Input value={complement} onSetState={setComplement} type="text" placeholder="Digite o complemento"/>
+          <Title tag="h2" onClassName="title_h2" value="Endereço"/>
 
-        <Label valueName="Cidade"/>
-        <Input value={cityName} onSetState={setCityName} type="text" placeholder="Digite a cidade"/>
-
-        <Label valueName="Estado"/>
-        <Input value={stateInitials} onSize={2} onSetState={setStateInitials} type="text" placeholder="Digite a sigla do estado"/>
-
-        <Label valueName="País"/>
-        <Input value={countryName} onSize={3} onSetState={setCountryName} type="text" placeholder="Digite a sigla do páis"/>
+          <Label valueName="Rua"/>
+          <Input value={street} onSetState={setStreet} type="text" placeholder="Digite o endereço da sua rua"/>
         
-        <Title tag="h2" onClassName="title_h2" value="Doação"/>
-        <Label valueName="Valor da doação: "/>
-        <Input value={donate}  onSetState={setDonate} type="number" placeholder="Digite a quantia"/>
+          <Label valueName="Número"/>
+          <Input value={number} onSetState={setNumber} type="number" placeholder="Digite o número"/>
+      
+          <Label valueName="Bairro"/>
+          <Input value={district} onSetState={setDistrict} type="text" placeholder="Digite o bairro"/>
+        
+          <Label valueName="CEP"/>
+          <Input value={zipCode} onSetState={setZipCode} type="number" placeholder="Digite o cep"/>
+      
+          <Label valueName="Complemento"/>
+          <Input value={complement} onSetState={setComplement} type="text" placeholder="Digite o complemento"/>
 
-        <Label valueName="Métodos de pagamento que essa campanha aceita:"/>
-        {boleto === true ? 
-        <div className="formRadioButton">
-        <input value="1" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio1"  type="radio" name="payment" /><span>Boleto</span>
-        </div> : ''}
-        {credito === true ? 
-        <div className="formRadioButton">
-        <input value="2" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio2" type="radio" name="payment"/><span>Cartão de credito</span>
-        </div> : ''}
-        {debito === true ? 
-        <div className="formRadioButton">
-        <input value="4" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio3" type="radio" name="payment"/><span>Cartão de debito</span>
-        </div> : ''}
-        {pix === true ? 
-        <div className="formRadioButton">
-        <input value="6" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio4" type="radio" name="payment"/><span>Pix</span>
-        </div> : ''}
-        {cripto === true ? 
-        <div className="formRadioButton">
-        <input value="3" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio5" type="radio" name="payment"/><span>Criptomoeda</span>
-        </div> : ''}
-        {optionPayment === "2" ? cardCredit() : '' }
-        {optionPayment === "4" ? cardCredit() : '' }
-        <Button value="Doar"/>
-      </Form>
-    </FormContainer>
-  )
+          <Label valueName="Cidade"/>
+          <Input value={cityName} onSetState={setCityName} type="text" placeholder="Digite a cidade"/>
+
+          <Label valueName="Estado"/>
+          <Input value={stateInitials} onSize={2} onSetState={setStateInitials} type="text" placeholder="Digite a sigla do estado"/>
+
+          <Label valueName="País"/>
+          <Input value={countryName} onSize={3} onSetState={setCountryName} type="text" placeholder="Digite a sigla do páis"/>
+          
+          <Title tag="h2" onClassName="title_h2" value="Doação"/>
+          <Label valueName="Valor da doação: "/>
+          <Input value={donate}  onSetState={setDonate} type="number" placeholder="Digite a quantia"/>
+
+          <Label valueName="Métodos de pagamento que essa campanha aceita:"/>
+          {boleto === true ? 
+          <div className="formRadioButton">
+          <input value="1" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio1"  type="radio" name="payment" /><span>Boleto</span>
+          </div> : ''}
+          {credito === true ? 
+          <div className="formRadioButton">
+          <input value="2" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio2" type="radio" name="payment"/><span>Cartão de credito</span>
+          </div> : ''}
+          {debito === true ? 
+          <div className="formRadioButton">
+          <input value="4" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio3" type="radio" name="payment"/><span>Cartão de debito</span>
+          </div> : ''}
+          {pix === true ? 
+          <div className="formRadioButton">
+          <input value="6" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio4" type="radio" name="payment"/><span>Pix</span>
+          </div> : ''}
+          {cripto === true ? 
+          <div className="formRadioButton">
+          <input value="3" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio5" type="radio" name="payment"/><span>Criptomoeda</span>
+          </div> : ''}
+          {optionPayment === "2" ? cardCredit() : '' }
+          {optionPayment === "4" ? cardCredit() : '' }
+          <Button value="Doar"/>
+        </Form>
+      </FormContainer>
+    )
+  }
 }

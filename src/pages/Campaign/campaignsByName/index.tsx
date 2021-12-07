@@ -30,6 +30,7 @@ export function CampaignsName(){
         }
         campaignsGet();
     },[campaignName])
+
     if(loading === true){
     return(
         <Title tag="h1" onClassName="title_h1" value="Carregando"/>

@@ -33,11 +33,16 @@ export function ViewCampaign() {
     async function searchCampaign() {
         const response = await viewCampaign(hash!)
         setCampaign(response);
-        console.log("Teste"+response);
+        setLoading(false);
         }
     searchCampaign();
     },[viewCampaign])
     
+    const [loading, setLoading] = useState(true);
+    if(loading === true){
+    return(
+        <Title tag="h1" onClassName="title_h1" value="Carregando"/>
+    )}else{
     return(
         <>
         <ContentButton>
@@ -59,4 +64,5 @@ export function ViewCampaign() {
         </>
         
     )
+    }
 }
