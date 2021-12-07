@@ -4,7 +4,7 @@ import 'antd/lib/menu/style/index.css';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { Modal } from 'react-bootstrap';
+import  Modal  from 'react-modal';
 
 interface MenuModalProps {
   isOpen: boolean;
