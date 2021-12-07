@@ -144,7 +144,7 @@ type CampaignReturnProps = {
   image: string,
 }
 
-type CampaignProps = Omit<CampaignReturnProps, 'id' | 'hash'>;
+type CampaignProps = Omit<CampaignReturnProps, 'hash'>;
 
 type ResponseRequest = {
     paymentMethod:{
@@ -157,6 +157,7 @@ type ResponseRequest = {
     IsInstallmentEnable: false
   }
 
+  type CampaignPropsDelet = Omit<CampaignReturnProps, 'title' | 'description' | 'image'>;
 
 type AuthContextData = {
   signIn(credentials: SignInCredentials): Promise<void>;
@@ -177,6 +178,7 @@ type AuthContextData = {
   listGridSite:(name: string) => Promise<CampaignReturnProps[]>
   addPayment:(data: Payment) => Promise<void>;
   requestMethods:(hash: string) => Promise<ResponseRequest[]>;
+  deletCampaign:(data: CampaignPropsDelet) => Promise<void>;
 };
 
 type AuthProviderProps = {
@@ -555,8 +557,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }, config)
 
       if(response.status === 200) {
-        console.log(response.data)
-        navigate('view_campaign/'+response.data);
+        toast.success("Criado")
+        navigate('/ver_campanha/'+response.data);
 
       }
     }
@@ -610,6 +612,26 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if(response.status === 200) {
         navigate('view_campaign/'+hash);
 
+      }
+    }
+
+    async function deletCampaign(hash: CampaignPropsDelet){
+
+      const config  = {
+        headers: {
+          //token: window.sessionStorage.geyItem('accessToken')
+          authorization: storagedToken ? 'bearer '+ storagedToken : 'Opa'
+        }
+      }
+      console.log(hash.hash)
+      const response = await api.put('DonationCampaign',{
+        hash: hash.hash,
+        isActive:true
+      }, config)
+      if(response.status === 200) {
+        toast.success("Deletado");
+        navigate('/');
+        navigate('/minhas_campanhas');
       }
     }
 
@@ -708,7 +730,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
   return (
-    <AuthContext.Provider value={{requestMethods, addPayment, listGridSite, listGridByName, editCampaign, listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
+    <AuthContext.Provider value={{deletCampaign, requestMethods, addPayment, listGridSite, listGridByName, editCampaign, listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
       {children}
     </AuthContext.Provider>
   )

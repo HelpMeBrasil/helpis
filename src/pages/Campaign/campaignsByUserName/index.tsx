@@ -15,7 +15,7 @@ type CampaignReturnProps = {
   }
 
 export function CampaignsByUserName(){
-    const { listGridByUserName } = useContext(AuthContext);
+    const { listGridByUserName, deletCampaign } = useContext(AuthContext);
     const [ campaigns, setCampaigns ] = useState<CampaignReturnProps[]>([]);
 
     
@@ -29,6 +29,15 @@ export function CampaignsByUserName(){
         campaignsGet();
     },[listGridByUserName])
 
+
+    function handleDelet(hash: string){
+
+      const data = {
+      hash
+      }
+      deletCampaign(data);
+    }
+    
 
     const [loading, setLoading] = useState(true);
     if(loading === true){
@@ -52,7 +61,7 @@ export function CampaignsByUserName(){
                   <Icon size={30} icon={edit}/>
                   </div>
                   </Link>
-                  <Link to="/">
+                  <Link onClick={() => handleDelet(campaign.hash)} to="/minhas_campanhas">
                   <div className="campanhas_buttonDelet">
                   <Icon size={38} icon={deleteIconic}/>
                   </div>

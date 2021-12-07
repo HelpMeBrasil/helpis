@@ -1,6 +1,6 @@
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Form, { Button, CheckBox, FormContainer, Input, Label, Title } from "../../../components/form";
+import Form, { Button, FormContainer, Input, Label, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
 import './styles.scss';
 export function Payment() {
@@ -74,16 +74,6 @@ export function Payment() {
     
     </>
     )
-  }
-
-
-  let dataCredit = {
-    holder,
-    cardNumber,
-    securityCode,
-    installmentQuantity: 1,
-    isPreAuthorization: false,
-    isApplyInterest: false
   }
 
   useEffect(() => {
@@ -264,7 +254,7 @@ export function Payment() {
           <input value="3" onChange={(e) => setOptionPayment(e.target.value)} className="radioButtonStyle" id="Radio5" type="radio" name="payment"/><span>Criptomoeda</span>
           </div> : ''}
           {optionPayment === "2" ? cardCredit() : '' }
-          {optionPayment === "4" ? cardCredit() : '' }
+          {optionPayment === "4" ? cardDebit() : '' }
           <Button value="Doar"/>
         </Form>
       </FormContainer>

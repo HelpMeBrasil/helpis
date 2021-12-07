@@ -1,0 +1,16 @@
+.div_container {
+  padding: 1rem 2.5rem 3rem 2.5rem;
+  margin: 1rem auto 1rem auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 40%;
+  max-width: 90%;
+  flex-direction: column;
+
+  background: #fff;
+
+  @media (max-width: 720px) {
+    max-width: 95%;
+  }
+}

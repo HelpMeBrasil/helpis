@@ -1,4 +1,4 @@
-import {Routes, Route, Navigate } from 'react-router-dom';
+import {Routes, Route } from 'react-router-dom';
 import { ForgetPassword } from './pages/password/forgetPassword';
 import { ResetPassword } from './pages/password/recoveryPassword';
 import Login from './pages/login';
@@ -13,6 +13,7 @@ import { CampaignsName } from './pages/Campaign/campaignsByName';
 import { Payment } from './pages/Payments/addPayment';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
+import { Home } from './pages/home';
 
 
 export const Rotas = (): JSX.Element => {
@@ -20,13 +21,13 @@ export const Rotas = (): JSX.Element => {
   return (
       <Routes>
         {isAuthenticated === true ? 
-        <Routes >
+        <>
           <Route path="/user_data" element={<UserData/>} />
           <Route path="/change_password" element={<ChangePassword/>} />
           <Route path="/new_campaign" element={<NewCampaign/>} /> 
           <Route path="/minhas_campanhas" element={<CampaignsByUserName/>} />
           <Route path="/editar_campanha/:hash" element={<EditCampaign/>} />
-          </Routes> : ''
+          </> : ''
         }
         <Route path="/login"  element={<Login/>} />
         <Route path="/forget_password" element={<ForgetPassword/>} />
@@ -35,7 +36,7 @@ export const Rotas = (): JSX.Element => {
         <Route path="/ver_campanha/:hash" element={<ViewCampaign/>} />
         <Route path="/campanhas_nome/:campaignName" element={<CampaignsName/>} />
         <Route path="/payment/:hash" element={<Payment/>} />
-        <Route path="*" element={<Login/>} />
+        <Route path="*" element={<Home/>} />
 
       </Routes>
   );
