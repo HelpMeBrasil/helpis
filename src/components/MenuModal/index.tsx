@@ -1,7 +1,7 @@
 import Modal from 'react-modal';
 import './style.scss';
 import 'antd/lib/menu/style/index.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 Modal.setAppElement('#root');
