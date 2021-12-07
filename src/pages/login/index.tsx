@@ -1,5 +1,5 @@
 import { FormEvent, useContext, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../context/AuthContext";
 import "./styles.scss"
@@ -8,7 +8,7 @@ import  Form, {Button, FormContainer, Input, Label,Title}  from "../../component
  const Login = (): JSX.Element =>{
     const [username, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { navigate } = useNavigate();
+    const navigate = useNavigate();
     const { signIn } = useContext(AuthContext);
 
 
