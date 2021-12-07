@@ -136,6 +136,10 @@ export function Payment() {
       return {}
     }
     if(optionPayment==='4'){
+      const brFormat = expirationDate.split("-");
+      const dia = brFormat[1];
+      const mes = brFormat[0];
+      setExpiradionDate(dia+"/"+mes)
       return {
         holder,
         cardNumber,
