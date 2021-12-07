@@ -108,6 +108,7 @@ export function Payment() {
           setPix(true);
         }
       }
+      setLoading(false);
     }
     methods();
   },[hash, requestMethods])
