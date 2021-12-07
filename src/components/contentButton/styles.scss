@@ -1,23 +1,28 @@
 .div_containerButton {
-    padding: 1rem 2.5rem 3rem 2.5rem;
-    margin: 1rem 3% 1rem 0;
-    display: flex;
-    position: fixed;
-    justify-content: flex-start;
-    align-items: center;
+  padding: 1rem 2.5rem 3rem 2.5rem;
+  margin: 1rem 3% 1rem 0;
+  display: flex;
+  position: fixed;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  max-width: 30%;
+  flex-direction: column;
+  right: 0%;
+  background: #fff;
+
+  button {
+    width: 25vw;
+  }
+
+  @media (max-width: 720px) {
+    position: relative;
+    margin: 1rem 1rem auto auto;
     width: 100%;
-    max-width: 30%;
-    flex-direction: column;
-    right:0%;
-    background: #fff;
-  
-    @media (max-width: 720px) {
-      position: relative;
-      margin: 1rem 1rem auto auto;
-      width: 100%;
-      max-width: 95%;
-      right:0%;
-      
+    max-width: 95%;
+    right: 0%;
+    button {
+      width: 70vw;
     }
   }
-  
+}

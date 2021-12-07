@@ -6,6 +6,7 @@ import { ContentButton } from '../../../components/contentButton';
 import { Button, Label, Title } from '../../../components/form';
 
 import { AuthContext } from "../../../context/AuthContext";
+import { api } from '../../../services/api';
 
 import './styles.scss';
 
@@ -46,8 +47,10 @@ export function ViewCampaign() {
     return(
         <>
         <ContentButton>
-        <Title tag="h2" onClassName="title_h1" value="Ajude"/>
+        <Title tag="h2" onClassName="title_h2" value="Ajude"/>
         <Link to={"/payment/"+hash} ><Button value="Doar"/></Link>
+        <Title tag="h2" onClassName="title_h2" value="Compartilhe"/>
+        <Label valueName={api.defaults.baseURL!+"/"+hash}/>
         </ContentButton>
         <Content>
         <Title tag="h1" onClassName="title_h1" value={campaign.title}/>
