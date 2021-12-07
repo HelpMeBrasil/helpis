@@ -587,6 +587,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if(response.status === 200) {
         return response.data;
       }
+      console.log("não encontrado");
+      navigate('nao_encontrado');
        
     }
 
