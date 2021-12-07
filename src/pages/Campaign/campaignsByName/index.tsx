@@ -2,10 +2,6 @@ import { useContext, useEffect, useState } from 'react'
 import { Label, Title } from '../../../components/form';
 import { ListaContent } from '../../../components/lista/listaContent';
 import { AuthContext } from "../../../context/AuthContext";
-import { Icon } from 'react-icons-kit'
-import { home } from 'react-icons-kit/icomoon/home'
-import {edit} from 'react-icons-kit/feather/edit'
-import {deleteIconic} from 'react-icons-kit/typicons/deleteIconic'
 import './styles.scss'
 import { Link, useParams } from 'react-router-dom';
 type CampaignReturnProps = {
@@ -29,7 +25,7 @@ export function CampaignsName(){
             setLoading(false);
         }
         campaignsGet();
-    },[campaignName])
+    },[campaignName, listGridSite])
 
     if(loading === true){
     return(

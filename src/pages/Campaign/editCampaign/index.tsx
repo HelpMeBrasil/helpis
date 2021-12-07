@@ -1,5 +1,5 @@
 import { FormEvent, useState, useContext, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Form, { Button, FormContainer, Input, InputImg, Label, Textarea, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
 
@@ -12,6 +12,7 @@ export function EditCampaign(){
   const [img, setImg] = useState<FileList>({} as FileList);
   const { hash } = useParams<string>();
   const [ hashFix, setHashFix] = useState('');
+  const [targetValue, setTargetValue] = useState('');
   console.log(hash)
   
 
@@ -51,7 +52,7 @@ export function EditCampaign(){
         setLoading(false)
         }
     searchCampaign();
-    },[])
+    },[hash, viewCampaign])
 
     async function handleSubmit(event: FormEvent){
     event.preventDefault();
@@ -62,6 +63,7 @@ export function EditCampaign(){
       title,
       description,
       image,
+      targetValue: parseInt(targetValue),
     }
     editCampaign(data);
     }
@@ -79,6 +81,8 @@ export function EditCampaign(){
                   <Input value={title} onSetState={setTitle} type="text" placeholder="Digite o título"/>
                   <Label valueName="Descrição da campanha"/>
                   <Textarea value={description} onSetState={setDescription}/>
+                  <Label valueName="Digite o valor da meta"/>
+                  <Input value={targetValue} onSetState={setTargetValue} type="text" placeholder="Digite o valor"/>
                   <Label valueName="Escolha a mesma ou nova imagem para a campanha"/>
                   <InputImg name="formInputImg "id="formInputImg" accept="image/x-png,image/gif,image/jpeg" type="file" onSetState={setImg}/>
                   <Button value="Criar"/>

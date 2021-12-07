@@ -1,6 +1,6 @@
 import './style.scss'
 interface LabelProps {
-  valueName: string;
+  valueName?: string | number;
   center?: string;
 
 }

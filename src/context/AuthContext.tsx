@@ -3,7 +3,7 @@ import { api } from "../services/api";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
-import { PaymentSucess } from "../pages/Payments/paymentSucess";
+import { DecimalLiteral } from "@babel/types";
 toast.configure()
 
 
@@ -143,6 +143,7 @@ type CampaignReturnProps = {
   title: string,
   description: string,
   image: string,
+  targetValue: number,
 }
 
 type CampaignProps = Omit<CampaignReturnProps, 'hash'>;
@@ -158,7 +159,7 @@ type ResponseRequest = {
     IsInstallmentEnable: false
   }
 
-  type CampaignPropsDelet = Omit<CampaignReturnProps, 'title' | 'description' | 'image'>;
+  type CampaignPropsDelet = Omit<CampaignReturnProps, 'title' | 'description' | 'image' | 'targetValue'>;
 
   type CampaignReturnPropsAll = {
     hash: string,
@@ -167,11 +168,6 @@ type ResponseRequest = {
     image: string,
   }[]
 
-  type returnPayment = {
-    description: string,
-    walletAddress?: string,
-    barcode?: string,
-  }
 
 type AuthContextData = {
   signIn(credentials: SignInCredentials): Promise<void>;
@@ -194,6 +190,7 @@ type AuthContextData = {
   requestMethods:(hash: string) => Promise<ResponseRequest[]>;
   deletCampaign:(data: CampaignPropsDelet) => Promise<void>;
   getAllCampaigns:( ) => Promise<CampaignReturnPropsAll>;
+  listByReference:(hash: string) => Promise<number>;
 };
 
 type AuthProviderProps = {
@@ -557,7 +554,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return response.data;
     }
 
-    async function addCampaign({title, description, image}: CampaignProps){
+    async function addCampaign({title, description, image, targetValue}: CampaignProps){
 
       const config  = {
         headers: {
@@ -569,6 +566,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         title,
         description,
         image,
+        targetValue,
       }, config)
 
       if(response.status === 200) {
@@ -777,8 +775,25 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return(response.data);
       
     }
+
+    async function listByReference(hash: string){
+      const config  = {
+        params: {
+          //token: window.sessionStorage.geyItem('accessToken')
+          hash
+        }
+      }
+      const response = await api.get('transaction/ListByReference', config);
+      console.log("retorno api"+response.data);
+      return(response.data);
+      
+    }
+
+    
+
+
   return (
-    <AuthContext.Provider value={{getAllCampaigns, deletCampaign, requestMethods, addPayment, listGridSite, listGridByName, editCampaign, listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
+    <AuthContext.Provider value={{listByReference, getAllCampaigns, deletCampaign, requestMethods, addPayment, listGridSite, listGridByName, editCampaign, listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
       {children}
     </AuthContext.Provider>
   )

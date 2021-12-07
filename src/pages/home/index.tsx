@@ -1,5 +1,4 @@
 import { useEffect, useContext, useState } from "react";
-import Icon from "react-icons-kit";
 import { Link } from "react-router-dom";
 import { ContentLarge } from "../../components/contentLarge";
 import { Label, Title } from "../../components/form";

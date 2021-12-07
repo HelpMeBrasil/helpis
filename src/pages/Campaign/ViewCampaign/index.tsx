@@ -14,6 +14,7 @@ type CampaignProps = {
     title: string,
     description: string,
     image: string,
+    targetValue: number,
   }
 
   interface ParamTypes {
@@ -27,16 +28,21 @@ export function ViewCampaign() {
         title: '',
         description: '',
         image: '',
+        targetValue: 0,
     });
-    const { viewCampaign } = useContext(AuthContext);
+    const { viewCampaign, listByReference } = useContext(AuthContext);
+    const [ amount, setAmount ] = useState<number>(0);
 
     useEffect(() => {
     async function searchCampaign() {
         const response = await viewCampaign(hash!)
+        const respostaAmount = await listByReference(hash!);
+        console.log(respostaAmount);
+        setAmount(respostaAmount);
         setCampaign(response);
         setLoading(false);
         }
-    searchCampaign();
+        searchCampaign();
     },[viewCampaign])
     
     const [loading, setLoading] = useState(true);
@@ -49,8 +55,11 @@ export function ViewCampaign() {
         <ContentButton>
         <Title tag="h2" onClassName="title_h2" value="Ajude"/>
         <Link to={"/payment/"+hash} ><Button value="Doar"/></Link>
+        <Title tag="h2" onClassName="title_h2" value={"Meta: "+campaign.targetValue}/>
+        <Title tag="h2" onClassName="title_h2" value={"Arrecadado: "+amount}/>
         <Title tag="h2" onClassName="title_h2" value="Compartilhe"/>
         <Label valueName={api.defaults.baseURL!+"/"+hash}/>
+        
         </ContentButton>
         <Content>
         <Title tag="h1" onClassName="title_h1" value={campaign.title}/>

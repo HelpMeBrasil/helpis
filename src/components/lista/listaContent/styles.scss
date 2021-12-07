@@ -1,14 +1,13 @@
 .campanhas_container {
-  max-width: 90%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
-  margin: 2rem auto 2rem auto;
-  list-style: none;
-  justify-items: center;
+  justify-content: center;
   text-align: center;
+  margin: 2rem auto 2rem 6%;
+  list-style: none;
+  align-items: center;
   @media (max-width: 900px) {
-    max-width: 95%;
     grid-template-columns: repeat(1, 1fr);
   }
 }

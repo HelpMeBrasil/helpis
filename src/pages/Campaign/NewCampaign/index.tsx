@@ -9,6 +9,7 @@ export function NewCampaign(){
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [img, setImg] = useState<any>();
+  const [targetValue, setTargetValue] = useState('');
 
     
     const toBase64 = (file: File) => new Promise((resolve, reject) => {
@@ -26,6 +27,7 @@ export function NewCampaign(){
       title,
       description,
       image,
+      targetValue: parseInt(targetValue),
     }
 
     await addCampaign(data);
@@ -41,6 +43,8 @@ export function NewCampaign(){
                 <Input value={title} onSetState={setTitle} type="text" placeholder="Digite o título"/>
                 <Label valueName="Descrição da campanha"/>
                 <Textarea value={description} onSetState={setDescription}/>
+                <Label valueName="Digite o valor da meta"/>
+                <Input value={targetValue} onSetState={setTargetValue} type="text" placeholder="Digite o valor"/>
                 <Label valueName="Escolha uma imagem para a campanha"/>
                 <InputImg name="formInputImg "id="formInputImg" accept="image/x-png,image/gif,image/jpeg" type="file" onSetState={setImg}/>
                 <Button value="Criar"/>
