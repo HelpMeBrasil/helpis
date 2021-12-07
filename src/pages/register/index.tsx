@@ -21,7 +21,7 @@ export function Register() {
 
   //BankData
   const [codeBank , setCodeBank] = useState('');
-  const [codeAccount, setCodeAccount] = useState('');
+  const [codeAccount, setCodeAccount] = useState("CC");
 
   //Account
   const [bankAgency, setBankAgency] = useState('');
@@ -131,9 +131,9 @@ export function Register() {
         <Input value={codeBank} onSetState={setCodeBank} type="text" placeholder="Digite o código do seu banco"/>
      
         <Label valueName="Selecione o tipo da sua conta"/>
-        <select className="selectRegister"  onChange={e => setCodeAccount(e.target.value)} >
-          <option className="selectOption" value="CC" >Conta Corrente</option>
-          <option className="selectOption" value="PP" selected>Conta Poupança</option>
+        <select className="selectRegister"  defaultValue={codeBank} onChange={e => setCodeAccount(e.target.value)} >
+          <option className="selectOption"  value="CC" >Conta Corrente</option>
+          <option className="selectOption" value="PP" >Conta Poupança</option>
         </select>
      
         <Label valueName="Número da sua agência"/>

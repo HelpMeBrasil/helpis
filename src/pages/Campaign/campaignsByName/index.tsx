@@ -7,7 +7,7 @@ import { home } from 'react-icons-kit/icomoon/home'
 import {edit} from 'react-icons-kit/feather/edit'
 import {deleteIconic} from 'react-icons-kit/typicons/deleteIconic'
 import './styles.scss'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 type CampaignReturnProps = {
     hash: string,
     title: string,
@@ -26,7 +26,7 @@ export function CampaignsName(){
             const response = await listGridSite(campaignName!);
             console.log("primeiro");
             setCampaigns(response);
-            setLoading(true);
+            setLoading(false);
         }
         campaignsGet();
     },[campaignName])
@@ -47,11 +47,13 @@ export function CampaignsName(){
     <Title tag="h1" onClassName="title_h1" value="Pesquisa por nome"/>
     <ListaContent>
           {campaigns.map(campaign => (
+            <Link style={{ textDecoration: 'none', width:'5%' }} to={"/ver_campanha/"+campaign.hash}>
             <li className="campanhas_list" key={campaign.hash}>
             <Title tag="h1" onClassName="title_h1" value={campaign.title}/>
             <img alt="imagem_campanha" className="campanha_img" src={campaign.image}/>
             <Label valueName={campaign.description}/>
             </li>
+            </Link>
           ))}
     </ListaContent>
     </>

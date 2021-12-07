@@ -208,7 +208,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       //window.sessionStorage.setItem('accessToken', response.data.accessToken);
       sessionStorage.setItem('accessToken', response.data.accessToken)
       setIsAuthenticated(true);
-      console.log("Teste"+isAuthenticated);
+      navigate("/minhas_campanhas");
     }else{
       toast.warning('Usuário/senha incorretos ou este cadastro não existe.', {autoClose:3000});
     }
