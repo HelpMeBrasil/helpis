@@ -247,7 +247,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       confirmationCode
   })
   if(response.status === 200) {
-    console.log(response.data.identifier);
     const recoveryId = response.data.identifier
     const responseRecover = await api.put('Recovery', {
       recoveryId,
@@ -265,7 +264,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   toast.warning('Código informado é inválido.', {autoClose:3000});
 
   if (response.status !== 200) {
-    console.log(response.data);
+    toast.warning("Erro");
   }
     
   }
@@ -529,11 +528,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
           //token: window.sessionStorage.geyItem('accessToken')
           authorization: storagedToken ? 'bearer '+ storagedToken : 'Opa'
         }
-      }
-      console.log(config)
-      
+      }      
       const response = await api.get('User', config);
-      console.log(response);
       // setUserId(response.data.id)
       return response.data;
     }
@@ -636,7 +632,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
           authorization: storagedToken ? 'bearer '+ storagedToken : 'Opa'
         }
       }
-      console.log(hash.hash)
       const response = await api.put('DonationCampaign',{
         hash: hash.hash,
         isActive:true
@@ -662,7 +657,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const response = await api.get('DonationCampaign/ListGridByName', config)
       if(response.status !== 200) {
-        console.log("erro");
+        toast.warning("Erro");
       }
       return response.data;
     }
@@ -678,7 +673,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const response = await api.get('DonationCampaign/ListSite', config)
       if(response.status !== 200) {
-        console.log("erro");
+        toast.warning("Erri");
       }
       return response.data;
     }
@@ -693,7 +688,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if(data.paymentMethod.code === '1'){
         const response = await api.post('Payment/AddTransactionBankSlip',data,config)
         if(response.status === 200){
-          console.log(response.data)
           navigate('/paymentSucess', { state: { 
             description: response.data.description,
             walletAddress: response.data.walletAddress,
@@ -702,10 +696,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
       if(data.paymentMethod.code === '2'){
-        console.log(data);
         const response = await api.post('Payment/AddTransactionCredit',data,config)
         if(response.status === 200){
-          console.log(response.data)
           navigate('/paymentSucess', { state: { 
             description: response.data.description,
             walletAddress: response.data.walletAddress,
@@ -714,10 +706,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
       if(data.paymentMethod.code === '3'){
-        console.log(data);
         const response = await api.post('Payment/AddTransactionCripto',data,config)
         if(response.status === 200){
-          console.log(response.data)
           navigate('/paymentSucess', { state: { 
             description: response.data.description,
             walletAddress: response.data.walletAddress,
@@ -727,23 +717,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
       if(data.paymentMethod.code === '4'){
-        console.log(data);
         const response = await api.post('Payment/AddTransactionDebit',data,config)
         if(response.status === 200){
-          console.log(response.data)
+          console.log("dentro"+response.data)
+          console.log("dentro"+response)
           navigate('/paymentSucess', { state: { 
             description: response.data.description,
             walletAddress: response.data.walletAddress,
-            barcode: response.data.barcode } });
+            barcode: response.data.barcode, 
+            authenticationUrl: response.data.authenticationUrl }});
         }
-
+        console.log("fora"+response.data)
       }
 
       if(data.paymentMethod.code === '6'){
-        console.log(data);
         const response = await api.post('Payment/AddTransactionPix',data,config)
         if(response.status === 200){
-          console.log(response.data)
           navigate('/paymentSucess', { state: { 
             description: response.data.description,
             walletAddress: response.data.walletAddress,
@@ -784,7 +773,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
       }
       const response = await api.get('transaction/ListByReference', config);
-      console.log("retorno api"+response.data);
       return(response.data);
       
     }

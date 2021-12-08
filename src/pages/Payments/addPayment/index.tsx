@@ -34,6 +34,7 @@ export function Payment() {
 
   const { hash } = useParams();
   const [loading, setLoading] = useState(true);
+
   function cardCredit() {
 
     return(
@@ -143,7 +144,6 @@ export function Payment() {
     }
   }
   async function handleSubmit(event: FormEvent) {
-    console.log(paymentObject());
     event.preventDefault();
     const data = {
       hash,

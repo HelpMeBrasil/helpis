@@ -6,7 +6,7 @@ import './styles.scss';
 
 export function PaymentSucess() {
   const {state} = useLocation();
-  const { description, walletAddress, barcode, amountBTC, qrCode, key } = state; // Read values passed on state
+  const { description, walletAddress, barcode, amountBTC, qrCode, key, authenticationUrl } = state; // Read values passed on state
   return(
     <>
     <ContentLarge>
@@ -14,6 +14,13 @@ export function PaymentSucess() {
     </ContentLarge>
     <ContentLarge>
         <Label center="center" valueName={description}/>
+
+        {authenticationUrl === undefined ? '' :
+        <>
+        <Label center="center" valueName="Url para concluir o pagamento"></Label>
+        <Label valueName={authenticationUrl}></Label>
+        </> }
+
 
         {barcode === undefined ? '' : 
         <>
