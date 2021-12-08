@@ -17,14 +17,25 @@ type CampaignReturnPropsAll = {
 export function Home() {
   const [campaigns, setCampaigns] = useState<CampaignReturnPropsAll>([]);
   const { getAllCampaigns } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     async function requestAllCampaigns(){
       const response = await getAllCampaigns()
       setCampaigns(response);
+      setLoading(false);
     }
     requestAllCampaigns();
   },[getAllCampaigns])
-  return(
+  
+  if(loading === true){
+    return(
+        <Title tag="h1" onClassName="title_h1" value="Carregando"/>
+    )
+    }
+    else{
+    return(
+    
     <>
     <ContentLarge>
         <Title tag="h1" onClassName="title_h1" value="Bem vindo ao Helpis"/>
@@ -32,6 +43,11 @@ export function Home() {
     <ContentLarge>
         <Title tag="h2" onClassName="title_h2" value="Seja a difença na vida de alguém"/>
     </ContentLarge>
+
+    {campaigns.length === 0 ?
+    <Title tag="h1" onClassName="title_h1" value=""/> : 
+    <>
+    
     <Title tag="h1" onClassName="title_h1" value="Campanhas cadastradas"/>
     <ListaContent>
           {campaigns.map(campaign => (
@@ -49,5 +65,9 @@ export function Home() {
           ))}
     </ListaContent>
     </>
-  )
+    }
+    </>
+    
+    )
+}
 }
