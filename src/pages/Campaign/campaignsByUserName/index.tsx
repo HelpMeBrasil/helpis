@@ -46,7 +46,8 @@ export function CampaignsByUserName(){
     )}else{
     return(
     <>
-    
+    {campaigns.length === 0 ? <Title tag="h1" onClassName="title_h1" value="Você não possui campanhas"/> : 
+    <>
     <Title tag="h1" onClassName="title_h1" value="Minhas campanhas"/>
       <ListaContent>
             {campaigns.map(campaign => (
@@ -72,6 +73,8 @@ export function CampaignsByUserName(){
               
             ))}
       </ListaContent>
+      </>
+    }
       </>
     )
   }
