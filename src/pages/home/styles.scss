@@ -15,6 +15,7 @@
     overflow: hidden;
     text-decoration: none;
     text-overflow: ellipsis; // This is where the magic happens
+    color: black;
   }
 
   @media (max-width: 900px) {
