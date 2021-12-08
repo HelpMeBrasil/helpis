@@ -587,7 +587,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if(response.status === 200) {
         return response.data;
       }
-      console.log("não encontrado");
       navigate('nao_encontrado');
        
     }
@@ -602,11 +601,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
       const response = await api.get('DonationCampaign/ListGridByUserName', config)
-      if(response.status !== 200) {
-        console.log("erro");
+      if(response.status === 200) {
+        return response.data;
       }
-      console.log(response.data)
-      return response.data;
+     
     }, [storagedToken])
 
     async function editCampaign({title, description, image, hash}: CampaignReturnProps){

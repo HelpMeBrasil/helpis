@@ -33,7 +33,7 @@ export function Payment() {
   const [cripto, setCripto] = useState(false);
 
   const { hash } = useParams();
-  console.log(hash);
+  const [loading, setLoading] = useState(true);
   function cardCredit() {
 
     return(
@@ -179,7 +179,7 @@ export function Payment() {
     //await register(data);
   }
 
-  const [loading, setLoading] = useState(true);
+  
   if(loading === true){
   return(
       <Title tag="h1" onClassName="title_h1" value="Carregando"/>
