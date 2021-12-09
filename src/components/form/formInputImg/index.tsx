@@ -9,6 +9,6 @@ interface InputProps {
 }
 export function InputImg ({onSetState, type, accept, id, name}:InputProps){
   return(
-    <input id={id} name={name} onChange={e => onSetState(e.target.files)} className="form__inputImg" type={type} accept={accept} />
+    <input required id={id} name={name} onChange={e => onSetState(e.target.files)} className="form__inputImg" type={type} accept={accept} />
   )
 }

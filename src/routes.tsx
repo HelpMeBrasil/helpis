@@ -41,7 +41,11 @@ export const Rotas = (): JSX.Element => {
         <Route path="/payment/:hash" element={<Payment/>} />
         <Route path="/paymentSucess" element={<PaymentSucess/>} />
         <Route path="/nao_encontrado" element={<NotFound/>} />
-        <Route path="*" element={<Home/>} />
+        <Route path="/" element={<Home/>} />
+        <Route path="" element={<Home/>} />
+        <Route path="/home" element={<Home/>} />
+        <Route path="/pagina_inicial" element={<Home/>} />
+        <Route path="/*" element={<NotFound/>} />
 
       </Routes>
   );

@@ -1,4 +1,5 @@
 import { FormEvent, useState, useContext, useEffect } from "react";
+import NumberFormat from "react-number-format";
 import { useParams } from "react-router-dom";
 import Form, { Button, FormContainer, Input, InputImg, Label, Textarea, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
@@ -13,7 +14,6 @@ export function EditCampaign(){
   const { hash } = useParams<string>();
   const [ hashFix, setHashFix] = useState('');
   const [targetValue, setTargetValue] = useState('');
-  console.log(hash)
   
 
 
@@ -23,31 +23,16 @@ export function EditCampaign(){
       reader.onload = () => resolve(reader.result);
       reader.onerror = error => reject(error);
   });
-  function dataURLtoFile(dataurl: string, filename: string) {
- 
-    var arr = dataurl.split(','),
-    mime = arr[0].match(/:(.*?);/)![1],
-    bstr = atob(arr[1]), 
-    n = bstr.length, 
-    u8arr = new Uint8Array(n);
-    
-    while(n--){
-        u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new File([u8arr], filename, {type:mime});
-    }
-
     useEffect(() => {
     async function searchCampaign() {
         const response = await viewCampaign(hash!)
         setTitle(response.title);
         setDescription(response.description);
-        const file = dataURLtoFile(response.image, "imagemAtual")
-        let list = new DataTransfer();
-        list.items.add(file);
-        let myFileList = list.files;
-        setImg(myFileList);
+        // const file = dataURLtoFile(response.image, "imagemAtual")
+        // let list = new DataTransfer();
+        // list.items.add(file);
+        // let myFileList = list.files;
+        //setImg(response.image);
         setHashFix(response.hash);
         setLoading(false)
         }
@@ -56,16 +41,26 @@ export function EditCampaign(){
 
     async function handleSubmit(event: FormEvent){
     event.preventDefault();
-    console.log(img);
-    const image = await toBase64(img![0]) as string;
-    const data = {
+    if(img === undefined){
+      const data = {
       hash: hashFix,
       title,
       description,
-      image,
-      targetValue: parseInt(targetValue),
+      targetValue: parseInt(targetValue.replace("R$","")),
+      }
+      editCampaign(data);
+    }else{
+      const image = await toBase64(img![0]) as string;
+      const data = {
+        hash: hashFix,
+        title,
+        description,
+        image,
+        targetValue: parseInt(targetValue.replace("R$","")),
+        }
+        editCampaign(data);
     }
-    editCampaign(data);
+    
     }
 
     const [loading, setLoading] = useState(true);
@@ -82,8 +77,8 @@ export function EditCampaign(){
                   <Label valueName="Descrição da campanha"/>
                   <Textarea value={description} onSetState={setDescription}/>
                   <Label valueName="Digite o valor da meta"/>
-                  <Input value={targetValue} onSetState={setTargetValue} type="text" placeholder="Digite o valor"/>
-                  <Label valueName="Escolha a mesma ou nova imagem para a campanha"/>
+                  <NumberFormat placeholder="Exemplo: 10,000.57" className="form__input" value={targetValue} thousandSeparator={true} prefix={'R$'} onChange={(e)=> setTargetValue(e.target.value)} />
+                  <Label valueName="Caso nao escolha imagem, ira manter a imagem antiga"/>
                   <InputImg name="formInputImg "id="formInputImg" accept="image/x-png,image/gif,image/jpeg" type="file" onSetState={setImg}/>
                   <Button value="Criar"/>
             </Form>

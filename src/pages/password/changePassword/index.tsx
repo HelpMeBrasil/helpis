@@ -14,7 +14,6 @@ export function ChangePassword() {
     event.preventDefault();
     
     if(newPassword === confirmNewPassword){
-      console.log(confirmNewPassword)
       const data = {
         oldPassword,
         newPassword,

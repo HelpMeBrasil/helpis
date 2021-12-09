@@ -7,7 +7,6 @@ interface TitleProps{
   children?: ReactNode;
 }
 export function Title({tag,onClassName,value, children}: TitleProps){
-  console.log(children);
   let retorno = <h1 className={onClassName}>{value}</h1>
 
   if(tag === "h2"){

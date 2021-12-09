@@ -7,7 +7,7 @@ interface TextareaProps {
 export function Textarea({value, onSetState}: TextareaProps) { 
 
   return(
-    <textarea className="form_textarea" value={value} onChange={e => onSetState(e.target.value)} />
+    <textarea required className="form_textarea" value={value} onChange={e => onSetState(e.target.value)} />
   )
 
 }

@@ -1,4 +1,6 @@
-import { FormEvent, useContext, useState } from "react";
+import axios from "axios";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import Form, { Button, CheckBox, FormContainer, Input, Label, Title } from "../../components/form";
 import { AuthContext } from "../../context/AuthContext";
 import './styles.scss'
@@ -38,7 +40,7 @@ export function Register() {
   const [complement, setComplement] = useState('');
   const [cityName, setCityName] = useState('');
   const [stateInitials, setStateInitials] = useState('');
-  const [countryName, setCountryName] = useState('');
+  const countryName = 'BR';
 
 
   const [boleto, setBoleto] = useState('');
@@ -47,47 +49,80 @@ export function Register() {
   const [pix, setPix] = useState('');
   const [cripto, setCripto] = useState('');
 
-
-
-  async function handleSubmit(event: FormEvent) {
-    console.log(event);
-    event.preventDefault();
-
-    const data = {
-      firstName,
-      surname,
-      email,
-      phoneNumber,
-      password,
-      identity,
-      name,
-      commercialName,
-      responsibleName,
-      responsibleIdentity,
-      codeBank,
-      codeAccount,
-      bankAgency,
-      bankAgencyDigit,
-      bankAccount,
-      bankAccountDigit,
-      operation,
-      street,
-      number,
-      district,
-      zipCode,
-      complement,
-      cityName,
-      stateInitials,
-      countryName,
-      boleto,
-      credito,
-      cripto,
-      debito,
-      pix
+  const validations = () => {
+    const validaCpf = identity.match("([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})");
+    console.log(validaCpf);
+    if(validaCpf === null){
+      toast.warning("Insira um cpf/cnpj válido");
+      return true
     }
-    await register(data);
+    else if(identity.length === 14 || identity.length === 11){
+    }else{
+      toast.warning("Cpf invalido")
+      return true
+    }
   }
 
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    if(validations() === true){
+
+    }else{
+      const data = {
+        firstName,
+        surname,
+        email,
+        phoneNumber,
+        password,
+        identity,
+        name,
+        commercialName,
+        responsibleName,
+        responsibleIdentity,
+        codeBank,
+        codeAccount,
+        bankAgency,
+        bankAgencyDigit,
+        bankAccount,
+        bankAccountDigit,
+        operation,
+        street,
+        number,
+        district,
+        zipCode,
+        complement,
+        cityName,
+        stateInitials,
+        countryName,
+        boleto,
+        credito,
+        cripto,
+        debito,
+        pix
+      }
+      await register(data);
+    }
+  }
+  useEffect(() => {
+    async function getZipCode(){
+    if(zipCode.length === 8){
+      const response = await axios.get("https://viacep.com.br/ws/"+zipCode+"/json/",{headers: { 'Content-Type': 'application/json', }});
+      
+      if(response.data.erro !==true){
+        setDistrict(response.data.bairro);
+        setStreet(response.data.logradouro);
+        setCityName(response.data.localidade);
+        setStateInitials(response.data.uf);
+        }else{
+          toast.warning("CEP deve ser valido");
+        }
+      }
+
+    }
+    
+    getZipCode();
+  },[zipCode])
+    
   return(
     <FormContainer>
       <Title tag="h1" onClassName="title_h1" value="Cadastrar-se"/>
@@ -118,7 +153,7 @@ export function Register() {
         <Input value={commercialName} onSetState={setCommercionalName} type="text" placeholder="Digite seu nome comercial "/>
         
         <Label valueName="CPF ou CNPJ"/>
-        <Input value={identity} onSetState={setIdentity} type="number" placeholder="Digite seu cpf ou cnpj sem pontos"/>
+        <Input onSize={3} value={identity} onSetState={setIdentity} type="number" placeholder="Digite seu cpf ou cnpj sem pontos"/>
       
         <Label valueName="Nome completo do responsavel"/>
         <Input value={responsibleName} onSetState={setResponsibleName} type="text" placeholder="Digite o nome completo do responsavel"/>
@@ -153,29 +188,29 @@ export function Register() {
 
         <Title tag="h2" onClassName="title_h2" value="Endereço"/>
 
+        <Label valueName="CEP"/>
+        <Input value={zipCode} onSetState={setZipCode} type="number" placeholder="Digite o cep"/>
+
         <Label valueName="Rua"/>
-        <Input value={street} onSetState={setStreet} type="text" placeholder="Digite o endereço da sua rua"/>
+        <Input disabled={true} value={street}  type="text" placeholder="Digite o endereço da sua rua"/>
       
         <Label valueName="Número"/>
         <Input value={number} onSetState={setNumber} type="number" placeholder="Digite o número"/>
-     
-        <Label valueName="Bairro"/>
-        <Input value={district} onSetState={setDistrict} type="text" placeholder="Digite o bairro"/>
-      
-        <Label valueName="CEP"/>
-        <Input value={zipCode} onSetState={setZipCode} type="number" placeholder="Digite o cep"/>
-     
+
         <Label valueName="Complemento"/>
         <Input value={complement} onSetState={setComplement} type="text" placeholder="Digite o complemento"/>
-
+     
+        <Label valueName="Bairro"/>
+        <Input disabled={true} value={district}  type="text" placeholder="Digite o bairro"/>
+      
         <Label valueName="Cidade"/>
-        <Input value={cityName} onSetState={setCityName} type="text" placeholder="Digite a cidade"/>
+        <Input disabled={true} value={cityName}  type="text" placeholder="Digite a cidade"/>
 
         <Label valueName="Estado"/>
-        <Input value={stateInitials} onSize={2} onSetState={setStateInitials} type="text" placeholder="Digite a sigla do estado"/>
+        <Input disabled={true} value={stateInitials} onSize={2}  type="text" placeholder="Digite a sigla do estado"/>
 
         <Label valueName="País"/>
-        <Input value={countryName} onSize={3} onSetState={setCountryName} type="text" placeholder="Digite a sigla do páis"/>
+        <Input disabled={true} value={countryName} onSize={3}  type="text" placeholder="Digite a sigla do páis"/>
         
         <Label valueName="Métodos que aceita receber pagamento:"/>
 

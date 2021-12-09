@@ -142,7 +142,7 @@ type CampaignReturnProps = {
   hash: string,
   title: string,
   description: string,
-  image: string,
+  image?: string,
   targetValue: number,
 }
 
@@ -181,7 +181,7 @@ type AuthContextData = {
   setIsAuthenticated: any;
   addCampaign: (propsCampaign: CampaignProps) => Promise<void>;
   viewCampaign:(hash: string) => Promise<CampaignReturnProps>;
-  campaign: CampaignProps | undefined;
+  //campaign: CampaignProps | undefined;
   listGridByUserName:() => Promise<CampaignReturnProps[]>
   editCampaign: (propsEditCampaign: CampaignReturnProps) => Promise<void>
   listGridByName:(name: string) => Promise<CampaignReturnProps[]>
@@ -202,8 +202,8 @@ export const AuthContext = createContext({} as AuthContextData);
 export function AuthProvider({ children }: AuthProviderProps) {
   const [username, setUsername] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [userId, setUserId] = useState('');
-  const [campaign, setCampaign] = useState<CampaignProps>()
+ // const [userId, setUserId] = useState('');
+  //const [campaign, setCampaign] = useState<CampaignProps>()
   const storagedToken = sessionStorage.getItem('accessToken');
   
 
@@ -466,7 +466,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const isPanelRestricted = true;
 
         const data = {
-            id: userId,
+           // id: userId,
             active: true,
             firstName,
             surname,
@@ -719,15 +719,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if(data.paymentMethod.code === '4'){
         const response = await api.post('Payment/AddTransactionDebit',data,config)
         if(response.status === 200){
-          console.log("dentro"+response.data)
-          console.log("dentro"+response)
           navigate('/paymentSucess', { state: { 
             description: response.data.description,
             walletAddress: response.data.walletAddress,
             barcode: response.data.barcode, 
             authenticationUrl: response.data.authenticationUrl }});
         }
-        console.log("fora"+response.data)
       }
 
       if(data.paymentMethod.code === '6'){
@@ -781,7 +778,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
 
   return (
-    <AuthContext.Provider value={{listByReference, getAllCampaigns, deletCampaign, requestMethods, addPayment, listGridSite, listGridByName, editCampaign, listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
+    //<AuthContext.Provider value={{listByReference, getAllCampaigns, deletCampaign, requestMethods, addPayment, listGridSite, listGridByName, editCampaign, listGridByUserName, campaign, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
+
+    <AuthContext.Provider value={{listByReference, getAllCampaigns, deletCampaign, requestMethods, addPayment, listGridSite, listGridByName, editCampaign, listGridByUserName, viewCampaign, signIn,setIsAuthenticated, addCampaign, isAuthenticated, forgetPassword, confirmCode, register, userDataGet, userUpdate, changePassword }}>
       {children}
     </AuthContext.Provider>
   )

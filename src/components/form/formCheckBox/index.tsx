@@ -10,11 +10,11 @@ type CheckBoxProps = {
 
 export function CheckBox({value, onSetChange, onChecked}: CheckBoxProps) {
 
-  const [onCheck, setOnCheck] = useState<boolean>();
+  const [onCheck, setOnCheck] = useState<boolean>(onChecked === undefined ? false : onChecked);
   
   useEffect(() => {
     async function changeOnCheck() {
-      setOnCheck(onChecked);
+      setOnCheck(onChecked === undefined ? false : onChecked);
     }
      
       changeOnCheck();

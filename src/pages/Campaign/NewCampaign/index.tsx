@@ -1,6 +1,7 @@
 import { FormEvent, useState, useContext } from "react";
 import Form, { Button, FormContainer, Input, InputImg, Label, Textarea, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
+import NumberFormat from 'react-number-format';
 
 
 export function NewCampaign(){
@@ -20,21 +21,27 @@ export function NewCampaign(){
   });
 
     async function handleSubmit(event: FormEvent){
-    event.preventDefault();
-    const image = await toBase64(img[0]) as string;
-    console.log(image);
-    const data = {
-      title,
-      description,
-      image,
-      targetValue: parseInt(targetValue),
+      event.preventDefault();
+      if(img === undefined){
+      const data = {
+        title,
+        description,
+        targetValue: parseInt(targetValue.replace("R$","")),
+        }
+        await addCampaign(data);
+      }else{
+        const image = await toBase64(img[0]) as string;
+        const data = {
+        title,
+        description,
+        image,
+        targetValue: parseInt(targetValue.replace("R$","")),
+        }
+        await addCampaign(data);
+      }
     }
 
-    await addCampaign(data);
-
-    }
-
-
+    //<Input value={targetValue} onSetState={setTargetValue} type="text" placeholder="Digite o valor"/>
   return(
     <FormContainer>
           <Title tag="h1" onClassName="title_h1" value="Criar uma campanha de doação"/>
@@ -44,7 +51,7 @@ export function NewCampaign(){
                 <Label valueName="Descrição da campanha"/>
                 <Textarea value={description} onSetState={setDescription}/>
                 <Label valueName="Digite o valor da meta"/>
-                <Input value={targetValue} onSetState={setTargetValue} type="text" placeholder="Digite o valor"/>
+                <NumberFormat placeholder="Exemplo: 10,000.57" className="form__input" value={targetValue} thousandSeparator={true} prefix={'R$'} onChange={(e)=> setTargetValue(e.target.value)} />
                 <Label valueName="Escolha uma imagem para a campanha"/>
                 <InputImg name="formInputImg "id="formInputImg" accept="image/x-png,image/gif,image/jpeg" type="file" onSetState={setImg}/>
                 <Button value="Criar"/>

@@ -14,15 +14,10 @@ import './styles.scss';
 type CampaignProps = {
     title: string,
     description: string,
-    image: string,
+    image?: string,
     targetValue: number,
   }
 
-  interface ParamTypes {
-    tokenName: string
-  }
-
-  
 export function ViewCampaign() {
     const { hash } = useParams<string>();
     const [loading, setLoading] = useState(true);
@@ -41,13 +36,12 @@ export function ViewCampaign() {
     async function searchCampaign() {
         const response = await viewCampaign(hash!)
         const respostaAmount = await listByReference(hash!);
-        console.log(respostaAmount);
         setAmount(respostaAmount);
         setCampaign(response);
         setLoading(false);
         }
         searchCampaign();
-    },[viewCampaign])
+    },[hash, listByReference, viewCampaign])
 
 
     function handleCopyURL(){

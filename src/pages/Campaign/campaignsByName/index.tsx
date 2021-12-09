@@ -8,7 +8,7 @@ type CampaignReturnProps = {
     hash: string,
     title: string,
     description: string,
-    image: string,
+    image?: string,
   }
 
 export function CampaignsName(){
@@ -20,7 +20,6 @@ export function CampaignsName(){
     useEffect(() => {
         async function campaignsGet() {
             const response = await listGridSite(campaignName!);
-            console.log("primeiro");
             setCampaigns(response);
             setLoading(false);
         }
