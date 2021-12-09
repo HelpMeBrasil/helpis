@@ -50,7 +50,7 @@ export function Register() {
   const [cripto, setCripto] = useState('');
 
   const validations = () => {
-    const validaCpf = identity.match("([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})");
+    const validaCpf = identity.match("([0-9]{2}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[\\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[-]?[0-9]{2})");
     console.log(validaCpf);
     if(validaCpf === null){
       toast.warning("Insira um cpf/cnpj válido");
@@ -65,9 +65,7 @@ export function Register() {
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    if(validations() === true){
-
-    }else{
+    if(validations() !== true){
       const data = {
         firstName,
         surname,

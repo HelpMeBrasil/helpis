@@ -2,7 +2,7 @@ import logo from '../../assets/logo.svg';
 import './styles.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
-import { DOMAttributes, KeyboardEventHandler, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 
@@ -13,7 +13,7 @@ interface HeaderProps{
 }
 
 export function Header({onOpenMenuModal, handleCloseHeaderMenuModal}: HeaderProps){
-  const [login, setLogin] = useState("");
+  //const [login, setLogin] = useState("");
   const [name, setName] = useState("");
   const navigate  = useNavigate();
 
@@ -22,7 +22,7 @@ export function Header({onOpenMenuModal, handleCloseHeaderMenuModal}: HeaderProp
     navigate('campanhas_nome/'+name);
   }
   }
-
+ //<p className="header__loggin">{login}</p>
   return (
     <div className="header" onClick={handleCloseHeaderMenuModal}>
         <Link className="header__link"to="/"> 
@@ -32,7 +32,7 @@ export function Header({onOpenMenuModal, handleCloseHeaderMenuModal}: HeaderProp
 
         <input onKeyPress={handleKeyPress}  value={name} onChange={(e) => setName(e.target.value) } className="header__search" type="text" placeholder="Pesquisar campanhas"></input>
         
-        <p className="header__loggin">{login}</p>
+       
         <FontAwesomeIcon onClick={onOpenMenuModal} className="header__icon" icon={faBars}/>
     
     

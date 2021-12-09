@@ -1,5 +1,6 @@
+import axios from "axios";
 import { FormEvent, useContext, useEffect, useState } from "react";
-import { isConstructorDeclaration } from "typescript";
+import { toast } from "react-toastify";
 import Form, { Button, CheckBox, FormContainer, Input, Label, Title } from "../../components/form";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -111,12 +112,45 @@ export function UserData() {
       }
     }
     userDataSearch();
-  },[]);
+  },[userDataGet]);
+
+  useEffect(() => {
+    async function getZipCode(){
+    if(zipCode.length === 8){
+      const response = await axios.get("https://viacep.com.br/ws/"+zipCode+"/json/",{headers: { 'Content-Type': 'application/json', }});
+      
+      if(response.data.erro !==true){
+        setDistrict(response.data.bairro);
+        setStreet(response.data.logradouro);
+        setCityName(response.data.localidade);
+        setStateInitials(response.data.uf);
+        }else{
+          toast.warning("CEP deve ser valido");
+        }
+      }
+
+    }
+    
+    getZipCode();
+  },[zipCode])
   
+  const validations = () => {
+    const validaCpf = identity.match("([0-9]{2}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[\\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[-]?[0-9]{2})");
+    console.log(validaCpf);
+    if(validaCpf === null){
+      toast.warning("Insira um cpf/cnpj válido");
+      return true
+    }
+    else if(identity.length === 14 || identity.length === 11){
+    }else{
+      toast.warning("Cpf invalido")
+      return true
+    }
+  }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
-
+    if(validations() !== true){
     const data = {
       firstName,
       surname,
@@ -150,6 +184,7 @@ export function UserData() {
     }
     await userUpdate(data);
   }
+}
 
   return(
     <FormContainer>
