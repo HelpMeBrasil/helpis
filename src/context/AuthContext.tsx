@@ -626,15 +626,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     async function deletCampaign(hash: CampaignPropsDelet){
 
       const config  = {
-        headers: {
+        params: {
           //token: window.sessionStorage.geyItem('accessToken')
-          authorization: storagedToken ? 'bearer '+ storagedToken : 'Opa'
+          hash: hash.hash
         }
       }
-      const response = await api.put('DonationCampaign',{
-        hash: hash.hash,
-        isActive:true
-      }, config)
+      const response = await api.delete('DonationCampaign', config)
       if(response.status === 200) {
         toast.success("Deletado");
         navigate('/');
