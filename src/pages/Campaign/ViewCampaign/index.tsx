@@ -50,11 +50,9 @@ export function ViewCampaign() {
       toast.success("URL copiada");
     }
     
-    
-    
     if(loading === true){
     return(
-        <Title tag="h1" onClassName="title_h1" value="Carregando"/>
+      <div id="loader"></div>
     )}else{
     return(
         <>
