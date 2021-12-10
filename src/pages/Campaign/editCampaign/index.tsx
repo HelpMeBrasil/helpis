@@ -101,7 +101,9 @@ export function EditCampaign(){
     const [loading, setLoading] = useState(true);
     if(loading === true){
     return(
+      <div id="container_loader">
       <div id="loader"></div>
+      </div>
     )}else{
 
       

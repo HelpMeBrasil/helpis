@@ -8,15 +8,27 @@
   --text-body: #969cb3;
   --shape: #ffffff;
 }
-
+#container_loader {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 93vh;
+}
 #loader {
+  flex-direction: row;
   border: 16px solid #f3f3f3; /* Light grey */
   border-top: 16px solid #3498db; /* Blue */
+  align-items: center;
+
   border-radius: 50%;
   width: 120px;
   height: 120px;
-  margin-left: 35rem;
-  margin-top: 10rem;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
   animation: spin 2s linear infinite;
 }
 
