@@ -68,7 +68,7 @@ export function Home() {
             <li className="campanhas_listHome" key={campaign.hash}>
             <Link style={{ textDecoration: 'none', width:'100%', height: '100%' }} to={"/ver_campanha/"+campaign.hash}>
             <Title tag="h1" onClassName="title_h1" value={campaign.title}/>
-            <img alt="imagem_campanha" className="campanha_imgHome" src={campaign.image}/>
+            <img title={campaign.description} alt="imagem_campanha" className="campanha_imgHome" src={campaign.image}/>
             <Label valueName={campaign.description}/>
             <hr></hr>
             <div>
