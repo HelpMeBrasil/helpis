@@ -39,7 +39,6 @@ type RegisterProps = {
   bankAgencyDigit: string;
   bankAccount: string;
   bankAccountDigit: string;
-  operation: string;
   street: string;
   number: string;
   district: string;
@@ -79,7 +78,6 @@ type UserProps = {
     bankAgencyDigit: string;
     bankAccount: string;
     bankAccountDigit: string;
-    operation: string;
   }
   address: {
     street: string;
@@ -270,7 +268,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function register({ 
     firstName, surname, email, phoneNumber, password, identity, name, commercialName, responsibleName, responsibleIdentity, codeBank,
-    codeAccount, bankAgency, bankAgencyDigit, bankAccount, bankAccountDigit, operation, street, number, district, zipCode, complement, cityName, stateInitials,
+    codeAccount, bankAgency, bankAgencyDigit, bankAccount, bankAccountDigit, street, number, district, zipCode, complement, cityName, stateInitials,
     countryName, boleto, credito, cripto, debito, pix}: RegisterProps)  {
       let merchantSplit = [];
       if(boleto !== ''){
@@ -360,8 +358,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           bankAgency,
           bankAgencyDigit,
           bankAccount,
-          bankAccountDigit,
-          operation,
+          bankAccountDigit
           },
         address:{
           street,
@@ -391,7 +388,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     async function userUpdate({ 
       firstName, surname, email, phoneNumber, identity, name, commercialName, responsibleName, responsibleIdentity, codeBank,
-      codeAccount, bankAgency, bankAgencyDigit, bankAccount, bankAccountDigit, operation, street, number, district, zipCode, complement, cityName, stateInitials,
+      codeAccount, bankAgency, bankAgencyDigit, bankAccount, bankAccountDigit, street, number, district, zipCode, complement, cityName, stateInitials,
       countryName, boleto, credito, cripto, debito, pix}: UserUpdate)  {
         let merchantSplit = [];
         if(boleto !== ''){
@@ -489,8 +486,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
               bankAgency,
               bankAgencyDigit,
               bankAccount,
-              bankAccountDigit,
-              operation,
+              bankAccountDigit
               },
             address:{
               street,

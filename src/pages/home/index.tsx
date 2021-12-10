@@ -30,25 +30,29 @@ export function Home() {
   
   if(loading === true){
     return(
-        <Title tag="h1" onClassName="title_h1" value="Carregando"/>
+        <div id="loader"></div>
     )
     }
     else{
     return(
     
-    <>
-    <ContentLarge>
-        <Title tag="h1" onClassName="title_h1" value="Bem vindo ao Helpis"/>
-    </ContentLarge>
-    <ContentLarge>
-        <Title tag="h2" onClassName="title_h2" value="Seja a difença na vida de alguém"/>
-    </ContentLarge>
+      <>
+      <div id="Image">
+        <img src="/wallpaper-home.jpg" width='100%' height='530px'/>
+        <h1 id="First-txt">
+        Bem vindo ao Helpis
+        </h1>
+        <h2 id="Second-txt">
+        Seja a diferença na vida de alguém
+        </h2>  
+      </div>
 
     {campaigns.length === 0 ?
     <Title tag="h1" onClassName="title_h1" value=""/> : 
     <>
     
     <Title tag="h1" onClassName="title_h1" value="Campanhas cadastradas"/>
+    <hr></hr>
     <ListaContent>
           {campaigns.map(campaign => (
             <li className="campanhas_listHome" key={campaign.hash}>
