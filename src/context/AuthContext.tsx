@@ -618,7 +618,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         image,
       }, config)
       if(response.status === 200) {
-        navigate('view_campaign/'+hash);
+        navigate('ver_campanha/'+hash);
 
       }
     }
@@ -626,6 +626,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     async function deletCampaign(hash: CampaignPropsDelet){
 
       const config  = {
+        headers: {
+          //token: window.sessionStorage.geyItem('accessToken')
+          authorization: storagedToken ? 'bearer '+ storagedToken : 'Opa'
+        },
         params: {
           //token: window.sessionStorage.geyItem('accessToken')
           hash: hash.hash

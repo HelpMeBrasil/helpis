@@ -1,7 +1,7 @@
-import { FormEvent, useState, useContext } from "react";
+import { FormEvent, useState, useContext, ChangeEvent } from "react";
+import { toast } from "react-toastify";
 import Form, { Button, FormContainer, Input, InputImg, Label, Textarea, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
-import NumberFormat from 'react-number-format';
 
 
 export function NewCampaign(){
@@ -22,26 +22,47 @@ export function NewCampaign(){
 
     async function handleSubmit(event: FormEvent){
       event.preventDefault();
-      if(img === undefined){
-      const data = {
-        title,
-        description,
-        targetValue: parseInt(targetValue.replace("R$","")),
-        }
-        await addCampaign(data);
-      }else{
-        const image = await toBase64(img[0]) as string;
+      if(!(targetValue.startsWith("."))){
+        if(img === undefined){
         const data = {
-        title,
-        description,
-        image,
-        targetValue: parseInt(targetValue.replace("R$","")),
+          title,
+          description,
+          targetValue: parseInt(targetValue.replace("R$ ","")),
+          }
+          await addCampaign(data);
+        }else{
+          const image = await toBase64(img[0]) as string;
+          const data = {
+          title,
+          description,
+          image,
+          targetValue: parseInt(targetValue.replace("R$ ","")),
+          }
+          await addCampaign(data);
         }
-        await addCampaign(data);
+      }
+      else{
+        toast.warning("Metas devem ser 1 real ou mais")
       }
     }
 
+    function handleChange(e: ChangeEvent<HTMLInputElement>){
+
+      var valor = e.target.value;
+
+      valor = valor + '';
+      let valorInt = parseInt(valor.replace(/[\D]+/g, ''));
+      valor = valorInt + '';
+      let valorFinal = valor.replace(/([0-9]{2})$/g, ".$1");
+      e.target.value = valorFinal;
+      console.log(e.target.value);
+      if(valor === 'NaN') e.target.value = '';
+      setTargetValue("R$ "+ e.target.value);
+}
+
     //<Input value={targetValue} onSetState={setTargetValue} type="text" placeholder="Digite o valor"/>
+    //                <NumberFormat placeholder="Exemplo: 10,000.57" className="form__input" value={targetValue} thousandSeparator={true} prefix={'R$'} onChange={(e)=> setTargetValue(e.target.value)} />
+
   return(
     <FormContainer>
           <Title tag="h1" onClassName="title_h1" value="Criar uma campanha de doação"/>
@@ -51,7 +72,7 @@ export function NewCampaign(){
                 <Label valueName="Descrição da campanha"/>
                 <Textarea value={description} onSetState={setDescription}/>
                 <Label valueName="Digite o valor da meta"/>
-                <NumberFormat placeholder="Exemplo: 10,000.57" className="form__input" value={targetValue} thousandSeparator={true} prefix={'R$'} onChange={(e)=> setTargetValue(e.target.value)} />
+                <input value={targetValue} type="text" className="form__input" onChange={e => handleChange(e)} />
                 <Label valueName="Escolha uma imagem para a campanha"/>
                 <InputImg name="formInputImg "id="formInputImg" accept="image/x-png,image/gif,image/jpeg" type="file" onSetState={setImg}/>
                 <Button value="Criar"/>
