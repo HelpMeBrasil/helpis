@@ -40,6 +40,7 @@ export function CampaignsName(){
     <Title tag="h1" onClassName="title_h1" value="Não existem campanhas com esse nome"/> : 
     <>
     <Title tag="h1" onClassName="title_h1" value="Pesquisa por nome"/>
+    <hr></hr>
     <ListaContent>
           {campaigns.map(campaign => (
             <Link style={{ textDecoration: 'none', width:'5%' }} to={"/ver_campanha/"+campaign.hash}>

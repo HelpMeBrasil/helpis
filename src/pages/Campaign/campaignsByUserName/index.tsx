@@ -51,6 +51,7 @@ export function CampaignsByUserName(){
     {campaigns.length === 0 ? <Title tag="h1" onClassName="title_h1" value="Você não possui campanhas"/> : 
     <>
     <Title tag="h1" onClassName="title_h1" value="Minhas campanhas"/>
+    <hr></hr>
       <ListaContent>
             {campaigns.map(campaign => (
               <li className="campanhas_list" key={campaign.hash}>
