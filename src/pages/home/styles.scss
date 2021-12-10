@@ -1,7 +1,7 @@
 .campanhas_listHome {
   display: flex;
-  height: 70vh;
-  width: 40vw;
+  height: 65vh;
+  width: 20vw;
   flex-direction: column;
   background: rgb(255, 255, 255);
   border-radius: 4px;
@@ -30,7 +30,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 60%;
+  height: 40%;
 }
 
 #Image{
@@ -71,5 +71,14 @@ hr{
   margin-top: 0%;
   position: relative;
   width: 70%;
+  margin-left: 15%;
+}
+p{
+  font-size: 15px;
+  text-align: left;
+  margin-left: 15%;
+}
+h4{
+  text-align: left;
   margin-left: 15%;
 }

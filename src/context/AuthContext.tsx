@@ -163,6 +163,17 @@ type ResponseRequest = {
     title: string,
     description: string,
     image: string,
+    targetValue: string
+    user: {
+      firstName: string,
+      surname: string,
+      merchant:{
+        address: {
+          cityName: string,
+          stateInitials: string
+        }
+      }
+    }
   }[]
 
 

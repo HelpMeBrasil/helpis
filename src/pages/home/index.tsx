@@ -1,6 +1,5 @@
 import { useEffect, useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { ContentLarge } from "../../components/contentLarge";
 import { Label, Title } from "../../components/form";
 import { ListaContent } from "../../components/lista/listaContent";
 import { AuthContext } from "../../context/AuthContext";
@@ -12,6 +11,17 @@ type CampaignReturnPropsAll = {
   title: string,
   description: string,
   image: string,
+  targetValue: string
+    user: {
+      firstName: string,
+      surname: string,
+      merchant:{
+        address: {
+          cityName: string,
+          stateInitials: string
+        }
+      }
+    }
 }[]
 
 export function Home() {
@@ -59,10 +69,15 @@ export function Home() {
             <Link style={{ textDecoration: 'none', width:'100%', height: '100%' }} to={"/ver_campanha/"+campaign.hash}>
             <Title tag="h1" onClassName="title_h1" value={campaign.title}/>
             <img alt="imagem_campanha" className="campanha_imgHome" src={campaign.image}/>
-            <div>
-            <Label valueName="Sobre"/>
-            </div>
             <Label valueName={campaign.description}/>
+            <hr></hr>
+            <div>
+              <h4>{campaign.user.firstName} {campaign.user.surname}</h4>
+              <p>{campaign.user.merchant.address.cityName}/{campaign.user.merchant.address.stateInitials}</p>
+            </div>
+            <div>
+            <i>Meta R$ </i><Label valueName={campaign.targetValue}/>
+            </div>
             </Link>
             </li>
 
