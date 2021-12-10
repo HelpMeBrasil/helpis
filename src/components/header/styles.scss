@@ -4,9 +4,9 @@
   height: 6vh;
   display: flex;
   align-items: center;
-  background-color: #73a2b0;
+  background-color: #053847;
 
-  &__link {
+  &__link {    
     display: flex;
     align-items: center;
     color: none;
@@ -14,13 +14,12 @@
   &__link {
     text-decoration: none;
   }
-
   &__link:hover {
     text-decoration: none;
     cursor: pointer;
   }
   &__img {
-    width: 25%;
+    width: 18%;
     margin-left: 1rem;
     border-radius: 5rem;
     border: 0.04rem solid rgba(255, 0, 0, 0.3);
@@ -67,7 +66,7 @@
 
   &__icon {
     margin-left: auto;
-    margin-right: 0.3rem;
+    margin-right: 1rem;
     color: #e7e9ee;
     cursor: pointer;
     @media (max-width: 900px) {

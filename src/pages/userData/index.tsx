@@ -30,7 +30,6 @@ export function UserData() {
   const [bankAgencyDigit, setBankAgencyDigit] = useState('');
   const [bankAccount, setBankAccount] = useState('');
   const [bankAccountDigit, setBankAccountDigit] = useState('');
-  const [operation, setOperation] = useState('');
 
   //Address
   const [street, setStreet] = useState('');
@@ -75,7 +74,6 @@ export function UserData() {
       setBankAccountDigit(response.merchant.bankData.bankAccountDigit);
       setBankAgency(response.merchant.bankData.bankAgency);
       setBankAgencyDigit(response.merchant.bankData.bankAgencyDigit);
-      setOperation(response.merchant.bankData.operation);
       setStreet(response.merchant.address.street);
       setNumber(response.merchant.address.number);
       setDistrict(response.merchant.address.district);
@@ -167,7 +165,6 @@ export function UserData() {
       bankAgencyDigit,
       bankAccount,
       bankAccountDigit,
-      operation,
       street,
       number,
       district,
@@ -244,8 +241,8 @@ export function UserData() {
         <Label valueName="Dígito da sua conta bancária"/>
         <Input value={bankAccountDigit} onSetState={setBankAccountDigit} type="text" placeholder="Digite o dígito da sua conta bancária"/>
      
-        <Label valueName="Operação da sua conta bancária"/>
-        <Input value={operation} onSetState={setOperation} type="text" placeholder="Digite a operação da sua conta"/>
+        {/* <Label valueName="Operação da sua conta bancária"/>
+        <Input value={operation} onSetState={setOperation} type="text" placeholder="Digite a operação da sua conta"/> */}
 
         <Title tag="h2" onClassName="title_h2" value="Endereço"/>
 
