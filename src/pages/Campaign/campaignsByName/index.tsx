@@ -28,7 +28,9 @@ export function CampaignsName(){
 
     if(loading === true){
     return(
+        <div id="container_loader">
         <div id="loader"></div>
+        </div>
     )
     }
     else{

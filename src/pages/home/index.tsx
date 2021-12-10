@@ -40,7 +40,9 @@ export function Home() {
   
   if(loading === true){
     return(
-        <div id="loader"></div>
+      <div id="container_loader">
+      <div id="loader"></div>
+      </div>
     )
     }
     else{
