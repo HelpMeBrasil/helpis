@@ -38,7 +38,7 @@ export function Home() {
     
       <>
       <div id="Image">
-        <img src="/wallpaper-home.jpg" width='100%' height='530px'/>
+        <img alt="imgmenu" src="/wallpaper-home.jpg" width='100%' height='530px'/>
         <h1 id="First-txt">
         Bem vindo ao Helpis
         </h1>
