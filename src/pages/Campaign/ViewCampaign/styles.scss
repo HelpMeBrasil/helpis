@@ -6,17 +6,17 @@
 
 .campaign_values {
   margin-top: 1rem;
-  width: 100%;
-  display: flex;
   text-align: left;
   font-size: 1.3rem;
   color: rgb(88, 88, 88);
+  margin-left: -0%;
 }
 
 .campaign_values_small {
   margin-left: 3rem;
   width: 100%;
   display: flex;
+  margin-left: 50%;
   text-align: center;
   font-size: 1rem;
   color: rgb(88, 88, 88);
@@ -24,8 +24,8 @@
 
 .campaign_copy_url {
   width: 100%;
-  padding: 0 1.5rem;
-  height: 3rem;
+  padding: 0 1.4rem;
+  height: 4rem;
   background: rgb(141, 182, 192);
   color: #fff;
   border-radius: 0.75rem;
@@ -40,4 +40,18 @@
   &:active {
     outline: auto;
   }
+}
+.campaign_values_border{
+  text-align: left;
+  margin-left: 1%;
+}
+
+.progressBar{
+  width: 245px;
+  height: 20px;
+}
+.teste{
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+  grid-gap: 5px;
 }
