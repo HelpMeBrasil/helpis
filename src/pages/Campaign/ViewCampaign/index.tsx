@@ -35,6 +35,7 @@ export function ViewCampaign() {
     useEffect(() => {
     async function searchCampaign() {
         const response = await viewCampaign(hash!)
+        console.log(hash!);
         const respostaAmount = await listByReference(hash!);
         setAmount(respostaAmount);
         setCampaign(response);
