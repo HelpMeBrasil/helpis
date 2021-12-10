@@ -50,7 +50,7 @@ export function Home() {
       <div id="Image">
         <img alt="imgmenu" src="/wallpaper-home.jpg" width='100%' height='530px'/>
         <h1 id="First-txt">
-        Bem vindo ao Helpis
+        Bem-vindo ao Helpis
         </h1>
         <h2 id="Second-txt">
         Seja a diferença na vida de alguém
