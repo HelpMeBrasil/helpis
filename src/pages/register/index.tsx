@@ -30,7 +30,6 @@ export function Register() {
   const [bankAgencyDigit, setBankAgencyDigit] = useState('');
   const [bankAccount, setBankAccount] = useState('');
   const [bankAccountDigit, setBankAccountDigit] = useState('');
-  const [operation, setOperation] = useState('');
 
   //Address
   const [street, setStreet] = useState('');
@@ -83,7 +82,6 @@ export function Register() {
         bankAgencyDigit,
         bankAccount,
         bankAccountDigit,
-        operation,
         street,
         number,
         district,
@@ -181,8 +179,8 @@ export function Register() {
         <Label valueName="Dígito da sua conta bancária"/>
         <Input value={bankAccountDigit} onSetState={setBankAccountDigit} type="text" placeholder="Digite o dígito da sua conta bancária"/>
      
-        <Label valueName="Operação da sua conta bancária"/>
-        <Input value={operation} onSetState={setOperation} type="text" placeholder="Digite a operação da sua conta"/>
+        {/* <Label valueName="Operação da sua conta bancária"/>
+        <Input value={operation} onSetState={setOperation} type="text" placeholder="Digite a operação da sua conta"/> */}
 
         <Title tag="h2" onClassName="title_h2" value="Endereço"/>
 
