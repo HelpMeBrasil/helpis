@@ -114,7 +114,6 @@ export function Register() {
           toast.warning("CEP deve ser valido");
         }
       }
-
     }
     
     getZipCode();

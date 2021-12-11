@@ -2,7 +2,7 @@ import { FormEvent, useContext, useState } from "react";
 import { toast } from "react-toastify";
 import Form, { Button, FormContainer, Input, Label, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
-
+import './styles.scss';
 
 export function ChangePassword() {
   const { changePassword } = useContext(AuthContext);
@@ -20,6 +20,12 @@ export function ChangePassword() {
         confirmNewPassword,
       }
       await changePassword(data);
+
+      toast.success('Senha alterada com sucesso!');
+
+      setOldPassowrd('');
+      setNewPassowrd('');
+      setConfirmNewPassowrd('');
     }else{
       toast.warning('Confirmação de senha incorreta')
     }
@@ -36,6 +42,13 @@ export function ChangePassword() {
         <Input value={newPassword} onSetState={setNewPassowrd} type="password" placeholder="Digite sua nova senha"/>
         <Label valueName="Confirmar nova senha"/>
         <Input value={confirmNewPassword} onSetState={setConfirmNewPassowrd} type="password" placeholder="Digite sua senha antiga"/>
+        <div className="passwordRequirements">
+          <p>A senha deve possuir no mínimo 8 caracteres.</p>
+          <p>A senha deve conter ao menos um número.</p>
+          <p>A senha deve conter ao menos uma letra maiúscula.</p>
+          <p>A senha deve conter ao menos uma letra minúscula.</p>
+          <p>A senha deve conter ao menos um caracter especial.</p>
+        </div>
         <Button value="Alterar"/>
       </Form>
     </FormContainer>

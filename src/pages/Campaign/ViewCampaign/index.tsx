@@ -50,7 +50,7 @@ export function ViewCampaign() {
       toast.success("URL copiada");
     }
 
-    var percentage = amount / campaign.targetValue;
+    var percentage = amount / campaign.targetValue * 100;
 
     percentage = parseFloat((percentage).toFixed(2));
 
