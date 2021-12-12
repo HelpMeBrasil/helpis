@@ -48,7 +48,7 @@ export function CampaignsName(){
             <Link style={{ textDecoration: 'none', width:'5%' }} to={"/ver_campanha/"+campaign.hash}>
             <li className="campanhas_list" key={campaign.hash}>
             <Title tag="h1" onClassName="title_h1" value={campaign.title}/>
-            <img alt="imagem_campanha" className="campanha_img" src={campaign.image}/>
+            <img title={campaign.description} alt="imagem_campanha" className="campanha_img" src={campaign.image}/>
             <Label valueName={campaign.description}/>
             </li>
             </Link>

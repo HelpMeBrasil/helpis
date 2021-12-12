@@ -70,13 +70,15 @@ export function Home() {
             <li className="campanhas_listHome" key={campaign.hash}>
             <Link style={{ textDecoration: 'none', width:'100%', height: '100%' }} to={"/ver_campanha/"+campaign.hash}>
             <Title tag="h1" onClassName="title_h1" value={campaign.title}/>
-            <img alt="imagem_campanha" className="campanha_imgHome" src={campaign.image}/>
+
+            <img title={campaign.title} alt="imagem_campanha" className="campanha_imgHome" src={campaign.image}/>
+
             <div>
               <h4>{campaign.user.firstName} {campaign.user.surname}</h4>
               <p>{campaign.user.merchant.address.cityName}/{campaign.user.merchant.address.stateInitials}</p>
             </div>
             <div>
-            <i>Meta R$ </i><Label valueName={campaign.targetValue}/>
+            <b>Meta R$ {campaign.targetValue}</b>
             </div>
             <hr></hr>
             <Label valueName={campaign.description}/>

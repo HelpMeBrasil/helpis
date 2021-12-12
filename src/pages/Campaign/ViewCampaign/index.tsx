@@ -49,7 +49,11 @@ export function ViewCampaign() {
       navigator.clipboard.writeText(url)
       toast.success("URL copiada");
     }
-    
+
+    var percentage = amount / campaign.targetValue * 100;
+
+    percentage = parseFloat((percentage).toFixed(2));
+
     if(loading === true){
     return(
       <div id="container_loader">
@@ -66,8 +70,6 @@ export function ViewCampaign() {
         
         <Title tag="h2" onClassName="title_h2" value={"Arrecadado: "+amount}/> */}
 
-        
-
         <p className="campaign_values" >Meta: {new Intl.NumberFormat('pt-BR', {
           style: 'currency',
           currency: 'BRL'
@@ -78,11 +80,21 @@ export function ViewCampaign() {
         currency: 'BRL'
       }).format(amount)} </p>
 
-        <p className="campaign_values">Compartilhe </p>
+        <div className="progress"> 
+          <div id="download" className="progress__bar"></div>
+        </div>
+
+      <div className='teste'>
+        <progress className='progressBar' max="100" value={percentage}></progress>
+        <p>{percentage}%</p>
+      </div>
+        
+
+        <p className="campaign_values">Compartilhe a campanha</p>
 
         <p className="campaign_values_small">Clique para copiar</p>
         <button onClick={() => handleCopyURL()} className="campaign_copy_url">
-        <p className="campaign_values_border"> {api.defaults.baseURL!+"/"+hash}  </p>
+        <p title='Copiar' className="campaign_values_border"> {api.defaults.baseURL!+"/"+hash}  </p>
         </button>
 
         </ContentButton>

@@ -18,7 +18,6 @@ import  Form, {Button, FormContainer, Input, Label,Title}  from "../../component
         password,
       }
       await signIn(data);
-
     }
     
     return(

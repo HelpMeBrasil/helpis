@@ -1,8 +1,241 @@
 .imgQrCodePayment {
-  width: 20%;
+  width: 15%;
   height: 20%;
+  float: left;
+  margin: 0% 5% 0% 15%;
   @media (max-width: 720px) {
     width: 75%;
     height: 75%;
   }
+}
+
+.copyWallet{
+  width: 35%;
+  height: 3rem;
+  background: rgb(141, 182, 192);
+  color: #fff;
+  border-radius: 0.75rem;
+  border: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: filter 0.2;
+  &:hover {
+    filter: brightness(0.9);
+  }
+  &:active {
+    outline: auto;
+  }
+}
+
+.wallet{
+  text-align: center;
+  margin-bottom: 2%;
+}
+
+.amount{
+  text-align: center;
+}
+
+.amount p{
+  text-align: center;
+  margin: 0%;
+}
+
+.debit{
+  text-align: center;
+}
+
+.debit p{
+  margin: 0%;
+  text-align: center;
+}
+
+.digitableLine{
+  margin-left: 30%;
+  margin-bottom: 2%;
+}
+
+.digitableLine p {
+  text-align: center;
+    margin: 0%;
+    width: 55%;
+}
+
+.urlBankslip {
+  text-align: center;
+}
+
+.urlBankslip p{
+  text-align: center;
+  margin-left: 0%;
+}
+
+.head{
+  display: flex;
+  margin-top: 2%;
+  margin-right: 2%;
+}
+
+.description{
+  margin-top: 5%;
+}
+
+.url{
+  font-size: 90%;
+}
+
+.copy{
+  margin-top: 2%;
+}
+
+.copykey{
+  width: 50%;
+  height: 6rem;
+  background: rgb(141, 182, 192);
+  color: #fff;
+  border-radius: 0.75rem;
+  border: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: filter 0.2;
+  &:hover {
+    filter: brightness(0.9);
+  }
+  &:active {
+    outline: auto;
+  }
+}
+
+.copykey p{
+  word-wrap: break-word;
+  margin: 1% 1% 1% 1%;
+}
+
+.copydigitableline{
+  width: 55%;
+  padding: 0 1.3rem;
+  height: 4rem;
+  background: rgb(141, 182, 192);
+  color: #fff;
+  border-radius: 0.75rem;
+  border: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: filter 0.2;
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  &:active {
+    outline: auto;
+  }
+}
+
+.copydigitableline p {
+  margin: 0%
+}
+
+.dummy-positioning {
+  width: 15%;
+  height: 25vh;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5%;
+  margin-bottom: 3%;
+}
+
+
+// The icon specifics
+// Variables
+$green:     #4cc93f;
+$icon-base-size: 20px;
+
+// Structure
+.success-icon {
+  display: inline-block;
+  width: 8em;
+  height: 8em;
+  font-size: $icon-base-size;
+  border-radius: 50%;
+  border: 4px solid lighten($green, 20%);
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+  transform-origin: center;
+  animation: showSuccess 180ms ease-in-out;
+  transform: scale(1);
+}
+
+// Elements
+.success-icon {
+  
+  &__tip,
+  &__long {
+    display: block;
+    position: absolute;
+    height: 4px;
+    background-color: lighten($green, 20%);
+    border-radius: 10px;
+  }
+
+  &__tip {
+    width: 2.4em;
+    top: 4.3em;
+    left: 1.4em;
+    transform: rotate(45deg);
+    animation: tipInPlace 300ms ease-in-out;
+    animation-fill-mode: forwards;
+    animation-delay: 180ms;
+    visibility: hidden;
+  }
+
+  &__long {
+    width: 4em;
+    transform: rotate(-45deg);
+    top: 3.70em;
+    left: 2.75em;
+    animation: longInPlace 140ms ease-in-out;
+    animation-fill-mode: forwards;
+    visibility: hidden;
+    animation-delay: 300ms + 140ms;
+  }
+
+}
+
+@keyframes showSuccess {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes tipInPlace {
+    from {
+        width: 0em;
+        top: 0em;
+        left: -1.6em;
+    }
+    to {
+        width: 2.4em;
+        top: 4.3em;
+        left: 1.4em;
+        visibility: visible;
+    }
+}
+
+@keyframes longInPlace {
+    from {
+        width: 0em;
+        top: 5.1em;
+        left: 3.2em;
+    }
+    to {
+        width: 4em;
+        top: 3.70em;
+        left: 2.75em;
+        visibility: visible;
+    }
 }

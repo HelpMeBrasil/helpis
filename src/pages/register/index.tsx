@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Form, { Button, CheckBox, FormContainer, Input, Label, Title } from "../../components/form";
 import { AuthContext } from "../../context/AuthContext";
 import './styles.scss'
+import NumberFormat from 'react-number-format';
 
 export function Register() {
   const { register } = useContext(AuthContext);
@@ -113,7 +114,6 @@ export function Register() {
           toast.warning("CEP deve ser valido");
         }
       }
-
     }
     
     getZipCode();
@@ -136,6 +136,9 @@ export function Register() {
         <Label valueName="Número de celular"/>
         <Input value={phoneNumber} onSetState={setPhoneNumber} type="number" placeholder="Numero formato DDD e NUMERO Exemplo: 00123456789"/>
         
+        {/* <Label valueName="Número de celular"/>
+        <NumberFormat format="(##)#####-####" value={phoneNumber} onSetState={setPhoneNumber} type="number" placeholder="Numero formato DDD e NUMERO Exemplo: 00123456789"/> */}
+
         <Label valueName="Senha"/>
         <Input value={password} onSetState={setPassword} type="password" placeholder="Digite sua senha"/>
        

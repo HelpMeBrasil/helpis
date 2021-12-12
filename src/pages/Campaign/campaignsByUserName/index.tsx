@@ -58,18 +58,18 @@ export function CampaignsByUserName(){
             {campaigns.map(campaign => (
               <li className="campanhas_list" key={campaign.hash}>
               <Title tag="h1" onClassName="title_h1" value={campaign.title}/>
-              <img alt="imagem_campanha" className="campanha_img" src={campaign.image}/>
+              <img title={campaign.description} alt="imagem_campanha" className="campanha_img" src={campaign.image}/>
               
               <Label valueName={campaign.description}/>
               <div className="container_buttons">
                   <Link to={`/editar_campanha/${campaign.hash}`}>
                   <div className="campanhas_buttonEdit">
-                  <Icon size={30} icon={edit}/>
+                  <Icon title="Editar campanha" size={30} icon={edit}/>
                   </div>
                   </Link>
                   <Link onClick={() => handleDelet(campaign.hash)} to="/minhas_campanhas">
                   <div className="campanhas_buttonDelet">
-                  <Icon size={38} icon={deleteIconic}/>
+                  <Icon title="Desativar campanha" size={38} icon={deleteIconic}/>
                   </div>
                   </Link>
               </div>   

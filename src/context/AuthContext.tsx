@@ -697,8 +697,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if(response.status === 200){
           navigate('/paymentSucess', { state: { 
             description: response.data.description,
-            walletAddress: response.data.walletAddress,
-            barcode: response.data.barcode } });
+            digitableLine: response.data.digitableLine,
+            bankSlipUrl: response.data.bankSlipUrl
+           } });
         }
       }
 
@@ -707,8 +708,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if(response.status === 200){
           navigate('/paymentSucess', { state: { 
             description: response.data.description,
-            walletAddress: response.data.walletAddress,
-            barcode: response.data.barcode } });
+            digitableLine: response.data.digitableLine } });
         }
       }
 
@@ -718,7 +718,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
           navigate('/paymentSucess', { state: { 
             description: response.data.description,
             walletAddress: response.data.walletAddress,
-            barcode: response.data.barcode,
             amountBTC: response.data.amountBTC } });
         }
       }
@@ -728,8 +727,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if(response.status === 200){
           navigate('/paymentSucess', { state: { 
             description: response.data.description,
-            walletAddress: response.data.walletAddress,
-            barcode: response.data.barcode, 
             authenticationUrl: response.data.authenticationUrl }});
         }
       }
@@ -739,8 +736,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if(response.status === 200){
           navigate('/paymentSucess', { state: { 
             description: response.data.description,
-            walletAddress: response.data.walletAddress,
-            barcode: response.data.barcode,
             key: response.data.key,
             qrCode: response.data.qrCode } });
         }

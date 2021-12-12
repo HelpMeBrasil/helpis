@@ -1,7 +1,8 @@
-import axios from "axios";
+
 import { FormEvent, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import axios from "axios";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 import Form, { Button, FormContainer, Input, Label, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
 import './styles.scss';
@@ -124,6 +125,24 @@ export function Payment() {
   },[zipCode])
 
 
+  useEffect(() => {
+    async function getZipCode(){
+    if(zipCode.length === 8){
+      const response = await axios.get("https://viacep.com.br/ws/"+zipCode+"/json/",{headers: { 'Content-Type': 'application/json', }});
+      
+      if(response.data.erro !==true){
+        setDistrict(response.data.bairro);
+        setStreet(response.data.logradouro);
+        setCityName(response.data.localidade);
+        setStateInitials(response.data.uf);
+        }else{
+          toast.warning("CEP deve ser valido");
+        }
+      }
+    }
+    
+    getZipCode();
+  },[zipCode])
 
 
   const paymentObject = () => {
