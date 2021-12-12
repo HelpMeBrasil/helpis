@@ -1,5 +1,7 @@
+import axios from "axios";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import Form, { Button, FormContainer, Input, Label, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
 import './styles.scss';
@@ -20,7 +22,7 @@ export function Payment() {
   const [complement, setComplement] = useState('');
   const [cityName, setCityName] = useState('');
   const [stateInitials, setStateInitials] = useState('');
-  const [countryName, setCountryName] = useState('');
+  const [countryName, setCountryName] = useState('BR');
 
   const [holder, setHolder] = useState('');
   const [cardNumber, setCardNumber] = useState('');
@@ -102,6 +104,24 @@ export function Payment() {
     }
     methods();
   },[hash, requestMethods])
+
+  useEffect(() => {
+    async function getZipCode(){
+    if(zipCode.length === 8){
+      const response = await axios.get("https://viacep.com.br/ws/"+zipCode+"/json/",{headers: { 'Content-Type': 'application/json', }});
+      
+      if(response.data.erro !==true){
+        setDistrict(response.data.bairro);
+        setStreet(response.data.logradouro);
+        setCityName(response.data.localidade);
+        setStateInitials(response.data.uf);
+        }else{
+          toast.warning("CEP deve ser valido");
+        }
+      }
+    }    
+    getZipCode();
+  },[zipCode])
 
 
 
@@ -206,29 +226,29 @@ export function Payment() {
       
           <Title tag="h2" onClassName="title_h2" value="Endereço"/>
 
+          <Label valueName="CEP"/>
+          <Input value={zipCode} onSetState={setZipCode} type="number" placeholder="Digite o cep"/>
+
           <Label valueName="Rua"/>
-          <Input value={street} onSetState={setStreet} type="text" placeholder="Digite o endereço da sua rua"/>
+          <Input value={street} onSetState={setStreet} type="text" placeholder="Digite o endereço da sua rua" disabled={true}/>
         
           <Label valueName="Número"/>
           <Input value={number} onSetState={setNumber} type="number" placeholder="Digite o número"/>
-      
-          <Label valueName="Bairro"/>
-          <Input value={district} onSetState={setDistrict} type="text" placeholder="Digite o bairro"/>
-        
-          <Label valueName="CEP"/>
-          <Input value={zipCode} onSetState={setZipCode} type="number" placeholder="Digite o cep"/>
-      
+
           <Label valueName="Complemento"/>
           <Input value={complement} onSetState={setComplement} type="text" placeholder="Digite o complemento"/>
-
+      
+          <Label valueName="Bairro"/>
+          <Input value={district} onSetState={setDistrict} type="text" placeholder="Digite o bairro" disabled={true}/>
+        
           <Label valueName="Cidade"/>
-          <Input value={cityName} onSetState={setCityName} type="text" placeholder="Digite a cidade"/>
+          <Input value={cityName} onSetState={setCityName} type="text" placeholder="Digite a cidade" disabled={true}/>
 
           <Label valueName="Estado"/>
-          <Input value={stateInitials} onSize={2} onSetState={setStateInitials} type="text" placeholder="Digite a sigla do estado"/>
+          <Input value={stateInitials} onSize={2} onSetState={setStateInitials} type="text" placeholder="Digite a sigla do estado" disabled={true}/>
 
           <Label valueName="País"/>
-          <Input value={countryName} onSize={3} onSetState={setCountryName} type="text" placeholder="Digite a sigla do páis"/>
+          <Input value={countryName} onSize={3} onSetState={setCountryName} type="text" placeholder="Digite a sigla do páis" disabled={true}/>
           
           <Title tag="h2" onClassName="title_h2" value="Doação"/>
           <Label valueName="Valor da doação: "/>

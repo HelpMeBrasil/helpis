@@ -71,8 +71,6 @@ export function Home() {
             <Link style={{ textDecoration: 'none', width:'100%', height: '100%' }} to={"/ver_campanha/"+campaign.hash}>
             <Title tag="h1" onClassName="title_h1" value={campaign.title}/>
             <img alt="imagem_campanha" className="campanha_imgHome" src={campaign.image}/>
-            <Label valueName={campaign.description}/>
-            <hr></hr>
             <div>
               <h4>{campaign.user.firstName} {campaign.user.surname}</h4>
               <p>{campaign.user.merchant.address.cityName}/{campaign.user.merchant.address.stateInitials}</p>
@@ -80,6 +78,8 @@ export function Home() {
             <div>
             <i>Meta R$ </i><Label valueName={campaign.targetValue}/>
             </div>
+            <hr></hr>
+            <Label valueName={campaign.description}/>
             </Link>
             </li>
 
