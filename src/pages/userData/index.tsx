@@ -116,7 +116,7 @@ export function UserData() {
 
   useEffect(() => {
     async function getZipCode(){
-    if(zipCode.length === 8){
+    if(zipCode.trim().length === 8){
       const response = await axios.get("https://viacep.com.br/ws/"+zipCode+"/json/",{headers: { 'Content-Type': 'application/json', }});
       
       if(response.data.erro !==true){

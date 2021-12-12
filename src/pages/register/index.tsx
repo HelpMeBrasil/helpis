@@ -105,10 +105,10 @@ export function Register() {
     }
   }
   useEffect(() => {
-    console.log("Teste"+phoneNumber);
+    
     async function getZipCode(){
-    if(zipCode.length === 8){
-      const response = await axios.get("https://viacep.com.br/ws/"+zipCode+"/json/",{headers: { 'Content-Type': 'application/json', }});
+    if(zipCode.trim().length === 8){
+      const response = await axios.get("https://viacep.com.br/ws/"+zipCode+"/json/", { headers: { 'Content-Type': 'application/json', }});
       
       if(response.data.erro !==true){
         setDistrict(response.data.bairro);
@@ -218,7 +218,7 @@ export function Register() {
 
         <Label valueName="CEP"/>
         <NumberFormat className="form__input" format="########" value={zipCode} onChange={(e) => setZipCode(e.target.value)} type="tel" placeholder="Digite o cep"/>
-        
+
         <Label valueName="Rua"/>
         <Input disabled={true} value={street}  type="text" placeholder="Digite o endereço da sua rua"/>
       
