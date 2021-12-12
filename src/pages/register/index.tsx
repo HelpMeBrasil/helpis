@@ -1,10 +1,12 @@
 import axios from "axios";
-import { FormEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Form, { Button, CheckBox, FormContainer, Input, Label, Title } from "../../components/form";
 import { AuthContext } from "../../context/AuthContext";
 import './styles.scss'
 import NumberFormat from 'react-number-format';
+import CpfCnpj from "../../utils/cpf";
+
 
 export function Register() {
   const { register } = useContext(AuthContext);
@@ -48,6 +50,7 @@ export function Register() {
   const [debito, setDebito] = useState('');
   const [pix, setPix] = useState('');
   const [cripto, setCripto] = useState('');
+  const [mask, setMask] = useState<boolean>();
 
   const validations = () => {
     const validaCpf = identity.match("([0-9]{2}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[\\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[-]?[0-9]{2})");
@@ -70,13 +73,13 @@ export function Register() {
         firstName,
         surname,
         email,
-        phoneNumber,
+        phoneNumber: phoneNumber.replaceAll("-", "").replaceAll("(", "").replaceAll(")", ""),
         password,
-        identity,
+        identity: identity.replaceAll("-", "").replaceAll("/", "").replaceAll(".", ""),
         name,
         commercialName,
         responsibleName,
-        responsibleIdentity,
+        responsibleIdentity: responsibleIdentity.replaceAll("-", "").replaceAll("/", "").replaceAll(".", ""),
         codeBank,
         codeAccount,
         bankAgency,
@@ -97,10 +100,12 @@ export function Register() {
         debito,
         pix
       }
+
       await register(data);
     }
   }
   useEffect(() => {
+    console.log("Teste"+phoneNumber);
     async function getZipCode(){
     if(zipCode.length === 8){
       const response = await axios.get("https://viacep.com.br/ws/"+zipCode+"/json/",{headers: { 'Content-Type': 'application/json', }});
@@ -118,6 +123,8 @@ export function Register() {
     
     getZipCode();
   },[zipCode])
+
+ 
     
   return(
     <FormContainer>
@@ -133,11 +140,11 @@ export function Register() {
         <Label valueName="Email"/>
         <Input value={email} onSetState={setEmail} type="text" placeholder="Digite seu email"/>
        
-        <Label valueName="Número de celular"/>
-        <Input value={phoneNumber} onSetState={setPhoneNumber} type="number" placeholder="Numero formato DDD e NUMERO Exemplo: 00123456789"/>
-        
         {/* <Label valueName="Número de celular"/>
-        <NumberFormat format="(##)#####-####" value={phoneNumber} onSetState={setPhoneNumber} type="number" placeholder="Numero formato DDD e NUMERO Exemplo: 00123456789"/> */}
+        <Input value={phoneNumber} onSetState={setPhoneNumber} type="number" placeholder="Numero formato DDD e NUMERO Exemplo: 00123456789"/> */}
+        
+        <Label valueName="Número de celular"/>
+        <NumberFormat className="form__input" format="(##)#####-####" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="tel" placeholder="Numero formato DDD e NUMERO Exemplo: 00123456789"/>
 
         <Label valueName="Senha"/>
         <Input value={password} onSetState={setPassword} type="password" placeholder="Digite sua senha"/>
@@ -150,15 +157,37 @@ export function Register() {
        
         <Label valueName="Nome comercial"/>
         <Input value={commercialName} onSetState={setCommercionalName} type="text" placeholder="Digite seu nome comercial "/>
-        
+
         <Label valueName="CPF ou CNPJ"/>
-        <Input onSize={3} value={identity} onSetState={setIdentity} type="number" placeholder="Digite seu cpf ou cnpj sem pontos"/>
-      
+
+        <CpfCnpj
+        className="form__input"
+        placeholder="Digite um CPF ou CNPJ"
+        type="tel"
+        value={identity}
+        onChange={(event, type) => {
+          setIdentity(event.target.value);
+          setMask(type === "CPF");
+        }}
+      />
+
         <Label valueName="Nome completo do responsavel"/>
         <Input value={responsibleName} onSetState={setResponsibleName} type="text" placeholder="Digite o nome completo do responsavel"/>
         
         <Label valueName="CPF do responsavel"/>
-        <Input value={responsibleIdentity} onSetState={setResponsibleIdentity} type="text" placeholder="Digite o cpf completo"/>
+        {/* <Input value={responsibleIdentity} onSetState={setResponsibleIdentity} type="text" placeholder="Digite o cpf completo"/> */}
+
+        <CpfCnpj
+        className="form__input"
+        placeholder="Digite um CPF ou CNPJ"
+        type="tel"
+        value={responsibleIdentity}
+        onChange={(event, type) => {
+          setResponsibleIdentity(event.target.value);
+          setMask(type === "CPF");
+        }}
+      />
+
 
         <Title tag="h2" onClassName="title_h2" value="Dados bancários"/>
         <Label valueName="Código do seu banco"/>
@@ -188,8 +217,8 @@ export function Register() {
         <Title tag="h2" onClassName="title_h2" value="Endereço"/>
 
         <Label valueName="CEP"/>
-        <Input value={zipCode} onSetState={setZipCode} type="number" placeholder="Digite o cep"/>
-
+        <NumberFormat className="form__input" format="########" value={zipCode} onChange={(e) => setZipCode(e.target.value)} type="tel" placeholder="Digite o cep"/>
+        
         <Label valueName="Rua"/>
         <Input disabled={true} value={street}  type="text" placeholder="Digite o endereço da sua rua"/>
       

@@ -6,6 +6,8 @@ import { useParams } from "react-router-dom";
 import Form, { Button, FormContainer, Input, Label, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
 import './styles.scss';
+import NumberFormat from "react-number-format";
+import CpfCnpj from "../../../utils/cpf";
 export function Payment() {
   const { addPayment, requestMethods } = useContext(AuthContext);
   const [optionPayment, setOptionPayment] = useState('');
@@ -34,7 +36,7 @@ export function Payment() {
   const [debito, setDebito] = useState(false);
   const [pix, setPix] = useState(false);
   const [cripto, setCripto] = useState(false);
-
+  const [ mask, setMask ] = useState<boolean>();
   const { hash } = useParams();
   const [loading, setLoading] = useState(true);
 
@@ -192,8 +194,8 @@ export function Payment() {
       },
       customer: {
         email,
-        phoneNumber,
-        identity,
+        phoneNumber: phoneNumber.replaceAll("-", "").replaceAll("(", "").replaceAll(")", ""),
+        identity: identity.replaceAll("-", "").replaceAll("/", "").replaceAll(".", ""),
         name,
         address: {
           street,
@@ -235,10 +237,19 @@ export function Payment() {
           <Input value={name} onSetState={setName} type="text" placeholder="Digite seu nome completo"/>
 
           <Label valueName="CPF"/>
-          <Input value={identity} onSetState={setIdentity} type="number" placeholder="Digite seu cpf ou cnpj sem pontos"/>
+          <CpfCnpj
+          className="form__input"
+          placeholder="Digite um CPF ou CNPJ"
+          type="tel"
+          value={identity}
+          onChange={(event, type) => {
+            setIdentity(event.target.value);
+            setMask(type === "CPF");
+          }}
+        />
 
           <Label valueName="Número de celular"/>
-          <Input value={phoneNumber} onSetState={setPhoneNumber} type="number" placeholder="Numero formato DDD e NUMERO Exemplo: 00123456789"/>
+          <NumberFormat className="form__input" format="(##)#####-####" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="tel" placeholder="Numero formato DDD e NUMERO Exemplo: 00123456789"/>
           
           <Label valueName="Email"/>
           <Input value={email} onSetState={setEmail} type="text" placeholder="Digite seu email"/>
@@ -246,7 +257,9 @@ export function Payment() {
           <Title tag="h2" onClassName="title_h2" value="Endereço"/>
 
           <Label valueName="CEP"/>
-          <Input value={zipCode} onSetState={setZipCode} type="number" placeholder="Digite o cep"/>
+          {/* <Input value={zipCode} onSetState={setZipCode} type="number" placeholder="Digite o cep"/> */}
+          <NumberFormat className="form__input" format="########" value={zipCode} onChange={(e) => setZipCode(e.target.value)} type="tel" placeholder="Digite o cep"/>
+
 
           <Label valueName="Rua"/>
           <Input value={street} onSetState={setStreet} type="text" placeholder="Digite o endereço da sua rua" disabled={true}/>

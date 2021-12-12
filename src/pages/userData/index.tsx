@@ -1,8 +1,10 @@
 import axios from "axios";
 import { FormEvent, useContext, useEffect, useState } from "react";
+import NumberFormat from "react-number-format";
 import { toast } from "react-toastify";
 import Form, { Button, CheckBox, FormContainer, Input, Label, Title } from "../../components/form";
 import { AuthContext } from "../../context/AuthContext";
+import CpfCnpj from "../../utils/cpf";
 
 
 
@@ -14,7 +16,7 @@ export function UserData() {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [identity, setIdentity] = useState('');
-
+  const [ mask, setMask ] = useState<boolean>();
   //Merchant
   const [name, setName] = useState('');
   const [commercialName, setCommercionalName] = useState('');
@@ -39,7 +41,7 @@ export function UserData() {
   const [complement, setComplement] = useState('');
   const [cityName, setCityName] = useState('');
   const [stateInitials, setStateInitials] = useState('');
-  const [countryName, setCountryName] = useState('');
+  const [countryName, setCountryName] = useState('BR');
 
   const [boleto, setBoleto] = useState('');
   const [credito, setCredito] = useState('');
@@ -153,12 +155,12 @@ export function UserData() {
       firstName,
       surname,
       email,
-      phoneNumber,
-      identity,
+      phoneNumber: phoneNumber.replaceAll("-", "").replaceAll("(", "").replaceAll(")", ""),
+      identity: identity.replaceAll("-", "").replaceAll("/", "").replaceAll(".", ""),
       name,
       commercialName,
       responsibleName,
-      responsibleIdentity,
+      responsibleIdentity: responsibleIdentity.replaceAll("-", "").replaceAll("/", "").replaceAll(".", ""),
       codeBank,
       codeAccount,
       bankAgency,
@@ -183,6 +185,8 @@ export function UserData() {
   }
 }
 
+  
+
   return(
     <FormContainer>
       <Title tag="h1" onClassName="title_h1" value="Alterar dados"/>
@@ -199,7 +203,7 @@ export function UserData() {
         <Input value={email} onSetState={setEmail} type="text" placeholder="Digite seu email"/>
        
         <Label valueName="Número de celular"/>
-        <Input value={phoneNumber} onSetState={setPhoneNumber} type="number" placeholder="Numero formato DDD e NUMERO Exemplo: 00123456789"/>
+        <NumberFormat className="form__input" format="(##)#####-####" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="tel" placeholder="Numero formato DDD e NUMERO Exemplo: 00123456789"/>
        
         <Title tag="h1" onClassName="title_h1" value="Dados para recebimento"/>
         <Title tag="h2" onClassName="title_h2" value="Caso nao possua empresa, utilize deus dados pessoais"/>
@@ -211,13 +215,34 @@ export function UserData() {
         <Input value={commercialName} onSetState={setCommercionalName} type="text" placeholder="Digite seu nome comercial "/>
         
         <Label valueName="CPF ou CNPJ"/>
-        <Input value={identity} onSetState={setIdentity} type="number" placeholder="Digite seu cpf ou cnpj sem pontos" disabled={true}/>
+
+        <CpfCnpj
+        className="form__input"
+        placeholder="Digite um CPF ou CNPJ"
+        type="tel"
+        value={identity}
+        onChange={(event, type) => {
+          setIdentity(event.target.value);
+          setMask(type === "CPF");
+        }}
+      />
       
         <Label valueName="Nome completo do responsavel"/>
         <Input value={responsibleName} onSetState={setResponsibleName} type="text" placeholder="Digite o nome completo do responsavel" disabled={true}/>
         
         <Label valueName="CPF do responsavel"/>
         <Input value={responsibleIdentity} onSetState={setResponsibleIdentity} type="text" placeholder="Digite o cpf completo" disabled={true}/>
+
+        <CpfCnpj
+        className="form__input"
+        placeholder="Digite um CPF ou CNPJ"
+        type="tel"
+        value={responsibleIdentity}
+        onChange={(event, type) => {
+          setIdentity(event.target.value);
+          setMask(type === "CPF");
+        }}
+      />
 
         <Title tag="h2" onClassName="title_h2" value="Dados bancários"/>
         <Label valueName="Código do seu banco"/>
@@ -247,19 +272,19 @@ export function UserData() {
         <Title tag="h2" onClassName="title_h2" value="Endereço"/>
 
         <Label valueName="CEP"/>
-        <Input value={zipCode} onSetState={setZipCode} type="number" placeholder="Digite o cep"/>
-
+        <NumberFormat className="form__input" format="########" value={zipCode} onChange={(e) => setZipCode(e.target.value)} type="tel" placeholder="Digite o cep"/>
+        
         <Label valueName="Rua"/>
         <Input disabled={true} value={street} onSetState={setStreet} type="text" placeholder="Digite o endereço da sua rua"/>
       
         <Label valueName="Número"/>
         <Input value={number} onSetState={setNumber} type="number" placeholder="Digite o número"/>
+
+        <Label valueName="Complemento"/>
+        <Input value={complement} onSetState={setComplement} type="text" placeholder="Digite o complemento"/>
      
         <Label valueName="Bairro"/>
         <Input disabled={true} value={district} onSetState={setDistrict} type="text" placeholder="Digite o bairro"/>
-     
-        <Label valueName="Complemento"/>
-        <Input value={complement} onSetState={setComplement} type="text" placeholder="Digite o complemento"/>
 
         <Label valueName="Cidade"/>
         <Input disabled={true} value={cityName} onSetState={setCityName} type="text" placeholder="Digite a cidade"/>
