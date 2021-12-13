@@ -191,7 +191,7 @@ export function Payment() {
       products:[{
         code: "001",
         description: "doacao",
-        unitPrice: parseInt(donate.replaceAll("R$", "").replaceAll(".", "").replaceAll(",", "")),
+        unitPrice: Number(parseFloat(donate.replaceAll("R$","").replaceAll(",", "")).toFixed(2)),
         quantity: 1,
       }],
       paymentObject: paymentObject(),

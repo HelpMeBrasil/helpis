@@ -630,8 +630,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
      
     }, [storagedToken])
 
-    async function editCampaign({title, description, image, hash}: CampaignReturnProps){
-
+    async function editCampaign({title, description, image, hash, targetValue}: CampaignReturnProps){
+      console.log(targetValue);
       const config  = {
         headers: {
           //token: window.sessionStorage.geyItem('accessToken')
@@ -644,6 +644,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         isActive:true,
         description,
         image: image === undefined ? null : image,
+        targetValue,
       }, config)
       if(response.status === 200) {
         navigate('ver_campanha/'+hash);

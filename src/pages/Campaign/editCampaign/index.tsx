@@ -40,15 +40,14 @@ export function EditCampaign(){
 
     async function handleSubmit(event: FormEvent){
     event.preventDefault();
-    console.log(img);
       if(img === undefined){
         const data = {
         hash: hashFix,
         title,
         description,
-        targetValue: parseInt(targetValue.replaceAll("R$","").replaceAll(".", "").replaceAll(",", "")),
+        targetValue: Number(parseFloat(targetValue.replaceAll("R$","").replaceAll(",", "")).toFixed(2)),
         }
-
+        console.log(data);
         editCampaign(data);
       }else{
         const image = await toBase64(img![0]) as string;
@@ -57,9 +56,9 @@ export function EditCampaign(){
           title,
           description,
           image,
-          targetValue: parseInt(targetValue.replaceAll("R$","").replaceAll(".", "").replaceAll(",", "")),
+          targetValue: Number(parseFloat(targetValue.replaceAll("R$","").replaceAll(",", "")).toFixed(2)),
           }
-          editCampaign(data);
+        editCampaign(data);
       }
     }
     
@@ -106,7 +105,7 @@ export function EditCampaign(){
 
                   <Label valueName="Caso nao escolha imagem, ira manter a imagem antiga"/>
                   <InputImg required={false} name="formInputImg "id="formInputImg" accept="image/x-png,image/gif,image/jpeg" type="file" onSetState={setImg}/>
-                  <Button value="Criar"/>
+                  <Button value="Editar"/>
             </Form>
             </FormContainer>
     )

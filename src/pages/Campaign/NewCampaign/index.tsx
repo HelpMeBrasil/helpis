@@ -22,12 +22,12 @@ export function NewCampaign(){
 
     async function handleSubmit(event: FormEvent){
       event.preventDefault();
-
+        
         if(img === undefined){
         const data = {
           title,
           description,
-          targetValue: parseInt(targetValue.replace("R$ ","")),
+          targetValue: Number(parseFloat(targetValue.replaceAll("R$","").replaceAll(",", "")).toFixed(2)),
           }
           await addCampaign(data);
         }else{
@@ -36,7 +36,7 @@ export function NewCampaign(){
           title,
           description,
           image,
-          targetValue: parseInt(targetValue.replace("R$ ","")),
+          targetValue: Number(parseFloat(targetValue.replaceAll("R$","").replaceAll(",", "")).toFixed(2)),
           }
           await addCampaign(data);
         }
