@@ -16,7 +16,7 @@ export function UserData() {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [identity, setIdentity] = useState('');
-  const [ mask, setMask ] = useState<boolean>();
+
   //Merchant
   const [name, setName] = useState('');
   const [commercialName, setCommercionalName] = useState('');
@@ -136,7 +136,6 @@ export function UserData() {
   
   const validations = () => {
     const validaCpf = identity.match("([0-9]{2}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[\\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[-]?[0-9]{2})");
-    console.log(validaCpf);
     if(validaCpf === null){
       toast.warning("Insira um cpf/cnpj válido");
       return true
@@ -221,9 +220,8 @@ export function UserData() {
         placeholder="Digite um CPF ou CNPJ"
         type="tel"
         value={identity}
-        onChange={(event, type) => {
+        onChange={(event, type: "CPF") => {
           setIdentity(event.target.value);
-          setMask(type === "CPF");
         }}
       />
       
@@ -238,9 +236,8 @@ export function UserData() {
         placeholder="Digite um CPF ou CNPJ"
         type="tel"
         value={responsibleIdentity}
-        onChange={(event, type) => {
+        onChange={(event, type: "CPF") => {
           setIdentity(event.target.value);
-          setMask(type === "CPF");
         }}
       />
 

@@ -7,16 +7,27 @@ import { edit } from 'react-icons-kit/feather/edit'
 import { deleteIconic } from 'react-icons-kit/typicons/deleteIconic'
 import './styles.scss'
 import { Link } from 'react-router-dom';
-type CampaignReturnProps = {
+type CampaignReturnPropsAll = {
     hash: string,
     title: string,
     description: string,
-    image?: string,
-  }
+    image: string,
+    targetValue: string,
+    user: {
+      firstName: string,
+      surname: string,
+      merchant:{
+        address: {
+          cityName: string,
+          stateInitials: string
+        }
+      }
+    }
+  }[]
 
 export function CampaignsByUserName(){
     const { listGridByUserName, deletCampaign } = useContext(AuthContext);
-    const [ campaigns, setCampaigns ] = useState<CampaignReturnProps[]>([]);
+    const [ campaigns, setCampaigns ] = useState<CampaignReturnPropsAll>([]);
 
     
 
@@ -58,8 +69,16 @@ export function CampaignsByUserName(){
             {campaigns.map(campaign => (
               <li className="campanhas_list" key={campaign.hash}>
               <Title tag="h1" onClassName="title_h1" value={campaign.title}/>
-              <img title={campaign.description} alt="imagem_campanha" className="campanha_img" src={campaign.image}/>
-              
+              <img title={campaign.title} alt="imagem_campanha" className="campanha_imgHome" src={campaign.image}/>
+
+              <div>
+                <h4>{campaign.user.firstName} {campaign.user.surname}</h4>
+                <p>{campaign.user.merchant.address.cityName}/{campaign.user.merchant.address.stateInitials}</p>
+              </div>
+              <div>
+              <b>Meta R$ {campaign.targetValue}</b>
+              </div>
+              <hr></hr>
               <Label valueName={campaign.description}/>
               <div className="container_buttons">
                   <Link to={`/editar_campanha/${campaign.hash}`}>

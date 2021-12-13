@@ -1,5 +1,4 @@
 import { FormEvent, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Form, { Button, FormContainer, Input, Label, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
 
@@ -8,7 +7,6 @@ export function ForgetPassword(){
 
   const { forgetPassword } = useContext(AuthContext);
   const [username, setUsername] = useState('');
-  const navigate = useNavigate();
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -17,7 +15,7 @@ export function ForgetPassword(){
     }
 
     await forgetPassword(data);
-    navigate('/reset_password');
+
   }
   return(
     <FormContainer>

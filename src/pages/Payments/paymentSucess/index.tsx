@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { ContentLarge } from "../../../components/contentLarge";
-import { Label, Title } from "../../../components/form";
+import { Label } from "../../../components/form";
 import './styles.scss';
 import { toast } from 'react-toastify';
 
@@ -10,15 +9,15 @@ export function PaymentSucess() {
   const { description, walletAddress, digitableLine, bankSlipUrl, amountBTC, qrCode, key, authenticationUrl } = state; // Read values passed on state
 
   function handleCopyURL(codePaymentMethod: number){
-    if(codePaymentMethod == 1){
+    if(codePaymentMethod === 1){
       navigator.clipboard.writeText(digitableLine)
       toast.success("Código de barras copiado!");
     }
-    if(codePaymentMethod == 6){
+    if(codePaymentMethod === 6){
       navigator.clipboard.writeText(key)
       toast.success("Copia e cola copiado!");
     }
-    if(codePaymentMethod == 3){
+    if(codePaymentMethod === 3){
       navigator.clipboard.writeText(walletAddress)
       toast.success("Endereço copiado!");
     }
@@ -44,7 +43,7 @@ export function PaymentSucess() {
         <>
         <div className="debit">
           <p>Para concluir o pagamento você precisa autenticar-se no seu ambiente bancário:</p>
-          <a className="url" href={authenticationUrl} target="_blank">{authenticationUrl}</a>
+          <a rel="noreferrer" className="url" href={authenticationUrl} target="_blank">{authenticationUrl}</a>
         </div>
         </> }
 
@@ -58,7 +57,7 @@ export function PaymentSucess() {
         </div>
         <div className="urlBankslip">
           <p>Link do boleto</p>
-          <a href={bankSlipUrl} target="_blank">{bankSlipUrl}</a>
+          <a rel="noreferrer" href={bankSlipUrl} target="_blank">{bankSlipUrl}</a>
         </div>
         </>
          }

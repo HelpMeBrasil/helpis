@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Form, { Button, CheckBox, FormContainer, Input, Label, Title } from "../../components/form";
 import { AuthContext } from "../../context/AuthContext";
@@ -50,11 +50,9 @@ export function Register() {
   const [debito, setDebito] = useState('');
   const [pix, setPix] = useState('');
   const [cripto, setCripto] = useState('');
-  const [mask, setMask] = useState<boolean>();
 
   const validations = () => {
     const validaCpf = identity.match("([0-9]{2}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[\\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[-]?[0-9]{2})");
-    console.log(validaCpf);
     if(validaCpf === null){
       toast.warning("Insira um cpf/cnpj válido");
       return true
@@ -165,9 +163,9 @@ export function Register() {
         placeholder="Digite um CPF ou CNPJ"
         type="tel"
         value={identity}
-        onChange={(event, type) => {
+        onChange={(event, type: "CPF") => {
           setIdentity(event.target.value);
-          setMask(type === "CPF");
+
         }}
       />
 
@@ -182,9 +180,9 @@ export function Register() {
         placeholder="Digite um CPF ou CNPJ"
         type="tel"
         value={responsibleIdentity}
-        onChange={(event, type) => {
+        onChange={(event, type: "CPF") => {
           setResponsibleIdentity(event.target.value);
-          setMask(type === "CPF");
+
         }}
       />
 

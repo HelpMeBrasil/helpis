@@ -1,5 +1,5 @@
 
-import { FormEvent, useContext, useEffect, useState } from "react";
+import {FormEvent, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
@@ -8,6 +8,8 @@ import { AuthContext } from "../../../context/AuthContext";
 import './styles.scss';
 import NumberFormat from "react-number-format";
 import CpfCnpj from "../../../utils/cpf";
+import CurrencyInput from "../../../utils/react-currency-input-master/src";
+
 export function Payment() {
   const { addPayment, requestMethods } = useContext(AuthContext);
   const [optionPayment, setOptionPayment] = useState('');
@@ -36,7 +38,6 @@ export function Payment() {
   const [debito, setDebito] = useState(false);
   const [pix, setPix] = useState(false);
   const [cripto, setCripto] = useState(false);
-  const [ mask, setMask ] = useState<boolean>();
   const { hash } = useParams();
   const [loading, setLoading] = useState(true);
 
@@ -190,7 +191,7 @@ export function Payment() {
       products:[{
         code: "001",
         description: "doacao",
-        unitPrice: parseInt(donate),
+        unitPrice: parseInt(donate.replaceAll("R$", "").replaceAll(".", "").replaceAll(",", "")),
         quantity: 1,
       }],
       paymentObject: paymentObject(),
@@ -199,7 +200,7 @@ export function Payment() {
     //await register(data);
   }
 
-  
+
   if(loading === true){
   return(
     <div id="container_loader">
@@ -221,9 +222,8 @@ export function Payment() {
           placeholder="Digite um CPF ou CNPJ"
           type="tel"
           value={identity}
-          onChange={(event, type) => {
+          onChange={(event, type: "CPF") => {
             setIdentity(event.target.value);
-            setMask(type === "CPF");
           }}
         />
 
@@ -263,7 +263,9 @@ export function Payment() {
           
           <Title tag="h2" onClassName="title_h2" value="Doação"/>
           <Label valueName="Valor da doação: "/>
-          <Input value={donate}  onSetState={setDonate} type="number" placeholder="Digite a quantia"/>
+          {/* <Input value={donate}  onSetState={setDonate} type="number" placeholder="Digite a quantia"/> */}
+
+          <CurrencyInput className="form__input" prefix="R$" value={donate} onChangeEvent={(e: any) => setDonate(e.target.value)}  required />
 
           <Label valueName="Métodos de pagamento que essa campanha aceita:"/>
           {boleto === true ? 

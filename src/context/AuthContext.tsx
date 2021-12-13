@@ -163,7 +163,7 @@ type ResponseRequest = {
     title: string,
     description: string,
     image: string,
-    targetValue: string
+    targetValue: string,
     user: {
       firstName: string,
       surname: string,
@@ -190,7 +190,7 @@ type AuthContextData = {
   addCampaign: (propsCampaign: CampaignProps) => Promise<void>;
   viewCampaign:(hash: string) => Promise<CampaignReturnProps>;
   //campaign: CampaignProps | undefined;
-  listGridByUserName:() => Promise<CampaignReturnProps[]>
+  listGridByUserName:() => Promise<CampaignReturnPropsAll>
   editCampaign: (propsEditCampaign: CampaignReturnProps) => Promise<void>
   listGridByName:(name: string) => Promise<CampaignReturnProps[]>
   listGridSite:(name: string) => Promise<CampaignReturnProps[]>
@@ -208,6 +208,7 @@ type AuthProviderProps = {
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  console.clear()
   const [username, setUsername] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false)
  // const [userId, setUserId] = useState('');
@@ -219,6 +220,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
 
   async function signIn({ username, password }: SignInCredentials) {
+    
+
     const response = await api.post('Auth', {
       username,
       password
@@ -231,8 +234,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       sessionStorage.setItem('accessToken', response.data.accessToken)
       setIsAuthenticated(true);
       navigate("/minhas_campanhas");
-    }else{
+    }
+    if (response.status !== 200){
       toast.warning('Usuário/senha incorretos ou este cadastro não existe.', {autoClose:3000});
+      console.clear()
     }
   }
 
@@ -243,8 +248,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       notificationType
   })
   setUsername(username);
+    if(response.status === 200){
+      navigate('/reset_password');
+    }
     if (response.status !== 200) {
       toast.warning('Usuário não encontrado.', {autoClose:3000});
+      navigate("/forget_password")
     }
   }
 
@@ -266,14 +275,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (responseRecover.status !== 200) {
       toast.warning('A senha não atende os requisitos.', {autoClose:3000});
     }else{
+
       window.location.href = "./login";
     }
   }else
   toast.warning('Código informado é inválido.', {autoClose:3000});
 
-  if (response.status !== 200) {
-    toast.warning("Erro");
-  }
     
   }
 
@@ -553,7 +560,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
         oldPassword,
         passwordConfirmation: confirmNewPassword,
       }, config);
-      return response.data;
+
+      if(response.status === 400){
+        toast.warning("Senha antiga incorreta");
+        console.clear();
+      }
+
+      if(response.status === 200){
+        toast.success('Senha alterada com sucesso!');
+        return response.data;
+      }
+
     }
 
     async function addCampaign({title, description, image, targetValue}: CampaignProps){
@@ -574,7 +591,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if(response.status === 200) {
         toast.success("Criado")
         navigate('/ver_campanha/'+response.data);
+      }
 
+      if(response.status === 400){
+        toast.warning("Problema ao criar campanha");
       }
     }
 
@@ -589,6 +609,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if(response.status === 200) {
         return response.data;
       }
+      toast.warning("Campanha não encontrada")
       navigate('nao_encontrado');
        
     }
@@ -622,7 +643,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         title,
         isActive:true,
         description,
-        image,
+        image: image === undefined ? null : image,
       }, config)
       if(response.status === 200) {
         navigate('ver_campanha/'+hash);
@@ -680,7 +701,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const response = await api.get('DonationCampaign/ListSite', config)
       if(response.status !== 200) {
-        toast.warning("Erri");
+        toast.warning("Erro");
       }
       return response.data;
     }
@@ -701,6 +722,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
             bankSlipUrl: response.data.bankSlipUrl
            } });
         }
+        if(response.status !== 200){
+          toast.warning("Erro. Revise os dados e tente novamente.");
+        }
+       
       }
 
       if(data.paymentMethod.code === '2'){
@@ -710,6 +735,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
             description: response.data.description,
             digitableLine: response.data.digitableLine } });
         }
+        if(response.status !== 200){
+          toast.warning("Erro. Revise os dados e tente novamente.");
+        }
+        
       }
 
       if(data.paymentMethod.code === '3'){
@@ -720,6 +749,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
             walletAddress: response.data.walletAddress,
             amountBTC: response.data.amountBTC } });
         }
+        if(response.status !== 200){
+          toast.warning("Erro. Revise os dados e tente novamente.");
+        }
       }
 
       if(data.paymentMethod.code === '4'){
@@ -728,6 +760,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
           navigate('/paymentSucess', { state: { 
             description: response.data.description,
             authenticationUrl: response.data.authenticationUrl }});
+        }
+        if(response.status !== 200){
+          toast.warning("Erro. Revise os dados e tente novamente.");
         }
       }
 
@@ -739,8 +774,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
             key: response.data.key,
             qrCode: response.data.qrCode } });
         }
+        if(response.status !== 200){
+          toast.warning("Erro. Revise os dados e tente novamente.");
+        }
 
       }
+
+      
       
     }
 
@@ -755,6 +795,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const response = await api.get('payment/ListPaymentMethods', config);
       if(response.status === 200){
         return response.data;
+      }
+      if(response.status !== 400){
+        toast.warning("Erro");
       }
     }
 

@@ -1,7 +1,7 @@
-import { FormEvent, useState, useContext, ChangeEvent } from "react";
-import { toast } from "react-toastify";
+import { FormEvent, useState, useContext } from "react";
 import Form, { Button, FormContainer, Input, InputImg, Label, Textarea, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
+import CurrencyInput from "../../../utils/react-currency-input-master/src";
 
 
 export function NewCampaign(){
@@ -22,7 +22,7 @@ export function NewCampaign(){
 
     async function handleSubmit(event: FormEvent){
       event.preventDefault();
-      if(!(targetValue.startsWith("."))){
+
         if(img === undefined){
         const data = {
           title,
@@ -40,25 +40,9 @@ export function NewCampaign(){
           }
           await addCampaign(data);
         }
-      }
-      else{
-        toast.warning("Metas devem ser 1 real ou mais")
-      }
+      
+
     }
-
-    function handleChange(e: ChangeEvent<HTMLInputElement>){
-
-      var valor = e.target.value;
-
-      valor = valor + '';
-      let valorInt = parseInt(valor.replace(/[\D]+/g, ''));
-      valor = valorInt + '';
-      let valorFinal = valor.replace(/([0-9]{2})$/g, ".$1");
-      e.target.value = valorFinal;
-      console.log(e.target.value);
-      if(valor === 'NaN') e.target.value = '';
-      setTargetValue("R$ "+ e.target.value);
-}
 
     //<Input value={targetValue} onSetState={setTargetValue} type="text" placeholder="Digite o valor"/>
     //                <NumberFormat placeholder="Exemplo: 10,000.57" className="form__input" value={targetValue} thousandSeparator={true} prefix={'R$'} onChange={(e)=> setTargetValue(e.target.value)} />
@@ -72,9 +56,10 @@ export function NewCampaign(){
                 <Label valueName="Descrição da campanha"/>
                 <Textarea value={description} onSetState={setDescription}/>
                 <Label valueName="Digite o valor da meta"/>
-                <input value={targetValue} type="text" className="form__input" onChange={e => handleChange(e)} />
+                {/* <input value={targetValue} type="text" className="form__input" onChange={e => handleChange(e)} /> */}
+                <CurrencyInput className="form__input" prefix="R$" value={targetValue} onChangeEvent={(e: any) => setTargetValue(e.target.value)}  required />
                 <Label valueName="Escolha uma imagem para a campanha"/>
-                <InputImg name="formInputImg "id="formInputImg" accept="image/x-png,image/gif,image/jpeg" type="file" onSetState={setImg}/>
+                <InputImg required={true} name="formInputImg "id="formInputImg" accept="image/x-png,image/gif,image/jpeg" type="file" onSetState={setImg}/>
                 <Button value="Criar"/>
           </Form>
           </FormContainer>
