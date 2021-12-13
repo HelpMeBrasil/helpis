@@ -22,14 +22,11 @@ export function ChangePassword() {
       }
       await changePassword(data);
 
-      toast.success('Senha alterada com sucesso!')
-
       setOldPassowrd('');
       setNewPassowrd('');
       setConfirmNewPassowrd('');
-      navigate("/login")
     }else{
-      toast.warning('Confirmação de senha incorreta')
+      toast.warning('Confirmação de senha incorreta', {autoClose:3000})
     }
   }
   

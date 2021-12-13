@@ -228,8 +228,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     })
 
     if (response.status === 200) {
-      toast.success('Sucesso!', {autoClose:3000});
-
       //window.sessionStorage.setItem('accessToken', response.data.accessToken);
       sessionStorage.setItem('accessToken', response.data.accessToken)
       setIsAuthenticated(true);
@@ -567,7 +565,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
       if(response.status === 204){
-        toast.success('Senha alterada com sucesso!');
+        toast.success('Senha alterada com sucesso!', {autoClose: 1500});
         return response.data;
       }
 
@@ -666,7 +664,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
       const response = await api.delete('DonationCampaign', config)
       if(response.status === 200) {
-        toast.success("Deletado");
+        toast.success("Campanha desativada");
         navigate('/');
         navigate('/minhas_campanhas');
       }

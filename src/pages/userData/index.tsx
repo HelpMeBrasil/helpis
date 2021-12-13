@@ -54,6 +54,7 @@ export function UserData() {
   const [checkedCripto,setCheckedCripto] = useState(false);
   const [checkedDebito,setCheckedDebito] = useState(false);
   const [checkedPix,setCheckedPix] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function userDataSearch() {
@@ -84,7 +85,7 @@ export function UserData() {
       setCityName(response.merchant.address.cityName);
       setStateInitials(response.merchant.address.stateInitials);
       setCountryName(response.merchant.address.countryName);
-
+      setLoading(false);
      
       const merchantSplits = response.merchant.merchantSplit;
       for(let i=0; i<merchantSplits.length; i++){
@@ -146,7 +147,7 @@ export function UserData() {
       return true
     }
   }
-
+ 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     if(validations() !== true){
@@ -185,7 +186,12 @@ export function UserData() {
 }
 
   
-
+if(loading === true){
+  return(
+    <div id="container_loader">
+      <div id="loader"></div>
+    </div>
+  )}else{
   return(
     <FormContainer>
       <Title tag="h1" onClassName="title_h1" value="Alterar dados"/>
@@ -304,5 +310,6 @@ export function UserData() {
 
       </Form>
     </FormContainer>
-  )
+    )
+  }
 }

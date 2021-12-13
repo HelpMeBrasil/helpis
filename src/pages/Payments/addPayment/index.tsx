@@ -120,7 +120,7 @@ export function Payment() {
         setCityName(response.data.localidade);
         setStateInitials(response.data.uf);
         }else{
-          toast.warning("CEP deve ser valido");
+          toast.warning("CEP deve ser valido", {autoClose: 1500});
         }
       }
     }    
