@@ -9,7 +9,7 @@ export function EditCampaign(){
   const { viewCampaign, editCampaign } = useContext(AuthContext);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [img, setImg] = useState<FileList>({} as FileList);
+  const [img, setImg] = useState<any>();
   const { hash } = useParams<string>();
   const [ hashFix, setHashFix] = useState('');
   const [targetValue, setTargetValue] = useState('');
@@ -39,6 +39,7 @@ export function EditCampaign(){
 
     async function handleSubmit(event: FormEvent){
     event.preventDefault();
+    console.log(img);
       if(img === undefined){
         const data = {
         hash: hashFix,
@@ -46,6 +47,7 @@ export function EditCampaign(){
         description,
         targetValue: parseInt(targetValue.replaceAll("-", "").replaceAll("(", "").replaceAll(")", "")),
         }
+        console.log(targetValue);
         editCampaign(data);
       }else{
         const image = await toBase64(img![0]) as string;
@@ -56,6 +58,7 @@ export function EditCampaign(){
           image,
           targetValue: parseInt(targetValue.replaceAll("-", "").replaceAll("(", "").replaceAll(")", "")),
           }
+          console.log(targetValue);
           editCampaign(data);
       }
     }
