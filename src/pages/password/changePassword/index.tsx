@@ -21,6 +21,8 @@ export function ChangePassword() {
       }
       await changePassword(data);
 
+      toast.success('Senha alterada com sucesso!')
+
       setOldPassowrd('');
       setNewPassowrd('');
       setConfirmNewPassowrd('');
