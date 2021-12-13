@@ -196,6 +196,7 @@ export function Payment() {
       }],
       paymentObject: paymentObject(),
     }
+    setLoading(true);
     await addPayment(data);
     //await register(data);
   }
