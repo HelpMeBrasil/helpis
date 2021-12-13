@@ -26,6 +26,7 @@ export function EditCampaign(){
         const response = await viewCampaign(hash!)
         setTitle(response.title);
         setDescription(response.description);
+        setTargetValue(String(response.targetValue));
         // const file = dataURLtoFile(response.image, "imagemAtual")
         // let list = new DataTransfer();
         // list.items.add(file);
@@ -45,9 +46,9 @@ export function EditCampaign(){
         hash: hashFix,
         title,
         description,
-        targetValue: parseInt(targetValue.replaceAll("-", "").replaceAll("(", "").replaceAll(")", "")),
+        targetValue: parseInt(targetValue.replaceAll("R$","").replaceAll(".", "").replaceAll(",", "")),
         }
-        console.log(targetValue);
+
         editCampaign(data);
       }else{
         const image = await toBase64(img![0]) as string;
@@ -56,9 +57,8 @@ export function EditCampaign(){
           title,
           description,
           image,
-          targetValue: parseInt(targetValue.replaceAll("-", "").replaceAll("(", "").replaceAll(")", "")),
+          targetValue: parseInt(targetValue.replaceAll("R$","").replaceAll(".", "").replaceAll(",", "")),
           }
-          console.log(targetValue);
           editCampaign(data);
       }
     }
