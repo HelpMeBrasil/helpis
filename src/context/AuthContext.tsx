@@ -275,7 +275,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (responseRecover.status !== 200) {
       toast.warning('A senha não atende os requisitos.', {autoClose:3000});
     }else{
-
+      toast.warning("Senha alterada");
       window.location.href = "./login";
     }
   }else
