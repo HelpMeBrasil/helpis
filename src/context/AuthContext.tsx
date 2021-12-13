@@ -275,7 +275,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (responseRecover.status !== 200) {
       toast.warning('A senha não atende os requisitos.', {autoClose:3000});
     }else{
-
+      toast.warning("Senha alterada");
       window.location.href = "./login";
     }
   }else
@@ -392,7 +392,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     });
       if (response.status === 200) {
-        toast.success('teste', {autoClose:3000});
+        toast.success('Criado', {autoClose:3000});
 
         //window.location.href = "./login";
         navigate('/login');
@@ -566,7 +566,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         console.clear();
       }
 
-      if(response.status === 200){
+      if(response.status === 204){
         toast.success('Senha alterada com sucesso!');
         return response.data;
       }
