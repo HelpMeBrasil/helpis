@@ -67,7 +67,7 @@ export function Home() {
 
         <div className="items_taxs">
           <img alt="imgCard"  src="/cartao.png"  id=""/>
-          <p> Cartão de dédito: 2,40% </p>
+          <p> Cartão de débito: 2,40% </p>
         </div>
 
         <div className="items_taxs">
