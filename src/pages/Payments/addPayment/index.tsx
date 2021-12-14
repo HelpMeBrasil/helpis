@@ -165,43 +165,48 @@ export function Payment() {
     }
   }
   async function handleSubmit(event: FormEvent) {
-    if(optionPayment !==''){
-      event.preventDefault();
-      const data = {
-        hash,
-        isSandbox: true,
-        paymentMethod:{
-          code: optionPayment
-        },
-        customer: {
-          email,
-          phoneNumber: phoneNumber.replaceAll("-", "").replaceAll("(", "").replaceAll(")", ""),
-          identity: identity.replaceAll("-", "").replaceAll("/", "").replaceAll(".", ""),
-          name,
-          address: {
-            street,
-            number,
-            district,
-            zipCode,
-            complement,
-            cityName,
-            stateInitials,
-            countryName,
+    if(donate !== ''){
+      if(optionPayment !==''){
+        event.preventDefault();
+        const data = {
+          hash,
+          isSandbox: true,
+          paymentMethod:{
+            code: optionPayment
           },
-        },
-        products:[{
-          code: "001",
-          description: "doacao",
-          unitPrice: Number(parseFloat(donate.replaceAll("R$","").replaceAll(",", "")).toFixed(2)),
-          quantity: 1,
-        }],
-        paymentObject: paymentObject(),
+          customer: {
+            email,
+            phoneNumber: phoneNumber.replaceAll("-", "").replaceAll("(", "").replaceAll(")", ""),
+            identity: identity.replaceAll("-", "").replaceAll("/", "").replaceAll(".", ""),
+            name,
+            address: {
+              street,
+              number,
+              district,
+              zipCode,
+              complement,
+              cityName,
+              stateInitials,
+              countryName,
+            },
+          },
+          products:[{
+            code: "001",
+            description: "doacao",
+            unitPrice: Number(parseFloat(donate.replaceAll("R$","").replaceAll(",", "")).toFixed(2)),
+            quantity: 1,
+          }],
+          paymentObject: paymentObject(),
+        }
+        setLoading(true);
+        await addPayment(data);
+      }else{
+        event.preventDefault();
+        toast.warning("Selecione a forma de pagamento")
       }
-      setLoading(true);
-      await addPayment(data);
     }else{
       event.preventDefault();
-      toast.warning("Selecione a forma de pagamento")
+      toast.warning("Informe um valor para a doação")
     }
   }
 
