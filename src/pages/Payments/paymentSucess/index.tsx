@@ -24,7 +24,7 @@ export function PaymentSucess() {
   }
 
   return(
-    <>
+    <div id="container__form">
 
       <div className="head">
         <div className="dummy-positioning d-flex">
@@ -89,6 +89,6 @@ export function PaymentSucess() {
         </>
          }
         
-    </>
+    </div>
   )
 }

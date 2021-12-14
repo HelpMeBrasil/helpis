@@ -18,6 +18,7 @@ export function ForgetPassword(){
 
   }
   return(
+    <div id="container__form">
     <FormContainer>
       <Title tag="h1" onClassName="title_h1" value="Recuperar senha"/>
       <Form onSubmit={handleSubmit}>
@@ -26,5 +27,6 @@ export function ForgetPassword(){
         <Button value="Recuperar"/>
       </Form>
     </FormContainer>
+    </div>
   )
 }

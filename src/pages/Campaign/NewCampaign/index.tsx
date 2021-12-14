@@ -44,10 +44,8 @@ export function NewCampaign(){
 
     }
 
-    //<Input value={targetValue} onSetState={setTargetValue} type="text" placeholder="Digite o valor"/>
-    //                <NumberFormat placeholder="Exemplo: 10,000.57" className="form__input" value={targetValue} thousandSeparator={true} prefix={'R$'} onChange={(e)=> setTargetValue(e.target.value)} />
-
   return(
+    <div id="container__form">
     <FormContainer>
           <Title tag="h1" onClassName="title_h1" value="Criar uma campanha de doação"/>
           <Form onSubmit={handleSubmit}>
@@ -63,5 +61,6 @@ export function NewCampaign(){
                 <Button value="Salvar"/>
           </Form>
           </FormContainer>
+          </div>
   )
 }

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { Label, Title } from '../../../components/form';
+import { Title } from '../../../components/form';
 import { ListaContent } from '../../../components/lista/listaContent';
 import { AuthContext } from "../../../context/AuthContext";
 import { Icon } from 'react-icons-kit'
@@ -60,9 +60,9 @@ export function CampaignsByUserName(){
       </div>
     )}else{
     return(
-    <>
+      <div id="container__form">
     {campaigns.length === 0 ? <div className="emptyCampaign"><Title tag="h1" onClassName="title_h1" value="Você não possui campanhas"/></div> : 
-    <>
+    <div id="container__form">
     <Title tag="h1" onClassName="title_h1" value="Minhas campanhas"/>
     <hr></hr>
       <ListaContent>
@@ -96,9 +96,9 @@ export function CampaignsByUserName(){
               
             ))}
       </ListaContent>
-      </>
+      </div>
     }
-      </>
+      </div>
     )
   }
 }
