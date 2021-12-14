@@ -284,7 +284,7 @@ if(loading === true){
         <Input value={number} onSetState={setNumber} type="number" placeholder="Digite o número"/>
 
         <Label valueName="Complemento"/>
-        <Input value={complement} onSetState={setComplement} type="text" placeholder="Digite o complemento"/>
+        <Input required={false} value={complement} onSetState={setComplement} type="text" placeholder="Digite o complemento"/>
      
         <Label valueName="Bairro"/>
         <Input disabled={true} value={district} onSetState={setDistrict} type="text" placeholder="Digite o bairro"/>
