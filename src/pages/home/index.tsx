@@ -62,7 +62,7 @@ export function Home() {
       <div className="container_taxs">
         <div className="items_taxs">
           <img alt="imgCard"  src="/cartao.png"  id=""/>
-          <p> Cartão de creédito: 2,80% </p>
+          <p> Cartão de crédito: 2,80% </p>
         </div>
 
         <div className="items_taxs">
