@@ -36,11 +36,11 @@ export function CampaignsName(){
     else{
     return(
     
-    <>
+      <div id="container__form">
 
     {campaigns.length === 0 ?
     <Title tag="h1" onClassName="title_h1" value="Não existem campanhas com esse nome"/> : 
-    <>
+    <div id="container__form">
     <Title tag="h1" onClassName="title_h1" value="Pesquisa por nome"/>
     <hr></hr>
     <ListaContent>
@@ -54,9 +54,9 @@ export function CampaignsName(){
             </Link>
           ))}
     </ListaContent>
-    </>
+    </div>
     }
-    </>
+    </div>
     
     )
 }

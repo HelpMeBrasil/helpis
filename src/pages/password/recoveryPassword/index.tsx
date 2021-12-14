@@ -27,6 +27,7 @@ export function ResetPassword(){
   }
 
   return(
+    <div id="container__form">
     <FormContainer>
       <Title tag="h1" onClassName="title_h1" value="Resetar sua senha"/>
       <Form onSubmit={handleConfirmationCode}>
@@ -40,5 +41,6 @@ export function ResetPassword(){
         <Button value="Recuperar"/>
       </Form>
     </FormContainer>
+    </div>
   )
 }

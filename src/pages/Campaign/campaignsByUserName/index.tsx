@@ -60,9 +60,9 @@ export function CampaignsByUserName(){
       </div>
     )}else{
     return(
-    <>
+      <div id="container__form">
     {campaigns.length === 0 ? <div className="emptyCampaign"><Title tag="h1" onClassName="title_h1" value="Você não possui campanhas"/></div> : 
-    <>
+    <div id="container__form">
     <Title tag="h1" onClassName="title_h1" value="Minhas campanhas"/>
     <hr></hr>
       <ListaContent>
@@ -79,6 +79,7 @@ export function CampaignsByUserName(){
               <b>Meta R$ {campaign.targetValue}</b>
               </div>
               <hr></hr>
+              <Label valueName={campaign.description}/>
               <div className="container_buttons">
                   <Link to={`/editar_campanha/${campaign.hash}`}>
                   <div className="campanhas_buttonEdit">
@@ -96,9 +97,9 @@ export function CampaignsByUserName(){
               
             ))}
       </ListaContent>
-      </>
+      </div>
     }
-      </>
+      </div>
     )
   }
 }

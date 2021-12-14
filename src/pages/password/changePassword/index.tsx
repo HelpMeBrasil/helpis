@@ -1,5 +1,4 @@
 import { FormEvent, useContext, useState } from "react";
-import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import Form, { Button, FormContainer, Input, Label, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
@@ -10,7 +9,6 @@ export function ChangePassword() {
   const [oldPassword, setOldPassowrd] = useState('');
   const [newPassword, setNewPassowrd] = useState('');
   const [confirmNewPassword, setConfirmNewPassowrd] = useState('');
-  const navigate = useNavigate();
   async function handleSubmit(event: FormEvent){
     event.preventDefault();
     
@@ -31,7 +29,7 @@ export function ChangePassword() {
   }
   
   return(
-     
+    <div id="container__form">
     <FormContainer>
       <Title tag="h1" onClassName="title_h1" value="Alterar sua senha"/>
       <Form onSubmit={handleSubmit}>
@@ -51,5 +49,6 @@ export function ChangePassword() {
         <Button value="Alterar"/>
       </Form>
     </FormContainer>
+    </div>
   )
 }
