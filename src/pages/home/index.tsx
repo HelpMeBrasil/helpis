@@ -59,6 +59,36 @@ export function Home() {
         </h2>  
       </div>
 
+      <div className="container_taxs">
+        <div className="items_taxs">
+          <img alt="imgCard"  src="/cartao.png"  id=""/>
+          <p> Cartão de creédito: 2,80% </p>
+        </div>
+
+        <div className="items_taxs">
+          <img alt="imgCard"  src="/cartao.png"  id=""/>
+          <p> Cartão de dédito: 2,40% </p>
+        </div>
+
+        <div className="items_taxs">
+          <img alt="imgCard"  src="/boleto.png"  id=""/>
+          <p> Boleto bancário: R$ 1,96 </p>
+        </div>
+
+        <div className="items_taxs">
+          <img alt="imgCard"  src="/pix.png"  id=""/>
+          <p> PIX: 1% </p>
+        </div>
+
+        <div className="items_taxs">
+          <img alt="imgCard"  src="/bitcoin.png"  id=""/>
+          <p> Criptomoedas: 1,80% </p>
+        </div>
+
+      </div>
+
+
+
     {campaigns.length === 0 ?
     <Title tag="h1" onClassName="title_h1" value=""/> : 
     <>
