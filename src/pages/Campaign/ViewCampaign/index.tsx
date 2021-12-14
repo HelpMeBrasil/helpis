@@ -46,7 +46,7 @@ export function ViewCampaign() {
 
     function handleCopyURL(){
       navigator.clipboard.writeText(url)
-      toast.success("URL copiada");
+      toast.success("URL copiada", {autoClose: 1300});
     }
 
     var percentage = amount / campaign.targetValue * 100;

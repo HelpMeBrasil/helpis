@@ -1,4 +1,5 @@
 import { Header } from "./components/header/header";
+import { Footer } from "./components/footer/Footer";
 import { AuthProvider } from "./context/AuthContext";
 import { MenuModal } from './components/MenuModal';
 import { useState } from "react";
@@ -35,6 +36,7 @@ function App() {
       isOpen={isMenuModalOpen}
       onRequestClose={handleCloseMenuModal}/>
       <div style={{height: 1}}></div>
+      <Footer/>
     </AuthProvider>
    </BrowserRouter>
    </>

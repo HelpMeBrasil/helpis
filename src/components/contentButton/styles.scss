@@ -1,5 +1,5 @@
 .div_containerButton {
-  padding: 1rem 2.5rem 3rem 2.5rem;
+  padding: 0rem 2.5rem 3rem 2.5rem;
   margin: 1rem 3% 1rem 0;
   display: flex;
   position: fixed;
@@ -10,6 +10,7 @@
   flex-direction: column;
   right: 0%;
   background: #fff;
+  box-sizing: inherit;
 
   button {
     width: 25vw;
