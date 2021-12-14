@@ -62,7 +62,7 @@ export function CampaignsByUserName(){
     return(
       <div id="container__form">
     {campaigns.length === 0 ? <div className="emptyCampaign"><Title tag="h1" onClassName="title_h1" value="Você não possui campanhas"/></div> : 
-    <div id="container__form">
+    <>
     <Title tag="h1" onClassName="title_h1" value="Minhas campanhas"/>
     <hr></hr>
       <ListaContent>
@@ -97,7 +97,7 @@ export function CampaignsByUserName(){
               
             ))}
       </ListaContent>
-      </div>
+      </>
     }
       </div>
     )
