@@ -93,7 +93,7 @@ export function EditCampaign(){
       
     return(
       <FormContainer>
-            <Title tag="h1" onClassName="title_h1" value="Criar uma campanha de doação"/>
+            <Title tag="h1" onClassName="title_h1" value="Editar uma campanha de doação"/>
             <Form onSubmit={handleSubmit}>
                   <Label valueName="Título da campanha"/>
                   <Input value={title} onSetState={setTitle} type="text" placeholder="Digite o título"/>
@@ -105,7 +105,7 @@ export function EditCampaign(){
 
                   <Label valueName="Caso nao escolha imagem, ira manter a imagem antiga"/>
                   <InputImg required={false} name="formInputImg "id="formInputImg" accept="image/x-png,image/gif,image/jpeg" type="file" onSetState={setImg}/>
-                  <Button value="Editar"/>
+                  <Button value="Salvar"/>
             </Form>
             </FormContainer>
     )

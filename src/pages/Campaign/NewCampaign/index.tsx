@@ -60,7 +60,7 @@ export function NewCampaign(){
                 <CurrencyInput className="form__input" prefix="R$" value={targetValue} onChangeEvent={(e: any) => setTargetValue(e.target.value)}  required />
                 <Label valueName="Escolha uma imagem para a campanha"/>
                 <InputImg required={true} name="formInputImg "id="formInputImg" accept="image/x-png,image/gif,image/jpeg" type="file" onSetState={setImg}/>
-                <Button value="Criar"/>
+                <Button value="Salvar"/>
           </Form>
           </FormContainer>
   )

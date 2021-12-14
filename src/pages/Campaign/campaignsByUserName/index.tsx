@@ -79,7 +79,6 @@ export function CampaignsByUserName(){
               <b>Meta R$ {campaign.targetValue}</b>
               </div>
               <hr></hr>
-              <Label valueName={campaign.description}/>
               <div className="container_buttons">
                   <Link to={`/editar_campanha/${campaign.hash}`}>
                   <div className="campanhas_buttonEdit">
