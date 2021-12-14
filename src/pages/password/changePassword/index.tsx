@@ -29,7 +29,7 @@ export function ChangePassword() {
   }
   
   return(
-    <div id="container__form">
+    <div className="formChangePassword">
     <FormContainer>
       <Title tag="h1" onClassName="title_h1" value="Alterar sua senha"/>
       <Form onSubmit={handleSubmit}>

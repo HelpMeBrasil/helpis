@@ -2,6 +2,7 @@ import { FormEvent, useState, useContext } from "react";
 import Form, { Button, FormContainer, Input, InputImg, Label, Textarea, Title } from "../../../components/form";
 import { AuthContext } from "../../../context/AuthContext";
 import CurrencyInput from "../../../utils/react-currency-input-master/src";
+import './styles.scss';
 
 
 export function NewCampaign(){
@@ -45,7 +46,7 @@ export function NewCampaign(){
     }
 
   return(
-    <div id="container__form">
+    <div className="formNewCampaign">
     <FormContainer>
           <Title tag="h1" onClassName="title_h1" value="Criar uma campanha de doação"/>
           <Form onSubmit={handleSubmit}>
