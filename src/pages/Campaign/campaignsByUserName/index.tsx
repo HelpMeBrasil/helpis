@@ -61,7 +61,7 @@ export function CampaignsByUserName(){
     )}else{
     return(
     <>
-    {campaigns.length === 0 ? <Title tag="h1" onClassName="title_h1" value="Você não possui campanhas"/> : 
+    {campaigns.length === 0 ? <div className="emptyCampaign"><Title tag="h1" onClassName="title_h1" value="Você não possui campanhas"/></div> : 
     <>
     <Title tag="h1" onClassName="title_h1" value="Minhas campanhas"/>
     <hr></hr>
